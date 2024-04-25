@@ -9,8 +9,8 @@ import com.example.demo.View.HomePage.HomePage;
 @Controller
 public class HomeController {
 	
-	@GetMapping("/")
-	public String index() {
+	@GetMapping("/home")
+	public String homepage() {
 		return "home";
 	}
 }

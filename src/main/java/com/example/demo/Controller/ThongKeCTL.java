@@ -11,6 +11,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Model.ThanhVienModel;
 import com.example.demo.Model.ThongTinSdModel;
@@ -18,7 +19,7 @@ import com.example.demo.Model.XuLyModel;
 import com.example.demo.repository.ThanhVienRepository;
 
 
-@Controller
+@RestController
 public class ThongKeCTL {
 	
 }
