@@ -14,25 +14,22 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Model.ThanhVienModel;
 import com.example.demo.repository.ThanhVienRepository;
 
-@Controller
+@RestController
 public class ThanhVienCTL {
 	
-	@Autowired
-	private ThanhVienRepository thanhVienRepository;
+//	@Autowired
+//	private ThanhVienRepository thanhVienRepository;
 	
 	@GetMapping("/thanhvien")
-    public List<ThanhVienModel> getAllThanhVien() {
-        List<ThanhVienModel> thanhViens = (List<ThanhVienModel>) thanhVienRepository.findAll();
-        thanhViens.forEach(thanhVien -> {
-            System.out.println("ID: " + thanhVien.getMaTV() + ", Name: " + thanhVien.getHoTen() + ", Age: " + thanhVien.getEmail());
-        });
-        return thanhViens;
+    public String getAllThanhVien() {
+        return "thành viên";
     }
 }

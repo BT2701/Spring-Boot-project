@@ -2,12 +2,15 @@ package com.example.demo.Model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
 import com.example.demo.Model.ThongTinSdModel;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "thanhvien")
@@ -51,8 +54,6 @@ public class ThanhVienModel {
 		this.khoa = khoa;
 		this.nganh = nganh;
 		this.sdt = sdt;
-		this.listInfomation = listInfomation;
-		this.listHandle = listHandle;
 		this.email = email;
 		this.password = password;
 	}
