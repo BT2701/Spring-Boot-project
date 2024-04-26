@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.Model.ThanhVienModel;
 
 @Repository
-public interface ThanhVienRepository extends JpaRepository<ThanhVienModel, Long>{}
+public interface ThanhVienRepository extends CrudRepository<ThanhVienModel, Integer>{}
     // Không cần khai báo phương thức getList, JpaRepository đã cung cấp các phương thức cơ 

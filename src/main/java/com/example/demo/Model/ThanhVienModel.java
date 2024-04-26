@@ -2,18 +2,18 @@ package com.example.demo.Model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.example.demo.Model.ThongTinSdModel;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import lombok.Data;
 
 
-@Entity
-@Table(name = "thanhvien")
+@Entity(name = "thanhvien")
 public class ThanhVienModel {
 
 	@Id
@@ -130,10 +130,5 @@ public class ThanhVienModel {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "ThanhVienModel [maTV=" + maTV + ", hoTen=" + hoTen + ", khoa=" + khoa + ", nganh=" + nganh + ", sdt="
-				+ sdt + ", listInfomation=" + listInfomation + ", listHandle=" + listHandle + "]";
-	}
 
 }

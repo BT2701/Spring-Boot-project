@@ -2,16 +2,15 @@ package com.example.demo.Model;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity
-@Table(name = "thietbi")
+@Entity(name = "thietbi")
 public class ThietBiModel {
 	@Id
 	@Column(name = "MaTB")
@@ -70,12 +69,6 @@ public class ThietBiModel {
 
 	public void setMoTaTB(String moTaTB) {
 		this.moTaTB = moTaTB;
-	}
-
-	@Override
-	public String toString() {
-		return "ThietBiModel [maTB=" + maTB + ", tenTB=" + tenTB + ", moTaTB=" + moTaTB + ", listInfomation="
-				+ listInfomation + "]";
 	}
 
 }
