@@ -1,0 +1,72 @@
+/* css for login page  start------------------------------------------ */
+.login-page {
+    max-width: 880px;
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+}
+
+.intro-side {
+    background-color: #f8f9fa; 
+    padding: 50px;
+}
+
+.login-side {
+    background-color: #f8f9fa; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+}
+.register-side{
+    background-color: #f8f9fa; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+}
+.form-operation{
+    display: flex;
+    justify-content:flex-end;
+}
+
+.btn-login{
+    min-width: 106px;
+    margin: 0 4px 0 0;
+}
+
+.btn-register{
+    min-width: 106px;
+}
+.error {
+    margin-top: 5px;
+    color: #ff0000;
+    font-size: 0.9rem;
+}
+.error-message {
+    color:#ff0000;
+    margin-left: 5px;
+}
+.form-label {
+    font-weight: bold;
+}
+/* css for login page  end------------------------------------------ */
+/* css for reset password start ------------------------------------ */
+.forgot-password-page {
+    min-height: 100vh;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+.forgot-password-form, .confirm-email-form, .reset-password-form, .password-changed-success {
+    background-color: #f8f9fa; 
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px; 
+}
+.otp-input {
+    width: 40px;
+    text-align: center;
+}
+
+/* css for reset password start end ---------------------------------------*/
