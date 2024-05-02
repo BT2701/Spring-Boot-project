@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.example.demo.Model.ThanhVienModel;
 import com.example.demo.Model.XuLyModel;
 
-public interface XuLyRepository extends CrudRepository<XuLyModel, Long>{
+public interface XuLyRepository extends JpaRepository<XuLyModel, Integer>{
 
 }
