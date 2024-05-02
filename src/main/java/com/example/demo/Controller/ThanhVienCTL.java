@@ -1,9 +1,6 @@
 package com.example.demo.Controller;
 
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
@@ -16,15 +13,14 @@ import com.example.demo.Model.ThanhVienModel;
 import com.example.demo.repository.ThanhVienRepository;
 
 @Controller
-@RequestMapping("/thanhvien")
 public class ThanhVienCTL {
 	@Autowired
 	private ThanhVienRepository thanhVienRepository;
 	
-	@GetMapping("")
+	@GetMapping("/thanhvien")
     public String getAllThanhVien(Model m) {
 		Iterable<ThanhVienModel>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
-        return "home";
+        return "thanhvien";
     }
 }
