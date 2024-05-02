@@ -7,7 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 	
 	@GetMapping("/login")
-	public String homepage() {
+	public String login() {
 		return "login";
+	}
+	@GetMapping("/sig-up")
+	public String sigup() {
+		return "register";
+	}
+	@GetMapping("forgot-password")
+	public String forgotPass(){
+		return "resetpasword";
 	}
 }
