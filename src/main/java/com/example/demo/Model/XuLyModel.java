@@ -14,7 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-@Entity(name = "xuly")
+@Entity
+@Table(name = "xuly")
 public class XuLyModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,9 @@ public class XuLyModel {
 	@Column(name = "TrangThaiXL")
 	private Integer trangThaiXL;
 	
+	@Transient
+    private String trangthai;
+
 	@ManyToOne
 	@JoinColumn(name = "MaTV")
 	private ThanhVienModel thanhVien;
@@ -103,6 +107,9 @@ public class XuLyModel {
         else return "Đã xử lý";
     }
 
+    public void setTrangthai(String trangthai) {
+        this.trangthai = trangthai;
+    }
 
 	@Override
 	public String toString() {

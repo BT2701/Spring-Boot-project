@@ -8,12 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.example.demo.Model.ThongTinSdModel;
-
-import lombok.Data;
-
-
-@Entity(name = "thanhvien")
+@Entity
+@Table(name = "thanhvien")
 public class ThanhVienModel {
 
 	@Id
@@ -54,6 +50,8 @@ public class ThanhVienModel {
 		this.khoa = khoa;
 		this.nganh = nganh;
 		this.sdt = sdt;
+		this.listInfomation = listInfomation;
+		this.listHandle = listHandle;
 		this.email = email;
 		this.password = password;
 	}
@@ -130,5 +128,10 @@ public class ThanhVienModel {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "ThanhVienModel [maTV=" + maTV + ", hoTen=" + hoTen + ", khoa=" + khoa + ", nganh=" + nganh + ", sdt="
+				+ sdt + ", listInfomation=" + listInfomation + ", listHandle=" + listHandle + "]";
+	}
 
 }

@@ -8,6 +8,6 @@ import com.example.demo.Model.ThanhVienModel;
 import com.example.demo.Model.ThietBiModel;
 
 @Repository
-public interface ThietBiRepository extends CrudRepository<ThietBiModel, Integer>{
+public interface ThietBiRepository extends JpaRepository<ThietBiModel, Integer>{
 
 }

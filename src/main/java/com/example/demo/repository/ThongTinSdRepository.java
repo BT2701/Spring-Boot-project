@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.example.demo.Model.ThanhVienModel;
 import com.example.demo.Model.ThongTinSdModel;
 
-public interface ThongTinSdRepository extends CrudRepository<ThongTinSdModel, Integer>{
+public interface ThongTinSdRepository extends JpaRepository<ThongTinSdModel, Integer>{
 
 }

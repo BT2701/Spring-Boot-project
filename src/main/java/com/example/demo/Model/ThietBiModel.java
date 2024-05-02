@@ -10,7 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name = "thietbi")
+@Entity
+@Table(name = "thietbi")
 public class ThietBiModel {
 	@Id
 	@Column(name = "MaTB")
@@ -69,6 +70,12 @@ public class ThietBiModel {
 
 	public void setMoTaTB(String moTaTB) {
 		this.moTaTB = moTaTB;
+	}
+
+	@Override
+	public String toString() {
+		return "ThietBiModel [maTB=" + maTB + ", tenTB=" + tenTB + ", moTaTB=" + moTaTB + ", listInfomation="
+				+ listInfomation + "]";
 	}
 
 }

@@ -13,7 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name = "thongtinsd")
+@Entity
+@Table(name = "thongtinsd")
 public class ThongTinSdModel {
 
 	@Id
