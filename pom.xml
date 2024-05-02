@@ -17,6 +17,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
         <dependency>
@@ -53,14 +54,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.6.14.Final</version>
-		</dependency>
+        
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+            <type>module</type>
+            <version>3.2.4</version>
         </dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -68,11 +67,11 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>5.2.5</version>
-		</dependency>
+         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.4.4.Final</version>
+        </dependency>
     </dependencies>
 
 
@@ -81,6 +80,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                   </configuration>
 			</plugin>
 		</plugins>
 	</build>
