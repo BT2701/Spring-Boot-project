@@ -21,6 +21,6 @@ public class ThanhVienCTL {
     public String getAllThanhVien(Model m) {
 		Iterable<ThanhVienModel>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
-        return "home";
+        return "thanhvien";
     }
 }

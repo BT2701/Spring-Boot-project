@@ -50,8 +50,6 @@ public class ThanhVienModel {
 		this.khoa = khoa;
 		this.nganh = nganh;
 		this.sdt = sdt;
-		this.listInfomation = listInfomation;
-		this.listHandle = listHandle;
 		this.email = email;
 		this.password = password;
 	}
