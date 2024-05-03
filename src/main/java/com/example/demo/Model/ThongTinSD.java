@@ -16,9 +16,8 @@ import jakarta.persistence.*;
 //import javax.persistence.TemporalType;
 
 
-@Entity
-@Table(name = "thongtinsd")
-public class ThongTinSdModel {
+@Entity(name = "thongtinsd")
+public class ThongTinSD {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,27 +37,27 @@ public class ThongTinSdModel {
 	private Date tgTra;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "TGDatCho")
-	private Date tgDatCho;
+	@Column
+	private Date tgdatcho;
 
 	@ManyToOne
 	@JoinColumn(name = "MaTV")
-	private ThanhVienModel thanhVien;
+	private ThanhVien thanhVien;
 
 	@ManyToOne
 	@JoinColumn(name = "MaTB")
-	private ThietBiModel thietBi;
+	private ThietBi thietBi;
 
-	public ThongTinSdModel() {
+	public ThongTinSD() {
 	}
 
-	public ThongTinSdModel(Integer maTT, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVienModel thanhVien,
-			ThietBiModel thietBi) {
+	public ThongTinSD(Integer maTT, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVien thanhVien,
+			ThietBi thietBi) {
 		this.maTT = maTT;
 		this.tgVao = tgVao;
 		this.tgMuon = tgMuon;
 		this.tgTra = tgTra;
-		this.tgDatCho = tgDatCho;
+		this.tgdatcho = tgDatCho;
 		this.thanhVien = thanhVien;
 		this.thietBi = thietBi;
 	}
@@ -96,26 +95,26 @@ public class ThongTinSdModel {
 	}
 
 	public Date getTgDatCho() {
-		return tgDatCho;
+		return tgdatcho;
 	}
 
 	public void setTgDatCho(Date tgDatCho) {
-		this.tgDatCho = tgDatCho;
+		this.tgdatcho = tgDatCho;
 	}
 
-	public ThanhVienModel getThanhVien() {
+	public ThanhVien getThanhVien() {
 		return thanhVien;
 	}
 
-	public void setThanhVien(ThanhVienModel thanhVien) {
+	public void setThanhVien(ThanhVien thanhVien) {
 		this.thanhVien = thanhVien;
 	}
 
-	public ThietBiModel getThietBi() {
+	public ThietBi getThietBi() {
 		return thietBi;
 	}
 
-	public void setThietBi(ThietBiModel thietBi) {
+	public void setThietBi(ThietBi thietBi) {
 		this.thietBi = thietBi;
 	}
 

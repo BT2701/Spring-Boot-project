@@ -16,44 +16,43 @@ import jakarta.persistence.*;
 //import javax.persistence.TemporalType;
 //import javax.persistence.Transient;
 
-@Entity
-@Table(name = "xuly")
-public class XuLyModel {
+@Entity(name = "xuly")
+public class XuLy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MaXL", insertable = false, updatable = false)
 	private Integer maXL;
 
-	@Column(name = "HinhThucXL")
-	private String hinhThucXL;
+	@Column
+	private String hinhthucxl;
 
-	@Column(name = "SoTien")
-	private Integer soTien;
+	@Column
+	private Integer sotien;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "NgayXL")
 	private Date ngayXL;
 
-	@Column(name = "TrangThaiXL")
-	private Integer trangThaiXL;
+	@Column
+	private Integer trangthaixl;
 	
 	@Transient
     private String trangthai;
 
 	@ManyToOne
 	@JoinColumn(name = "MaTV")
-	private ThanhVienModel thanhVien;
+	private ThanhVien thanhVien;
 
-	public XuLyModel() {
+	public XuLy() {
 	}
 
-	public XuLyModel(Integer maXL, String hinhThucXL, Integer soTien, Date ngayXL, Integer trangThaiXL,
-			ThanhVienModel thanhVien) {
+	public XuLy(Integer maXL, String hinhThucXL, Integer soTien, Date ngayXL, Integer trangThaiXL,
+			ThanhVien thanhVien) {
 		this.maXL = maXL;
-		this.hinhThucXL = hinhThucXL;
-		this.soTien = soTien;
+		this.hinhthucxl = hinhThucXL;
+		this.sotien = soTien;
 		this.ngayXL = ngayXL;
-		this.trangThaiXL = trangThaiXL;
+		this.trangthaixl = trangThaiXL;
 		this.thanhVien = thanhVien;
 	}
 
@@ -66,19 +65,19 @@ public class XuLyModel {
 	}
 
 	public String getHinhThucXL() {
-		return hinhThucXL;
+		return hinhthucxl;
 	}
 
 	public void setHinhThucXL(String hinhThucXL) {
-		this.hinhThucXL = hinhThucXL;
+		this.hinhthucxl = hinhThucXL;
 	}
 
 	public Integer getSoTien() {
-		return soTien;
+		return sotien;
 	}
 
 	public void setSoTien(Integer soTien) {
-		this.soTien = soTien;
+		this.sotien = soTien;
 	}
 
 	public Date getNgayXL() {
@@ -90,22 +89,22 @@ public class XuLyModel {
 	}
 
 	public Integer getTrangThaiXL() {
-		return trangThaiXL;
+		return trangthaixl;
 	}
 
 	public void setTrangThaiXL(Integer trangThaiXL) {
-		this.trangThaiXL = trangThaiXL;
+		this.trangthaixl = trangThaiXL;
 	}
 
-	public ThanhVienModel getThanhVien() {
+	public ThanhVien getThanhVien() {
 		return thanhVien;
 	}
 
-	public void setThanhVien(ThanhVienModel thanhVien) {
+	public void setThanhVien(ThanhVien thanhVien) {
 		this.thanhVien = thanhVien;
 	}
 	public String getTrangthai() {
-        if (this.trangThaiXL == 0) return "Chưa xử lý";
+        if (this.trangthaixl == 0) return "Chưa xử lý";
         else return "Đã xử lý";
     }
 
@@ -115,8 +114,8 @@ public class XuLyModel {
 
 	@Override
 	public String toString() {
-		return "XuLyModel [maXL=" + maXL + ", hinhThucXL=" + hinhThucXL + ", soTien=" + soTien + ", ngayXL=" + ngayXL
-				+ ", trangThaiXL=" + trangThaiXL +  "]";
+		return "XuLyModel [maXL=" + maXL + ", hinhThucXL=" + hinhthucxl + ", soTien=" + sotien + ", ngayXL=" + ngayXL
+				+ ", trangThaiXL=" + trangthaixl +  "]";
 	}
 
 }

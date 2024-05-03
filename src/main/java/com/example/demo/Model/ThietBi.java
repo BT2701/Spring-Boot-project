@@ -12,41 +12,41 @@ import jakarta.persistence.*;
 //import javax.persistence.OneToMany;
 //import javax.persistence.Table;
 
-@Entity
-@Table(name = "thietbi")
-public class ThietBiModel {
+@Entity(name = "thietbi")
+public class ThietBi {
 	@Id
-	@Column(name = "MaTB")
 	private Integer maTB;
-	@Column(name = "TenTB")
+	
+	@Column
 	private String tenTB;
-	@Column(name = "MoTaTB")
-	private String moTaTB;
+	
+	@Column
+	private String motatb;
 
 	@OneToMany(mappedBy = "thietBi")
-	private List<ThongTinSdModel> listInfomation;
+	private List<ThongTinSD> listInfomation;
 
-	public ThietBiModel() {
+	public ThietBi() {
 	}
 
-	public ThietBiModel(Integer maTB, String tenTB, String moTaTB) {
+	public ThietBi(Integer maTB, String tenTB, String moTaTB) {
 		this.maTB = maTB;
 		this.tenTB = tenTB;
-		this.moTaTB = moTaTB;
+		this.motatb = moTaTB;
 	}
 
-	public ThietBiModel(Integer maTB, String tenTB, String moTaTB, List<ThongTinSdModel> listInfomation) {
+	public ThietBi(Integer maTB, String tenTB, String moTaTB, List<ThongTinSD> listInfomation) {
 		this.maTB = maTB;
 		this.tenTB = tenTB;
-		this.moTaTB = moTaTB;
+		this.motatb = moTaTB;
 		this.listInfomation = listInfomation;
 	}
 
-	public List<ThongTinSdModel> getListInfomation() {
+	public List<ThongTinSD> getListInfomation() {
 		return listInfomation;
 	}
 
-	public void setListInfomation(List<ThongTinSdModel> listInfomation) {
+	public void setListInfomation(List<ThongTinSD> listInfomation) {
 		this.listInfomation = listInfomation;
 	}
 
@@ -67,16 +67,16 @@ public class ThietBiModel {
 	}
 
 	public String getMoTaTB() {
-		return moTaTB;
+		return motatb;
 	}
 
 	public void setMoTaTB(String moTaTB) {
-		this.moTaTB = moTaTB;
+		this.motatb = moTaTB;
 	}
 
 	@Override
 	public String toString() {
-		return "ThietBiModel [maTB=" + maTB + ", tenTB=" + tenTB + ", moTaTB=" + moTaTB + ", listInfomation="
+		return "ThietBiModel [maTB=" + maTB + ", tenTB=" + tenTB + ", moTaTB=" + motatb + ", listInfomation="
 				+ listInfomation + "]";
 	}
 
