@@ -13,9 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Model.ThanhVienModel;
-import com.example.demo.Model.ThongTinSdModel;
-import com.example.demo.Model.XuLyModel;
+import com.example.demo.Model.ThanhVien;
+import com.example.demo.Model.ThongTinSD;
+import com.example.demo.Model.XuLy;
 import com.example.demo.repository.ThanhVienRepository;
 
 

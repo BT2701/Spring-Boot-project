@@ -12,33 +12,29 @@ import lombok.Setter;
 //import javax.persistence.OneToMany;
 //import javax.persistence.Table;
 
-@Entity
-@Table(name = "thanhvien")
-@Getter
-@Setter
-public class ThanhVienModel {
+@Entity(name="thanhvien")
+public class ThanhVien {
 
 	@Id
-	@Column(name = "MaTV")
 	private Integer maTV;
 
-	@Column(name = "HoTen")
-	private String hoTen;
+	@Column
+	private String hoten;
 
-	@Column(name = "Khoa")
+	@Column
 	private String khoa;
 
-	@Column(name = "Nganh")
+	@Column
 	private String nganh;
 
-	@Column(name = "SDT")
+	@Column
 	private String sdt;
 
 	@OneToMany(mappedBy = "thanhVien")
-	private List<ThongTinSdModel> listInfomation;
+	private List<ThongTinSD> listInfomation;
 
 	@OneToMany(mappedBy = "thanhVien")
-	private List<XuLyModel> listHandle;
+	private List<XuLy> listHandle;
 
 	@Column
 	private String email;
@@ -46,13 +42,13 @@ public class ThanhVienModel {
 	@Column
 	private String password;
 
-	public ThanhVienModel() {
+	public ThanhVien() {
 	}
 
-	public ThanhVienModel(Integer maTV, String hoTen, String khoa, String nganh, String sdt, String email,
+	public ThanhVien(Integer maTV, String hoTen, String khoa, String nganh, String sdt, String email,
 			String password) {
 		this.maTV = maTV;
-		this.hoTen = hoTen;
+		this.hoten = hoTen;
 		this.khoa = khoa;
 		this.nganh = nganh;
 		this.sdt = sdt;
@@ -69,11 +65,11 @@ public class ThanhVienModel {
 	}
 
 	public String getHoTen() {
-		return hoTen;
+		return hoten;
 	}
 
 	public void setHoTen(String hoTen) {
-		this.hoTen = hoTen;
+		this.hoten = hoTen;
 	}
 
 	public String getKhoa() {
@@ -100,19 +96,19 @@ public class ThanhVienModel {
 		this.sdt = sdt;
 	}
 
-	public List<ThongTinSdModel> getListInfomation() {
+	public List<ThongTinSD> getListInfomation() {
 		return listInfomation;
 	}
 
-	public void setListInfomation(List<ThongTinSdModel> listInfomation) {
+	public void setListInfomation(List<ThongTinSD> listInfomation) {
 		this.listInfomation = listInfomation;
 	}
 
-	public List<XuLyModel> getListHandle() {
+	public List<XuLy> getListHandle() {
 		return listHandle;
 	}
 
-	public void setListHandle(List<XuLyModel> listHandle) {
+	public void setListHandle(List<XuLy> listHandle) {
 		this.listHandle = listHandle;
 	}
 
@@ -132,10 +128,5 @@ public class ThanhVienModel {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "ThanhVienModel [maTV=" + maTV + ", hoTen=" + hoTen + ", khoa=" + khoa + ", nganh=" + nganh + ", sdt="
-				+ sdt + ", listInfomation=" + listInfomation + ", listHandle=" + listHandle + "]";
-	}
 
 }

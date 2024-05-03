@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Model.ThanhVienModel;
+import com.example.demo.Model.ThanhVien;
 import com.example.demo.repository.ThanhVienRepository;
 
 @Controller
@@ -19,7 +19,7 @@ public class ThanhVienCTL {
 	
 	@GetMapping("/thanhvien")
     public String getAllThanhVien(Model m) {
-		Iterable<ThanhVienModel>list= thanhVienRepository.findAll();
+		Iterable<ThanhVien>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
         return "thanhvien";
     }
