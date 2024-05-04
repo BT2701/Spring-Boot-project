@@ -15,6 +15,6 @@ import com.example.demo.Model.XuLy;
 public class XuLyCTL {
 	@GetMapping("/xu-ly-vi-pham")
 	public String xuLyViPham() {
-		return "XuLyViPham";
+		return "admin-xuly";
 	}
 }

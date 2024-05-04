@@ -17,7 +17,7 @@ public class ThanhVienCTL {
 	@Autowired
 	private ThanhVienRepository thanhVienRepository;
 	
-	@GetMapping("/thanhvien")
+	@GetMapping("/thanh-vien")
     public String getAllThanhVien(Model m) {
 		Iterable<ThanhVien>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
