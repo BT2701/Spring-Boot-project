@@ -1,0 +1,105 @@
+
+body {
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+.form-label {
+    font-weight: bold;
+}
+.page-title {
+    font-family: Arial, sans-serif; /* Chọn font chữ */
+    font-size: 2.5rem; /* Kích thước font chữ */
+    color: #ff5733; /* Màu sắc tiêu đề */
+    text-align: center; /* Canh chỉnh giữa */
+    text-transform: uppercase; /* Chuyển đổi chữ hoa */
+    margin-bottom: 20px; /* Khoảng cách phía dưới */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Hiệu ứng bóng đổ */
+}
+
+.btn-custom {
+    display: inline-block;
+    padding: 15px 30px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #ff6f61;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-custom i {
+    margin-right: 10px;
+}
+
+.btn-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.btn-custom:hover::after {
+    width: 0;
+    height: 0;
+}
+
+.btn-custom:hover {
+    color: #ff6f61;
+    background-color: #ffffff;
+    border-color: #ff6f61;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-custom:focus {
+    outline: none;
+}
+
+.btn-custom span {
+    position: relative;
+    z-index: 1;
+}
+.page-title {
+    font-family: Arial, sans-serif; /* Chọn font chữ */
+    font-size: 2.5rem; /* Kích thước font chữ */
+    color: #ff5733; /* Màu sắc tiêu đề */
+    text-align: center; /* Canh chỉnh giữa */
+    text-transform: uppercase; /* Chuyển đổi chữ hoa */
+    margin-bottom: 20px; /* Khoảng cách phía dưới */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Hiệu ứng bóng đổ */
+}
+.btn-cancel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px; /* Tăng độ rộng và chiều cao của nút */
+    font-size: 16px; /* Giảm kích thước chữ để phù hợp với nút */
+    border-radius: 5px; /* Bo tròn góc nút */
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff; /* Màu chữ */
+    transition: background-color 0.3s, border-color 0.3s, transform 0.3s; /* Thêm hiệu ứng hover */
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: scale(1.05); /* Phóng to nút khi hover */
+}
