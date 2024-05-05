@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý thành viên</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/css/QuanLyThanhVien.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1 class="mt-4 mb-4 text-center">Quản Lý Thành Viên</h1>
+    <div class="row mb-3">
+      <div class="col-md-6 offset-md-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm theo họ tên">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6 offset-md-3 text-center">
+        <button class="btn btn-success base-btn" data-bs-toggle="modal" data-bs-target="#modalChonCachThem" onclick=""><i
+            class="fas fa-plus"></i>Thêm thành viên</button>
+        <button class="btn btn-danger base-btn" data-bs-toggle="modal" data-bs-target="#modalXoaNhieu" onclick=""><i
+            class="fa-solid fa-trash"></i>Xóa nhiều thành viên</button>
+      </div>
+    </div>
+
+    <div class="member-container mt-5">
+      <div class="row member-container-header border-bottom border-dark ">
+        <div class="col">
+          <p class="fw-bold">Mã TV</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold">Họ và Tên</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold">Khoa</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold">Ngành</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold">Số điện thoại</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold">Thao tác</p>
+        </div>
+      </div>
+
+      <div class="row member-container-body" id="member-container-body">
+        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center">
+          <div class="col">
+            <p class="mb-0 text-center ">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Phạm Văn Dự
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center ">
+              CNTT
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Công nghệ thông tin
+            </p>
+          </div>
+          <div class="col text-center">
+            0379614995
+          </div>
+          <div class="col text-center">
+            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+
+        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
+          <div class="col">
+            <p class="mb-0 text-center">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Phạm Văn Dự
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              CNTT
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Công nghệ thông tin
+            </p>
+          </div>
+          <div class="col text-center">
+            0379614995
+          </div>
+          <div class="col text-center">
+            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+
+        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
+          <div class="col">
+            <p class="mb-0 text-center">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Phạm Văn Dự
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              CNTT
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Công nghệ thông tin
+            </p>
+          </div>
+          <div class="col text-center">
+            0379614995
+          </div>
+          <div class="col text-center">
+            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+
+        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
+          <div class="col">
+            <p class="mb-0 text-center">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Phạm Văn Dự
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              CNTT
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Công nghệ thông tin
+            </p>
+          </div>
+          <div class="col text-center">
+            0379614995
+          </div>
+          <div class="col text-center">
+            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+
+        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
+          <div class="col">
+            <p class="mb-0 text-center">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Phạm Văn Dự
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              CNTT
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center ">
+              Công nghệ thông tin
+            </p>
+          </div>
+          <div class="col text-center">
+            0379614995
+          </div>
+          <div class="col text-center">
+            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+
+        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
+          <div class="col">
+            <p class="mb-0 text-center">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Phạm Văn Dự
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              CNTT
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Công nghệ thông tin
+            </p>
+          </div>
+          <div class="col text-center">
+            0379614995
+          </div>
+          <div class="col text-center">
+            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+
+    <div id="rightclicked"
+      style="background-color: rgb(200, 200, 200);z-index: 100000;height: auto; position: absolute; display: none;">
+      <div class="btn-group-vertical">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSua">
+          Sửa thông tin
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKhuVucHocTap">
+          Khu vực học tập
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCanhBaoViPham">
+          Cảnh báo vi phạm
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMuonTra">
+          Mượn trả
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalXemChiTiet">
+          Xem chi tiết
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal sưa-->
+  <div class="modal fade" id="modalThemThanhVien" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm Thành Viên</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="inputMTV" class="form-label">Mã thành viên</label>
+              <input type="number" class="form-control" id="inputMTV">
+              <div class="error">
+                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+                <span class="error-message">Trường hợp có lỗi</span>
+            </div>
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="selectKhoa" class="form-label">Khoa</label>
+              <select class="form-select" id="selectKhoa" name="Khoa">
+                <option value="CNTT">CNTT</option>
+                <option value="QTKD">QTKD</option>
+                <option value="TCNH">TCNH</option>
+                <option value="Dulich">Dulich</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="selectNganh" class="form-label">Ngành</label>
+              <select class="form-select" id="selectNganh" name="Nganh">
+                <option value="DLDP">Du lich dia phuong</option>
+                <option value="CVPT">Chuyen vien phan tich</option>
+                <option value="CVHDKH">Chuyen vien hoach dinh ke hoach</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="inputSdt" class="form-label">Số điện thoại</label>
+              <input type="number" class="form-control" id="inputSdt">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal sưa-->
+  <div class="modal fade" id="modalSua" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Thông Tin Thành Viên</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="inputMTV" class="form-label">Mã thành viên</label>
+              <input type="number" readonly class="form-control" id="inputMTV">
+             
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT">
+              <div class="error">
+                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+                <span class="error-message">Trường hợp có lỗi</span>
+            </div>
+            </div>
+            <div class="mb-2">
+              <label for="selectKhoa" class="form-label">Khoa</label>
+              <select class="form-select" id="selectKhoa" name="Khoa">
+                <option value="CNTT">CNTT</option>
+                <option value="QTKD">QTKD</option>
+                <option value="TCNH">TCNH</option>
+                <option value="Dulich">Dulich</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="selectNganh" class="form-label">Ngành</label>
+              <select class="form-select" id="selectNganh" name="Nganh">
+                <option value="DLDP">Du lich dia phuong</option>
+                <option value="CVPT">Chuyen vien phan tich</option>
+                <option value="CVHDKH">Chuyen vien hoach dinh ke hoach</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="inputSdt" class="form-label">Số điện thoại</label>
+              <input type="number" class="form-control" id="inputSdt">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal delete mutiple-->
+  <div class="modal fade" id="modalXoaNhieu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xóa Nhiều Thành Viên</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="selectKhoaThu" class="form-label">Khóa thứ</label>
+              <select class="form-select" id="selectKhoaThu" name="KhoaThu">
+                <option value="K21">K21</option>
+                <option value="K22">K22</option>
+                <option value="K23">K23</option>
+                <option value="K24">K24</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT">
+              <div class="error">
+                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+                <span class="error-message">Trường hợp có lỗi</span>
+            </div>
+            </div>
+            <div class="mb-2">
+              <label for="selectKhoa" class="form-label">Khoa</label>
+              <select class="form-select" id="selectKhoa" name="Khoa">
+                <option value="CNTT">CNTT</option>
+                <option value="QTKD">QTKD</option>
+                <option value="TCNH">TCNH</option>
+                <option value="Dulich">Dulich</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="selectNganh" class="form-label">Ngành</label>
+              <select class="form-select" id="selectNganh" name="Nganh">
+                <option value="DLDP">Du lich dia phuong</option>
+                <option value="CVPT">Chuyen vien phan tich</option>
+                <option value="CVHDKH">Chuyen vien hoach dinh ke hoach</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="inputSdt" class="form-label">Số điện thoại</label>
+              <input type="number" class="form-control" id="inputSdt">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Khu Vuc Hoc Tap-->
+  <div class="modal fade" id="modalKhuVucHocTap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Khu Vực Học Tập</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="inputMaTV" class="form-label">Mã thành viên</label>
+              <input type="text" class="form-control" id="inputMaTV">
+              <div class="error">
+                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+                <span class="error-message">Trường hợp có lỗi</span>
+            </div>
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputKhoa" class="form-label">Khoa</label>
+              <input type="text" class="form-control" id="inputKhoa">
+            </div>
+            <div class="mb-2">
+              <label for="inputNganh" class="form-label">Ngành</label>
+              <input type="text" class="form-control" id="inputNganh">
+            </div>
+            <div class="mb-2">
+              <label for="inputSdt" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="inputSdt">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal canh bao vi pham-->
+  <div class="modal fade" id="modalCanhBaoViPham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cảnh Báo Vi Phạm</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="selectThanhVien" class="form-label">Thành viên</label>
+              <select class="form-select" id="selectThanhVien" name="ThanhVien">
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="inputViPham" class="form-label">Vi phạm</label>
+              <input type="text" class="form-control" id="inputViPham">
+              <div class="error">
+                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
+                <span class="error-message">Trường hợp có lỗi</span>
+            </div>
+            </div>
+            <div class="mb-2">
+              <label for="inputSoTien" class="form-label">Số tiền</label>
+              <input type="number" class="form-control" id="inputSoTien">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal mượn trả-->
+  <div class="modal fade" id="modalMuonTra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mượn Trả Thiết Bị</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="selectThanhVien" class="form-label">Thành viên</label>
+              <select class="form-select" id="selectThanhVien" name="ThanhVien">
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option value="3121410128">3121410128-PhamVanDu</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="selectThietBi" class="form-label">Thiết bị</label>
+              <select class="form-select" id="selectThietBi" name="ThietBi">
+                <option value="tb01">Micro</option>
+                <option value="tb02">Loa phát thanh</option>
+                <option value="tb03">Kẹo đồng</option>
+              </select>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary">Mượn</button>
+          <button type="button" class="btn btn-primary">Trả</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal xem chi tiet-->
+  <div class="modal fade" id="modalXemChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xem Chi Tiết Thành Viên</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="inputMTV" class="form-label">Mã thành viên</label>
+              <input type="text" readonly class="form-control" id="inputMTV">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Họ và tên</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Số điện thoại</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Ngành</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Khoa</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Email</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Password</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Thiết bị đã mượn</label>
+            </div>
+
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Vi phạm</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Modal lựa chọn cách thêm thành viên-->
+  <div class="modal fade" id="modalChonCachThem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cách thêm thành viên</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <button class="btn btn-primary base-btn" data-bs-toggle="modal" data-bs-target="#modalThemThanhVien"
+            data-bs-dismiss="modal"><i class="fas fa-plus"></i>Thông qua form</button>
+          <button class="btn btn-success base-btn" data-bs-toggle="modal" data-bs-target="#modalChonFile"
+            data-bs-dismiss="modal"><i class="fas fa-plus"></i>Thông qua file</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal thêm thành viên thông qua file-->
+  <div class="modal fade" id="modalChonFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm Thành Viên</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+          <div class="mb-2">
+            <label for="filechooser" class="form-label">Chọn file</label>
+            <input type="file" class="form-control" id="filechooser">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script>
+    document.body.addEventListener('click', function () {
+      document.getElementById("rightclicked").style.display = "none";
+    })
+    document.body.addEventListener('contextmenu', function () {
+      document.getElementById("rightclicked").style.display = "none";
+    })
+
+    members = document.querySelectorAll('.member');
+    members.forEach(member => {
+      member.addEventListener('contextmenu', function (ev) {
+      ev.stopPropagation();
+      ev.preventDefault();
+      rightclick();
+      return false;
+    }, false);
+    });
+   
+
+    function rightclick() {
+      var e = window.event;
+      var cantThinkOfAName = document.getElementById("rightclicked");
+      cantThinkOfAName.style.display = "block";
+      cantThinkOfAName.style.left = e.clientX + "px";
+      cantThinkOfAName.style.top = e.clientY + "px";
+    }
+  </script>
+</body>
+
+</html>

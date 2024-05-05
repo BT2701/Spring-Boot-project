@@ -1,0 +1,72 @@
+.form-label {
+    font-weight: 600;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.empty-member-container {
+    text-align: center;
+}
+
+.empty-member-img {
+    display: inline-block;
+    height: 200px;
+}
+
+.empty-member-message {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.member-container-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  background-color: #99ccff;
+  min-width: 680px;
+}
+
+.member-container-header p{
+    margin: 0;
+    padding: 4px 0 4px 0;
+    text-align: center;
+}
+
+
+.member-container {
+    position: relative;
+    overflow: auto;
+    height: 300px;
+    white-space: nowrap;
+}
+.member {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    min-width: 680px;
+}
+
+.member:hover{
+    background-color: #edeeee;
+}
+
+.base-btn {
+    min-width: 190px;
+    margin: 10px 0 0 0 ;
+}
+
+
+.modal-header{
+    background-color: #99ccff;
+}
