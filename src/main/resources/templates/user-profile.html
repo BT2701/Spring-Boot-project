@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao diện hồ sơ thành viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-LhXLOROzOtki5/ISJzdd+tdys62XbWU+0c8+RcqKUvWBoZf1RmvnWuYb23OILFA/KEs8VN1MzB8f2ldusJe3kw==" crossorigin="anonymous" />
+	<link rel="stylesheet" href="/css/profile.css">
+
+</head>
+<body>
+    <div class="container mt-5 p-5">
+        <h1 class="page-title">Giao diện hồ sơ thành viên</h1>
+        <form>
+            <div class="mb-3 row">
+                <label for="memberCode" class="col-sm-2 col-form-label form-label">Mã thành viên</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="memberCode" value="123456" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="fullName" class="col-sm-2 col-form-label form-label">Họ và tên</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="fullName" value="Nguyễn Văn A" readonly>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="faculty" class="col-sm-2 col-form-label form-label">Khoa</label>
+                <div class="col-sm-10">
+                    <select class="form-select" id="faculty" onchange="updateMajor()">
+                        <option value="CNTT">Khoa Công nghệ Thông tin</option>
+                        <option value="GD">Khoa Giáo dục</option>
+                        <option value="GDMN">Khoa Giáo dục Mầm non</option>
+                        <option value="KL">Khoa Luật</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-3 row">
+                <label for="major" class="col-sm-2 col-form-label form-label">Ngành</label>
+                <div class="col-sm-10">
+                    <select class="form-select" id="major">
+                        <!-- Options will be populated dynamically based on faculty selection -->
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="phone" class="col-sm-2 col-form-label form-label">Số điện thoại</label>
+                <div class="col-sm-10">
+                    <input type="tel" class="form-control" id="phone" pattern="[0-9]*" value="0904332938" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11)">
+                    <small id="phoneHelp" class="form-text text-muted">Vui lòng chỉ nhập số.</small>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="email" class="col-sm-2 col-form-label form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" value="nguyenvana@example.com">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="password" class="col-sm-2 col-form-label form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" value="********">
+                </div>
+            </div>    
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label form-label">Xem trạng thái vi phạm</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  readonly>
+                </div>          
+            </div>  
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label form-label">Xem đặt chỗ mượn thiết bị</label> 
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  readonly>
+                </div>     
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label form-label">Xem thiết bị đang được mượnn</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  readonly>
+                </div>      
+            </div>              
+            <div class="text-center mt-5">
+                <a href="./profile/editProfile" class="btn btn-custom1">
+                    <i class="fas fa-edit"></i> Chỉnh sửa thông tin cá nhân
+                </a>
+            </div>              
+        </form>
+    </div>
+
+    <script>
+        function updateMajor() {
+            const facultySelect = document.querySelector("#faculty");
+            const majorSelect = document.querySelector("#major");
+            majorSelect.innerHTML = "";
+
+            if (facultySelect.value === "CNTT") {
+                const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
+                majors.forEach(major => {
+                    const option = document.createElement("option");
+                    option.text = major;
+                    option.value = major;
+                    majorSelect.add(option);
+                });
+            } else if (facultySelect.value === "GD") {
+                const majors = ["Tư vấn học đường", "Tâm lý giáo dục", "Sư phạm", "Công nghệ giáo dục"];
+                majors.forEach(major => {
+                    const option = document.createElement("option");
+                    option.text = major;
+                    option.value = major;
+                    majorSelect.add(option);
+                });
+            } else if (facultySelect.value === "GDMN") {
+                const majors = ["Ngành giáo dục mầm non"];
+                majors.forEach(major => {
+                    const option = document.createElement("option");
+                    option.text = major;
+                    option.value = major;
+                    majorSelect.add(option);
+                });
+            } else if (facultySelect.value === "KL") {
+                const majors = ["Luật Hình sự", "Luật Dân sự", "Luật Hành chính","Luật Thương mại","Luật Quốc tế","Cố vấn pháp lý","Thẩm phán"];
+                majors.forEach(major => {
+                    const option = document.createElement("option");
+                    option.text = major;
+                    option.value = major;
+                    majorSelect.add(option);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

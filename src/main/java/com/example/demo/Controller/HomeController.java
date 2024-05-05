@@ -14,7 +14,7 @@ public class HomeController {
 	public String sigup() {
 		return "register";
 	}
-	@GetMapping("forgot-password")
+	@GetMapping("/forgot-password")
 	public String forgotPass(){
 		return "resetpasword";
 	}

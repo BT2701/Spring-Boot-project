@@ -17,10 +17,23 @@ public class ThanhVienCTL {
 	@Autowired
 	private ThanhVienRepository thanhVienRepository;
 	
-	@GetMapping("/thanh-vien")
+	@GetMapping("/thanh-vien-admin")
     public String getAllThanhVien(Model m) {
 		Iterable<ThanhVien>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
-        return "thanhvien";
+        return "admin-thanhvien";
+    }
+	
+	@GetMapping("/profile")
+    public String profile(Model m) {
+		Iterable<ThanhVien>list= thanhVienRepository.findAll();
+		m.addAttribute("data", list);
+        return "user-profile";
+    }
+	@GetMapping("/profile/editProfile")
+    public String editProfile(Model m) {
+		Iterable<ThanhVien>list= thanhVienRepository.findAll();
+		m.addAttribute("data", list);
+        return "user-editProfile";
     }
 }
