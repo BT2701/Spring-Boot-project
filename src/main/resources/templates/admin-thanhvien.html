@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -19,12 +19,12 @@
     <h1 class="mt-4 mb-4 text-center">Quản Lý Thành Viên</h1>
     <div class="row mb-3">
       <div class="col-md-6 offset-md-3">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Tìm kiếm theo họ tên">
+        <form class="input-group" method="get" th:action="@{/thanh-vien-admin}">
+          <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm theo họ tên">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+            <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <div class="row mb-3">
@@ -58,187 +58,47 @@
         </div>
       </div>
 
-      <div class="row member-container-body" id="member-container-body">
+      <div th:each="thanhVien : ${tvList}" class="row member-container-body" id="member-container-body">
         <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center">
           <div class="col">
-            <p class="mb-0 text-center ">
-              3121410128
-            </p>
+            <p class="mb-0 text-center" th:text="${thanhVien.maTV}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center">
-              Phạm Văn Dự
-            </p>
+            <p class="mb-0 text-center" th:text="${thanhVien.hoTen}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center ">
-              CNTT
-            </p>
+            <p class="mb-0 text-center" th:text="${thanhVien.khoa}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center">
-              Công nghệ thông tin
-            </p>
+            <p class="mb-0 text-center" th:text="${thanhVien.nganh}"></p>
           </div>
           <div class="col text-center">
-            0379614995
+            <p class="mb-0" th:text="${thanhVien.sdt}"></p>
           </div>
           <div class="col text-center">
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+            <!-- Nút để xóa thành viên -->
+            <button th:onclick="'ClickDeleteOneTVBtn(' + ${thanhVien.maTV} + ')'" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
 
-
-        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
-          <div class="col">
-            <p class="mb-0 text-center">
-              3121410128
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Phạm Văn Dự
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              CNTT
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Công nghệ thông tin
-            </p>
-          </div>
-          <div class="col text-center">
-            0379614995
-          </div>
-          <div class="col text-center">
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa thành viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Bạn có muốn xóa thành viên với id : <span id="modal-body-idTV">0</span> không ?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <a class="btn btn-primary" th:href="@{'/thanhvien/delete/' + ${thanhVien.maTV}}" id="aTagDeleteMatv">Xóa</a>
+              </div>
+            </div>
           </div>
         </div>
-
-
-        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
-          <div class="col">
-            <p class="mb-0 text-center">
-              3121410128
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Phạm Văn Dự
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              CNTT
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Công nghệ thông tin
-            </p>
-          </div>
-          <div class="col text-center">
-            0379614995
-          </div>
-          <div class="col text-center">
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-
-
-        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
-          <div class="col">
-            <p class="mb-0 text-center">
-              3121410128
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Phạm Văn Dự
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              CNTT
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Công nghệ thông tin
-            </p>
-          </div>
-          <div class="col text-center">
-            0379614995
-          </div>
-          <div class="col text-center">
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-
-
-        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
-          <div class="col">
-            <p class="mb-0 text-center">
-              3121410128
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Phạm Văn Dự
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              CNTT
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center ">
-              Công nghệ thông tin
-            </p>
-          </div>
-          <div class="col text-center">
-            0379614995
-          </div>
-          <div class="col text-center">
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-
-
-        <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center" id="" oncontextmenu="">
-          <div class="col">
-            <p class="mb-0 text-center">
-              3121410128
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Phạm Văn Dự
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              CNTT
-            </p>
-          </div>
-          <div class="col">
-            <p class="mb-0  text-center">
-              Công nghệ thông tin
-            </p>
-          </div>
-          <div class="col text-center">
-            0379614995
-          </div>
-          <div class="col text-center">
-            <button class="btn"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-
-        
       </div>
     </div>
 
@@ -266,101 +126,97 @@
 
 
   <!-- Modal sưa-->
-  <div class="modal fade" id="modalThemThanhVien" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalThemThanhVien" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Thêm Thành Viên</h5>
+          <h5 class="modal-title" id="exampleModalLabel1">Thêm Thành Viên</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="inputMTV" class="form-label">Mã thành viên</label>
-              <input type="number" class="form-control" id="inputMTV">
+              <label for="inputMTV1" class="form-label">Mã thành viên</label>
+              <input type="number" class="form-control" id="inputMTV1">
               <div class="error">
                 <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                 <span class="error-message">Trường hợp có lỗi</span>
             </div>
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Họ và tên</label>
-              <input type="text" class="form-control" id="inputHVT">
+              <label for="inputHVT1" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT1">
             </div>
             <div class="mb-2">
-              <label for="selectKhoa" class="form-label">Khoa</label>
-              <select class="form-select" id="selectKhoa" name="Khoa">
-                <option value="CNTT">CNTT</option>
-                <option value="QTKD">QTKD</option>
-                <option value="TCNH">TCNH</option>
-                <option value="Dulich">Dulich</option>
+              <label for="selectKhoa1" class="form-label">Khoa</label>
+              <select class="form-select s_faculty" id="selectKhoa1" onchange="updateMajor()">
+                <option value="CNTT">Khoa Công nghệ Thông tin</option>
+                <option value="GD">Khoa Giáo dục</option>
+                <option value="GDMN">Khoa Giáo dục Mầm non</option>
+                <option value="KL">Khoa Luật</option>
               </select>
             </div>
             <div class="mb-2">
-              <label for="selectNganh" class="form-label">Ngành</label>
-              <select class="form-select" id="selectNganh" name="Nganh">
-                <option value="DLDP">Du lich dia phuong</option>
-                <option value="CVPT">Chuyen vien phan tich</option>
-                <option value="CVHDKH">Chuyen vien hoach dinh ke hoach</option>
+              <label for="major1" class="form-label">Ngành</label>
+              <select class="form-select s_major" id="major1">
+                <!-- Options will be populated dynamically based on faculty selection -->
               </select>
             </div>
             <div class="mb-2">
-              <label for="inputSdt" class="form-label">Số điện thoại</label>
-              <input type="number" class="form-control" id="inputSdt">
+              <label for="inputSdt1" class="form-label">Số điện thoại</label>
+              <input type="number" class="form-control" id="inputSdt1">
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalAddTVBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" th:onclick="saveNewThanhVien()">Lưu</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Modal sưa-->
-  <div class="modal fade" id="modalSua" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalSua" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Thông Tin Thành Viên</h5>
+          <h5 class="modal-title" id="exampleModalLabel2">Cập Nhật Thông Tin Thành Viên</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="inputMTV" class="form-label">Mã thành viên</label>
-              <input type="number" readonly class="form-control" id="inputMTV">
-             
+              <label for="inputMTV2" class="form-label">Mã thành viên</label>
+              <input type="number" readonly class="form-control" id="inputMTV2">
+
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Họ và tên</label>
-              <input type="text" class="form-control" id="inputHVT">
+              <label for="inputHVT2" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT2">
               <div class="error">
                 <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                 <span class="error-message">Trường hợp có lỗi</span>
             </div>
             </div>
             <div class="mb-2">
-              <label for="selectKhoa" class="form-label">Khoa</label>
-              <select class="form-select" id="selectKhoa" name="Khoa">
-                <option value="CNTT">CNTT</option>
-                <option value="QTKD">QTKD</option>
-                <option value="TCNH">TCNH</option>
-                <option value="Dulich">Dulich</option>
+              <label for="selectKhoa2" class="form-label">Khoa</label>
+              <select class="form-select s_faculty" id="selectKhoa2" onchange="updateMajor()">
+                <option value="CNTT">Khoa Công nghệ Thông tin</option>
+                <option value="GD">Khoa Giáo dục</option>
+                <option value="GDMN">Khoa Giáo dục Mầm non</option>
+                <option value="KL">Khoa Luật</option>
               </select>
             </div>
             <div class="mb-2">
-              <label for="selectNganh" class="form-label">Ngành</label>
-              <select class="form-select" id="selectNganh" name="Nganh">
-                <option value="DLDP">Du lich dia phuong</option>
-                <option value="CVPT">Chuyen vien phan tich</option>
-                <option value="CVHDKH">Chuyen vien hoach dinh ke hoach</option>
+              <label for="major2" class="form-label">Ngành</label>
+              <select class="form-select s_major" id="major2">
+                <!-- Options will be populated dynamically based on faculty selection -->
               </select>
             </div>
             <div class="mb-2">
-              <label for="inputSdt" class="form-label">Số điện thoại</label>
-              <input type="number" class="form-control" id="inputSdt">
+              <label for="inputSdt2" class="form-label">Số điện thoại</label>
+              <input type="number" class="form-control" id="inputSdt2">
             </div>
           </form>
         </div>
@@ -374,11 +230,11 @@
 
 
   <!-- Modal delete mutiple-->
-  <div class="modal fade" id="modalXoaNhieu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalXoaNhieu" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Xóa Nhiều Thành Viên</h5>
+          <h5 class="modal-title" id="exampleModalLabel3">Xóa Nhiều Thành Viên</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -393,33 +249,31 @@
               </select>
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Họ và tên</label>
-              <input type="text" class="form-control" id="inputHVT">
+              <label for="inputHVT3" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT3">
               <div class="error">
                 <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                 <span class="error-message">Trường hợp có lỗi</span>
             </div>
             </div>
             <div class="mb-2">
-              <label for="selectKhoa" class="form-label">Khoa</label>
-              <select class="form-select" id="selectKhoa" name="Khoa">
-                <option value="CNTT">CNTT</option>
-                <option value="QTKD">QTKD</option>
-                <option value="TCNH">TCNH</option>
-                <option value="Dulich">Dulich</option>
+              <label for="selectKhoa3" class="form-label">Khoa</label>
+              <select class="form-select s_faculty" id="selectKhoa3" name="Khoa" onchange="updateMajor()">
+                <option value="CNTT">Khoa Công nghệ Thông tin</option>
+                <option value="GD">Khoa Giáo dục</option>
+                <option value="GDMN">Khoa Giáo dục Mầm non</option>
+                <option value="KL">Khoa Luật</option>
               </select>
             </div>
             <div class="mb-2">
-              <label for="selectNganh" class="form-label">Ngành</label>
-              <select class="form-select" id="selectNganh" name="Nganh">
-                <option value="DLDP">Du lich dia phuong</option>
-                <option value="CVPT">Chuyen vien phan tich</option>
-                <option value="CVHDKH">Chuyen vien hoach dinh ke hoach</option>
+              <label for="selectNganh3" class="form-label">Ngành</label>
+              <select class="form-select s_major" id="selectNganh3" name="Nganh">
+                <!-- Options will be populated dynamically based on faculty selection -->
               </select>
             </div>
             <div class="mb-2">
-              <label for="inputSdt" class="form-label">Số điện thoại</label>
-              <input type="number" class="form-control" id="inputSdt">
+              <label for="inputSdt3" class="form-label">Số điện thoại</label>
+              <input type="number" class="form-control" id="inputSdt3">
             </div>
           </form>
         </div>
@@ -433,38 +287,38 @@
 
 
   <!-- Modal Khu Vuc Hoc Tap-->
-  <div class="modal fade" id="modalKhuVucHocTap" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalKhuVucHocTap" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Khu Vực Học Tập</h5>
+          <h5 class="modal-title" id="exampleModalLabel4">Khu Vực Học Tập</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="inputMaTV" class="form-label">Mã thành viên</label>
-              <input type="text" class="form-control" id="inputMaTV">
+              <label for="inputMaTV4" class="form-label">Mã thành viên</label>
+              <input type="text" class="form-control" id="inputMaTV4">
               <div class="error">
                 <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                 <span class="error-message">Trường hợp có lỗi</span>
             </div>
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Họ và tên</label>
-              <input type="text" class="form-control" id="inputHVT">
+              <label for="inputHVT4" class="form-label">Họ và tên</label>
+              <input type="text" class="form-control" id="inputHVT4">
             </div>
             <div class="mb-2">
-              <label for="inputKhoa" class="form-label">Khoa</label>
-              <input type="text" class="form-control" id="inputKhoa">
+              <label for="inputKhoa4" class="form-label">Khoa</label>
+              <input type="text" class="form-control" id="inputKhoa4">
             </div>
             <div class="mb-2">
-              <label for="inputNganh" class="form-label">Ngành</label>
-              <input type="text" class="form-control" id="inputNganh">
+              <label for="inputNganh4" class="form-label">Ngành</label>
+              <input type="text" class="form-control" id="inputNganh4">
             </div>
             <div class="mb-2">
-              <label for="inputSdt" class="form-label">Số điện thoại</label>
-              <input type="text" class="form-control" id="inputSdt">
+              <label for="inputSdt4" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="inputSdt4">
             </div>
           </form>
         </div>
@@ -479,18 +333,18 @@
 
 
   <!-- Modal canh bao vi pham-->
-  <div class="modal fade" id="modalCanhBaoViPham" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalCanhBaoViPham" tabindex="-1" aria-labelledby="exampleModalLabel5" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cảnh Báo Vi Phạm</h5>
+          <h5 class="modal-title" id="exampleModalLabel5">Cảnh Báo Vi Phạm</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="selectThanhVien" class="form-label">Thành viên</label>
-              <select class="form-select" id="selectThanhVien" name="ThanhVien">
+              <label for="selectThanhVien5" class="form-label">Thành viên</label>
+              <select class="form-select" id="selectThanhVien5" name="ThanhVien">
                 <option value="3121410128">3121410128-PhamVanDu</option>
                 <option value="3121410128">3121410128-PhamVanDu</option>
                 <option value="3121410128">3121410128-PhamVanDu</option>
@@ -499,16 +353,16 @@
               </select>
             </div>
             <div class="mb-2">
-              <label for="inputViPham" class="form-label">Vi phạm</label>
-              <input type="text" class="form-control" id="inputViPham">
+              <label for="inputViPham5" class="form-label">Vi phạm</label>
+              <input type="text" class="form-control" id="inputViPham5">
               <div class="error">
                 <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                 <span class="error-message">Trường hợp có lỗi</span>
             </div>
             </div>
             <div class="mb-2">
-              <label for="inputSoTien" class="form-label">Số tiền</label>
-              <input type="number" class="form-control" id="inputSoTien">
+              <label for="inputSoTien5" class="form-label">Số tiền</label>
+              <input type="number" class="form-control" id="inputSoTien5">
             </div>
           </form>
         </div>
@@ -523,34 +377,32 @@
 
 
   <!-- Modal mượn trả-->
-  <div class="modal fade" id="modalMuonTra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalMuonTra" tabindex="-1" aria-labelledby="exampleModalLabel6" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Mượn Trả Thiết Bị</h5>
+          <h5 class="modal-title" id="exampleModalLabel6">Mượn Trả Thiết Bị</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
-            <div class="mb-2">
-              <label for="selectThanhVien" class="form-label">Thành viên</label>
-              <select class="form-select" id="selectThanhVien" name="ThanhVien">
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-              </select>
-            </div>
-            <div class="mb-2">
-              <label for="selectThietBi" class="form-label">Thiết bị</label>
-              <select class="form-select" id="selectThietBi" name="ThietBi">
-                <option value="tb01">Micro</option>
-                <option value="tb02">Loa phát thanh</option>
-                <option value="tb03">Kẹo đồng</option>
+            <div class="mb-2" th:if="${tvList != null}">
+              <label for="selectThanhVien6" class="form-label">Thành viên</label>
+              <select class="form-select" id="selectThanhVien6" name="ThanhVien">
+                <option th:each="thanhVien : ${tvList}"
+                        th:value="${thanhVien.maTV}"
+                        th:text="${thanhVien.maTV + '-' + thanhVien.hoTen}"></option>
               </select>
             </div>
 
+            <div class="mb-2" th:if="${tbList != null}">
+              <label for="selectThietBi6" class="form-label">Thiết bị</label>
+              <select class="form-select" id="selectThietBi6" name="ThietBi">
+                <option th:each="thietbi : ${tbList}"
+                        th:value="${thietbi.tenTB}"
+                        th:text="${thietbi.tenTB}"></option>
+              </select>
+            </div>
           </form>
         </div>
         <div class="modal-footer">
@@ -564,51 +416,53 @@
 
 
   <!-- Modal xem chi tiet-->
-  <div class="modal fade" id="modalXemChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalXemChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel7" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Xem Chi Tiết Thành Viên</h5>
+          <h5 class="modal-title" id="exampleModalLabel7">Xem Chi Tiết Thành Viên</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="inputMTV" class="form-label">Mã thành viên</label>
-              <input type="text" readonly class="form-control" id="inputMTV">
+              <label for="inputMTV7" class="form-label">Mã thành viên</label>
+              <input type="text" readonly class="form-control" id="inputMTV7">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Họ và tên</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="inputHVT7" class="form-label">Họ và tên</label>
+              <input type="text" readonly class="form-control" id="inputHVT7">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Số điện thoại</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="inputSdt7" class="form-label">Số điện thoại</label>
+              <input type="text" readonly class="form-control" id="inputSdt7">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Ngành</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="inputNganh7" class="form-label">Ngành</label>
+              <input type="text" readonly class="form-control" id="inputNganh7">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Khoa</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="inputKhoa7" class="form-label">Khoa</label>
+              <input type="text" readonly class="form-control" id="inputKhoa7">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Email</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
-            </div>
-
-            <div class="mb-2">
-              <label for="inputHVT" class="form-label">Password</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="inputEmail7" class="form-label">Email</label>
+              <input type="text" readonly class="form-control" id="inputEmail7">
             </div>
 
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Thiết bị đã mượn</label>
+              <label for="inputPw7" class="form-label">Password</label>
+              <input type="text" readonly class="form-control" id="inputPw7">
             </div>
 
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Vi phạm</label>
+              <label for="inputTbdm7" class="form-label">Thiết bị đã mượn</label>
+              <input type="text" readonly class="form-control" id="inputTbdm7">
+            </div>
+
+            <div class="mb-2">
+              <label for="inputVp7" class="form-label">Vi phạm</label>
+              <input type="text" readonly class="form-control" id="inputVp7">
             </div>
           </form>
         </div>
@@ -619,16 +473,12 @@
     </div>
   </div>
 
-
-
-
-
   <!-- Modal lựa chọn cách thêm thành viên-->
-  <div class="modal fade" id="modalChonCachThem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalChonCachThem" tabindex="-1" aria-labelledby="exampleModalLabel8" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cách thêm thành viên</h5>
+          <h5 class="modal-title" id="exampleModalLabel8">Cách thêm thành viên</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">
@@ -644,21 +494,18 @@
     </div>
   </div>
 
-
-
-
   <!-- Modal thêm thành viên thông qua file-->
-  <div class="modal fade" id="modalChonFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalChonFile" tabindex="-1" aria-labelledby="exampleModalLabel9" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Thêm Thành Viên</h5>
+          <h5 class="modal-title" id="exampleModalLabel9">Thêm Thành Viên</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body ">
           <div class="mb-2">
             <label for="filechooser" class="form-label">Chọn file</label>
-            <input type="file" class="form-control" id="filechooser">
+            <input type="file" class="form-control" id="filechooser" accept=".xls, .xlsx">
           </div>
         </div>
         <div class="modal-footer">
@@ -666,16 +513,20 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <script>
+    function ClickDeleteOneTVBtn(matv) {
+      document.getElementById("modal-body-idTV").innerText = matv.toString();
+
+      document.getElementById("aTagDeleteMatv").href = `/thanhvien/delete/${matv}`;
+    }
+
     document.body.addEventListener('click', function () {
       document.getElementById("rightclicked").style.display = "none";
     })
@@ -692,7 +543,6 @@
       return false;
     }, false);
     });
-   
 
     function rightclick() {
       var e = window.event;
@@ -700,6 +550,110 @@
       cantThinkOfAName.style.display = "block";
       cantThinkOfAName.style.left = e.clientX + "px";
       cantThinkOfAName.style.top = e.clientY + "px";
+    }
+
+    function renderMajorFirstTime() {
+      const facultySelects = document.querySelectorAll(".s_faculty");
+      const majorSelects = document.querySelectorAll(".s_major");
+
+      const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
+
+      facultySelects.forEach((facultySelect, index) => {
+          const majorSelect = majorSelects[index];
+
+          if (facultySelect.value === "CNTT") {
+              majorSelect.innerHTML = "";
+
+             majors.forEach(major => {
+                  const option = document.createElement("option");
+                  option.text = major;
+                  option.value = major;
+                  majorSelect.add(option);
+              });
+         }
+      });
+    }
+    renderMajorFirstTime();
+
+    function updateMajor() {
+            const facultySelects = document.querySelectorAll(".s_faculty");
+            const majorSelects = document.querySelectorAll(".s_major");
+
+            facultySelects.forEach((facultySelect, index) => {
+                const majorSelect = majorSelects[index];
+                majorSelect.innerHTML = "";
+
+                if (facultySelect.value === "CNTT") {
+                    const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
+                    majors.forEach(major => {
+                        const option = document.createElement("option");
+                        option.text = major;
+                        option.value = major;
+                        majorSelect.add(option);
+                    });
+                } else if (facultySelect.value === "GD") {
+                    const majors = ["Tư vấn học đường", "Tâm lý giáo dục", "Sư phạm", "Công nghệ giáo dục"];
+                    majors.forEach(major => {
+                        const option = document.createElement("option");
+                        option.text = major;
+                        option.value = major;
+                        majorSelect.add(option);
+                    });
+                } else if (facultySelect.value === "GDMN") {
+                    const majors = ["Ngành giáo dục mầm non"];
+                    majors.forEach(major => {
+                        const option = document.createElement("option");
+                        option.text = major;
+                        option.value = major;
+                        majorSelect.add(option);
+                    });
+                } else if (facultySelect.value === "KL") {
+                    const majors = ["Luật Hình sự", "Luật Dân sự", "Luật Hành chính","Luật Thương mại","Luật Quốc tế","Cố vấn pháp lý","Thẩm phán"];
+                    majors.forEach(major => {
+                        const option = document.createElement("option");
+                        option.text = major;
+                        option.value = major;
+                        majorSelect.add(option);
+                    });
+                }
+            });
+        }
+
+    function saveNewThanhVien() {
+        const maTV = document.getElementById("inputMTV1").value;
+        const hoten = document.getElementById("inputHVT1").value;
+        const khoa = document.getElementById("selectKhoa1").value;
+        const nganh = document.getElementById("major1").value;
+        const sdt = document.getElementById("inputSdt1").value;
+        const email = "";
+        const password = "";
+
+        const data = {
+            maTV,
+            hoten,
+            khoa,
+            nganh,
+            sdt,
+            email,
+            password
+        };
+
+        fetch("/thanhvien/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById("closeModalAddTVBtn").click();
+                window.location.reload(); // Hoặc chuyển hướng đến trang khác
+            } else {
+                console.error("Có lỗi khi thêm thành viên");
+            }
+        })
+        .catch(error => console.error("Lỗi:", error));
     }
   </script>
 </body>
