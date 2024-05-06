@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupon Manager</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/muontra.css">
+</head>
+
+<body>
+	<iframe src="/user-header" frameborder="0"></iframe>
+  <div class="container">
+    <h1 class="mt-4 mb-4 text-center">Danh sách thiết bị</h1>
+    <div class="row mb-3">
+      <div class="col-md-6 offset-md-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm theo tên thiết bị">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <!-- <div class="col-md-6 offset-md-3 text-center">
+        <button class="btn btn-success base-btn" data-bs-toggle="modal" data-bs-target="#modalChonCachThem" onclick=""><i
+            class="fas fa-plus"></i>Mượn thiết bị</button>
+        <button class="btn btn-danger base-btn" data-bs-toggle="modal" data-bs-target="#modalXoaNhieu" onclick=""><i
+            class="fa-solid fa-user"></i>Đặt chỗ</button>
+      </div> -->
+    </div>
+
+    <div class="device-container mt-5">
+      <div class="row device-container-header border-bottom border-dark ">
+        <div class="col">
+          <p class="fw-bold text-center">Mã TB</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold text-center">Tên</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold text-center">Mô tả</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold text-center">Trạng thái</p>
+        </div>
+        <div class="col">
+          <p class="fw-bold text-center">Thao tác</p>
+        </div>
+      </div>
+
+      <div class="row device-container-body" id="device-container-body">
+        <div class="device pt-1 pb-1 border-bottom  d-flex justify-content-center">
+          <div class="col">
+            <p class="mb-0 text-center ">
+              3121410128
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              Quạt Đứng
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center ">
+              cây quạt
+            </p>
+          </div>
+          <div class="col">
+            <p class="mb-0  text-center">
+              còn
+            </p>
+          </div>
+          <div class="col text-center">
+            <button class="btn btn-success btn-sm active borrow"><i class="fa-solid fa-notes-medical"></i>Mượn</button>
+            <button class="btn btn-primary btn-sm active datcho"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
+            <button class="btn btn-info btn-sm active detail"><i class="fa-solid fa-list"></i></button>
+          </div>
+        </div>       
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal xem chi tiet-->
+  <div class="modal fade" id="modalXemChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xem Chi Tiết Thiết Bị</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-2">
+              <label for="inputMTV" class="form-label">Mã thiết bị</label>
+              <input type="text" readonly class="form-control" id="inputMTV">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Tên thiết bị</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Mô tả</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Trạng thái</label>
+              <input type="text" readonly class="form-control" id="inputHVT">
+            </div>
+            <div class="mb-2">
+              <label for="inputHVT" class="form-label">Đang được mượn bởi:</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+	<iframe src="/footer" frameborder="0"></iframe>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script>
+    // Add event listener to the search button
+    document.querySelectorAll('.device-container-body .detail').forEach(button => {
+      button.addEventListener('click', function() {
+        // Find the modal with the ID "modalXemChiTiet" and show it
+        var modal = document.getElementById('modalXemChiTiet');
+        var modalInstance = new bootstrap.Modal(modal);
+        modalInstance.show();
+      });
+    });
+  </script>
+  
+</body>
+
+</html>
