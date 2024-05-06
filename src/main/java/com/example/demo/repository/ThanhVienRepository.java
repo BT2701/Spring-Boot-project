@@ -1,11 +1,23 @@
 package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Model.ThanhVien;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
-public interface ThanhVienRepository extends JpaRepository<ThanhVien, Integer>{}
-    // Không cần khai báo phương thức getList, JpaRepository đã cung cấp các phương thức cơ 
+public interface ThanhVienRepository extends JpaRepository<ThanhVien, Integer>{
+//    @Modifying
+//    @Transactional
+//    @Query("DELETE FROM ThanhVienModel tv WHERE :condition AND tv.maTV NOT IN " +
+//            "(SELECT x.thanhVien.maTV FROM XuLyModel x) " +
+//            "AND tv.maTV NOT IN (SELECT t.thanhVien.maTV FROM ThongTinSdModel t)")
+//    void deleteByCondition(String condition);
+
+    List<ThanhVien> findByHotenContaining(String hoten);
+}
