@@ -14,10 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableJpaRepositories(basePackages = "repository")
 //@EntityScan(basePackages = "Model")
 public class LearningMaterialApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(LearningMaterialApplication.class, args);
 
 	}
-
 }
