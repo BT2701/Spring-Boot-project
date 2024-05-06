@@ -19,7 +19,26 @@ import com.example.demo.Model.XuLy;
 import com.example.demo.repository.ThanhVienRepository;
 
 
-@RestController
+@Controller
 public class ThongKeCTL {
-	
+	@GetMapping("/thong-ke")
+	public String thongKeIndex() {
+		return "admin-thongke/thong_ke";
+	}
+	@GetMapping("/thong-ke/member-chart")
+	public String member() {
+		return "admin-thongke/member_chart";
+	}
+	@GetMapping("/thong-ke/device-chart")
+	public String device() {
+		return "admin-thongke/device_chart";
+	}
+	@GetMapping("/thong-ke/current-chart")
+	public String current() {
+		return "admin-thongke/current_chart";
+	}
+	@GetMapping("/thong-ke/handle-chart")
+	public String handle() {
+		return "admin-thongke/handle_chart";
+	}
 }
