@@ -21,10 +21,43 @@ h1 {
     margin-bottom: 20px;
 }
 
-.btn-group1 {
-    float: right;
+.group-search {
+    display: inline-flex;
+    align-items: center;
 }
 
+.group-search > button {
+    margin-left: 20px;
+}
+
+.btn-search {
+    width: 150px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.btn-search > span {
+    margin: 0 5px;
+}
+
+.btn-group1 {
+
+    float: right;
+    
+}
+
+.btn-group1 > button {
+    width: 150px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+
+.btn-group1 > button > span {
+    margin: 0 5px;
+}
 .search-option {
     padding: 3px;
     margin-bottom: 10px;
@@ -137,9 +170,31 @@ button:hover {
     width: 60px;
 }
 
+.btn-xuly {
+    background-color: 	#0099FF;
+}
+
+.btn-sua {
+    background-color: #33FF99;
+}
+
+.btn-xoa {
+    background-color: #FF3333;
+}
+
+.btn-them {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-them > span {
+    margin: 0 5px;
+}
+
 /* CSS cho modal */
 .modal {
-    display: block;
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -255,6 +310,9 @@ button:hover {
         min-width: 432.17px;
     }
 
+    .btn-group1 {
+    }
+
 
 
     .group-info {
@@ -274,21 +332,45 @@ button:hover {
     .material-symbols-outlined {
         cursor: pointer;
     }
+
+    .btn-search,
+    .btn-group1 > button {
+        width: 100px;
+    }
+
+    .btn-search span:nth-child(2),
+    .btn-group1 > button span:nth-child(2) {
+        display: none;
+    }
+
+    
 }
 
 /* Phone */
 
 @media screen and (max-width: 767px) {
+    
+
     span {
         font-size: 14px;
     }
 
-    #search-input {
-        margin-bottom: 20px;
+    .container {
+        min-width: 613px;
+    }
+
+    .btn-search,
+    .btn-group1 > button {
+        width: 100px;
+    }
+
+    .btn-search span:nth-child(2),
+    .btn-group1 > button span:nth-child(2) {
+        display: none;
     }
     
     .btn-group1 {
-        float: none;
+        float: right;
     }
 
     .td:nth-child(3) {
