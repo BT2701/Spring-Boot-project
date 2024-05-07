@@ -37,7 +37,7 @@ public class XuLy {
 	private Integer trangthaixl;
 	
 	@Transient
-    private String trangthai;
+        private String trangthai;
 
 	@ManyToOne
 	@JoinColumn(name = "MaTV")

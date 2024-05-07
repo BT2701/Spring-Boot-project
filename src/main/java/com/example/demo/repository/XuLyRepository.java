@@ -7,5 +7,5 @@ import com.example.demo.Model.ThanhVien;
 import com.example.demo.Model.XuLy;
 
 public interface XuLyRepository extends JpaRepository<XuLy, Integer>{
-
+        
 }
