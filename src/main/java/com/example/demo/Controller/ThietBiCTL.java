@@ -12,6 +12,6 @@ public class ThietBiCTL {
 	@GetMapping("/thiet-bi")
     public String getAllthietBi() {
         
-        return "admin-thietbi";
+        return "admin-thietbi/admin-thietbi";
     }
 }
