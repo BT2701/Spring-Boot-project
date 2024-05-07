@@ -29,7 +29,7 @@ public class XuLyService {
         return xuLyRepository.findById(id);
     }
     
-    public XuLy addXuLy(XuLy xuly){
+    public XuLy save(XuLy xuly){
         return xuLyRepository.save(xuly);
     }
 }
