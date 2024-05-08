@@ -237,23 +237,21 @@
             <div class="mb-2">
               <label for="selectKhoaThu" class="form-label">Khóa thứ</label>
               <select class="form-select" id="selectKhoaThu" name="KhoaThu">
-                <option value="K21">K21</option>
-                <option value="K22">K22</option>
-                <option value="K23">K23</option>
-                <option value="K24">K24</option>
+                <option value=""></option>
+                <option value="21">K21</option>
+                <option value="22">K22</option>
+                <option value="23">K23</option>
+                <option value="24">K24</option>
               </select>
             </div>
             <div class="mb-2">
               <label for="inputHVT3" class="form-label">Họ và tên</label>
               <input type="text" class="form-control" id="inputHVT3">
-<!--              <div class="error">-->
-<!--                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>-->
-<!--                <span class="error-message">Trường hợp có lỗi</span>-->
-<!--            </div>-->
             </div>
             <div class="mb-2">
               <label for="selectKhoa3" class="form-label">Khoa</label>
               <select class="form-select s_faculty" id="selectKhoa3" name="Khoa" onchange="updateMajor()">
+                <option value=""></option>
                 <option value="CNTT">Khoa Công nghệ Thông tin</option>
                 <option value="GD">Khoa Giáo dục</option>
                 <option value="GDMN">Khoa Giáo dục Mầm non</option>
@@ -263,6 +261,7 @@
             <div class="mb-2">
               <label for="selectNganh3" class="form-label">Ngành</label>
               <select class="form-select s_major" id="selectNganh3" name="Nganh">
+                <option value=""></option>
                 <!-- Options will be populated dynamically based on faculty selection -->
               </select>
             </div>
@@ -273,8 +272,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeDeleteManyTvModalBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" id="deleteManyTvBtn">Xóa</button>
         </div>
       </div>
     </div>
@@ -494,7 +493,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalUploadFile">Đóng</button>
+          <button type="button" class="btn btn-primary" id="uploadFileBtn">Tải lên</button>
         </div>
       </div>
     </div>
@@ -726,6 +726,38 @@
             alert("Đã xảy ra lỗi khi thực hiện yêu cầu. Vui lòng thử lại sau.");
         }
     }
+
+    document.getElementById("uploadFileBtn").addEventListener("click", function () {
+        const fileInput = document.getElementById("filechooser");
+
+        if (fileInput.files.length === 0) { // Kiểm tra nếu không có file được chọn
+            alert("Vui lòng chọn một file Excel để tải lên.");
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/upload-excel", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById("closeModalUploadFile").click();
+                window.location.reload();
+            } else {
+                return response.text().then(text => {
+                    alert("Lỗi tải lên: " + text);
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi:", error);
+            alert("Đã xảy ra lỗi khi tải lên. Vui lòng thử lại sau.");
+        });
+    });
 
     var emailBackupToUpdate = "";
     var passwordBackupToUpdate = "";
@@ -1040,6 +1072,51 @@
         console.error("Lỗi:", error);
         alert("Đã xảy ra lỗi khi thực hiện yêu cầu. Vui lòng thử lại sau.");
       }
+    })
+
+
+    // xóa nhiều thành viên
+    document.getElementById("deleteManyTvBtn").addEventListener("click", () => {
+        const khoaThu = document.getElementById("selectKhoaThu").value; // ko co = ""
+        const hoTen = document.getElementById("inputHVT3").value.trim();
+        const khoa = document.getElementById("selectKhoa3").value; // ko co = ""
+        const nganh = document.getElementById("selectNganh3").value; // ko co = ""
+        const sdt = document.getElementById("inputSdt3").value.trim();
+
+        if(khoaThu.trim().length === 0 && hoTen.trim().length === 0 && khoa.trim().length === 0
+          && nganh.trim().length === 0 && sdt.trim().length === 0
+        ) {
+          alert("Hãy nhập hoặc chọn 1 điều kiện để thực hiện xóa nhiều !");
+          return;
+        }
+
+        const data = {
+            khoaThu: khoaThu.length > 0 ? khoaThu : undefined,
+            hoTen: hoTen.length > 0 ? hoTen : undefined,
+            khoa: khoa.length > 0 ? khoa : undefined,
+            nganh: nganh.length > 0 ? nganh : undefined,
+            sdt: sdt.length > 0 ? sdt : undefined
+        };
+
+        fetch("/thanhvien/delete-multiple", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById("closeDeleteManyTvModalBtn").click();
+                window.location.reload();
+            } else {
+                response.text().then(text => alert("Lỗi: " + text));
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi:", error);
+            alert("Đã xảy ra lỗi. Vui lòng thử lại sau.");
+        });
     })
   </script>
 </body>

@@ -7,6 +7,12 @@ import com.example.demo.Model.XuLy;
 import com.example.demo.repository.ThietBiRepository;
 import com.example.demo.repository.ThongTinSdRepository;
 import com.example.demo.repository.XuLyRepository;
+import com.example.demo.service.ThanhVienService;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +21,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Model.ThanhVien;
 import com.example.demo.repository.ThanhVienRepository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +34,8 @@ import java.util.stream.Collectors;
 public class ThanhVienCTL {
 	@Autowired
 	private ThanhVienRepository thanhVienRepository;
+	@Autowired
+	private ThanhVienService thanhVienService;
 	@Autowired
 	private ThietBiRepository thietBiRepository;
 	@Autowired
@@ -67,10 +80,6 @@ public class ThanhVienCTL {
 		List<XuLy> xuLy = xuLyRepository.findByThanhVien_MaTV(id);
 		List<ThongTinSD> ttsd = thongTinSdRepository.findByThanhVien_MaTV(id);
 
-		System.out.println("id: " + id);
-		System.out.println("Số lượng phần tử trong XuLy: " + xuLy);
-		System.out.println("Số lượng phần tử trong ThongTinSD: " + ttsd);
-
 		if (!xuLy.isEmpty() || !ttsd.isEmpty()) {
 			return ResponseEntity.badRequest().body(String.format("Thành viên với mã : %s đang thực hiện 1 hành động!", id));
 		}
@@ -95,6 +104,61 @@ public class ThanhVienCTL {
 
 		return ResponseEntity.ok(thanhVien);
     };
+
+	@PostMapping("/upload-excel")
+	@ResponseBody
+	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+		try {
+			// Xử lý file Excel
+			if (file.isEmpty()) {
+				return ResponseEntity.badRequest().body("File không được rỗng.");
+			}
+			// Đọc và xử lý file Excel tại đây
+			InputStream inputStream = file.getInputStream();
+			String result = this.addModelFromFileExcel(inputStream);
+
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Lỗi khi xử lý file: " + e.getMessage());
+		}
+	}
+	public String addModelFromFileExcel(InputStream excelInputStream) {
+		try {
+			Workbook workbook = new XSSFWorkbook(excelInputStream); // Đọc Excel từ InputStream
+			Sheet sheet = workbook.getSheetAt(0);
+
+			if (isExcelFormatValid(sheet)) { // Kiểm tra định dạng tệp Excel
+				thanhVienService.addMembersFromExcel(sheet); // Thêm thành viên từ Excel
+				workbook.close();
+				return "Thêm thành viên từ file Excel thành công.";
+			} else {
+				workbook.close();
+				return "Định dạng của tệp Excel không đúng.";
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Định dạng của tệp Excel không đúng.";
+		}
+	}
+	private boolean isExcelFormatValid(Sheet sheet) {
+		// Kiểm tra số cột của dòng đầu tiên (header) có đúng định dạng không
+		Row headerRow = sheet.getRow(0);
+		int expectedColumnCount = 7; // Số cột mong muốn
+		if (headerRow == null || headerRow.getLastCellNum() != expectedColumnCount) {
+			return false;
+		}
+
+		// Kiểm tra tên các cột có đúng định dạng không
+		String[] expectedColumnNames = {"MaTV", "Ho Ten", "Khoa", "Nganh", "SDT", "email", "password"};
+		for (int i = 0; i < expectedColumnCount; i++) {
+			Cell cell = headerRow.getCell(i);
+			if (cell == null || !cell.getStringCellValue().equals(expectedColumnNames[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	@GetMapping("/thanhvien/{maTV}")
 	@ResponseBody
@@ -256,7 +320,52 @@ public class ThanhVienCTL {
 		return ResponseEntity.ok(String.format("Đã thêm thành viên với mã : %s vào khu vực học tập !", maTV));
 	};
 
-	@GetMapping("/profile")
+    @DeleteMapping("/thanhvien/delete-multiple")
+    @ResponseBody
+    public ResponseEntity<?> deleteMultipleThanhVien(@RequestBody Map<String, String> criteria) {
+        String khoaThu = criteria.get("khoaThu");
+        String hoTen = criteria.get("hoTen");
+        String khoa = criteria.get("khoa");
+        String nganh = criteria.get("nganh");
+        String sdt = criteria.get("sdt");
+
+        List<ThanhVien> thanhViensToDelete = thanhVienRepository.findAll().stream()
+                .filter(tv -> {
+                    boolean matches = true;
+                    if (khoaThu != null && !khoaThu.isEmpty()) {
+                        String maTVStr = Integer.toString(tv.getMaTV());
+                        matches = matches && maTVStr.length() == 10 && maTVStr.substring(2, 4).equals(khoaThu);
+                    }
+                    if (hoTen != null && !hoTen.isEmpty()) {
+                        matches = matches && tv.getHoTen().contains(hoTen);
+                    }
+                    if (khoa != null && !khoa.isEmpty()) {
+                        matches = matches && tv.getKhoa().equals(khoa);
+                    }
+                    if (nganh != null && !nganh.isEmpty()) {
+                        matches = matches && tv.getNganh().equals(nganh);
+                    }
+                    if (sdt != null && !sdt.isEmpty()) {
+                        matches = matches && tv.getSdt().equals(sdt);
+                    }
+
+					// kiểm tra khóa ngoại
+					List<XuLy> xuLy = xuLyRepository.findByThanhVien_MaTV(tv.getMaTV());
+					List<ThongTinSD> ttsd = thongTinSdRepository.findByThanhVien_MaTV(tv.getMaTV());
+
+					if (!xuLy.isEmpty() || !ttsd.isEmpty()) {
+						matches = false;
+					}
+
+                    return matches;
+                })
+                .collect(Collectors.toList());
+
+        thanhVienRepository.deleteAll(thanhViensToDelete);
+        return ResponseEntity.ok("Đã xóa thành công " + thanhViensToDelete.size() + " thành viên.");
+    }
+
+    @GetMapping("/profile")
     public String profile(Model m) {
 		Iterable<ThanhVien>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
