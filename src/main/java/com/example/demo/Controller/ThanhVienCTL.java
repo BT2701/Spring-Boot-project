@@ -174,9 +174,13 @@ public class ThanhVienCTL {
 
 		List<ThongTinSD> ttsdList = thongTinSdRepository.findByThanhVien_MaTV(maTV);
 		String ttsd = ttsdList.stream()
+				.filter(thongTinSD -> {
+					ThietBi thietBi = thongTinSD.getThietBi();
+					return thietBi != null;
+				})
 				.map(thongTinSD -> {
 					ThietBi thietBi = thongTinSD.getThietBi();
-					return (thietBi != null) ? thietBi.getTenTB() : "Thiết bị không xác định";
+					return thietBi.getTenTB();
 				})
 				.collect(Collectors.joining(", "));
 

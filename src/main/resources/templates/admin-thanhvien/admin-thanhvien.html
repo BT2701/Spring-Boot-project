@@ -870,10 +870,10 @@
       document.getElementById("inputNganh7").value = tv.nganh;
       document.getElementById("inputKhoa7").value = tv.khoa;
       document.getElementById("inputSdt7").value = tv.sdt;
-      document.getElementById("inputEmail7").value = tv.email;
-      document.getElementById("inputPw7").value = tv.password;
-      document.getElementById("inputTbdm7").value = thietBiDaMuon;
-      document.getElementById("inputVp7").value = vipham;
+      document.getElementById("inputEmail7").value = tv.email.length === 0 ? "Chưa tạo" : tv.email;
+      document.getElementById("inputPw7").value = tv.password.length === 0 ? "Chưa tạo" : tv.password;
+      document.getElementById("inputTbdm7").value = thietBiDaMuon.length === 0 ? "Không có" : thietBiDaMuon;
+      document.getElementById("inputVp7").value = vipham.length === 0 ? "Không có" : vipham;
     })
 
 
