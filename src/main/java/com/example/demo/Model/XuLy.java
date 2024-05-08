@@ -56,6 +56,15 @@ public class XuLy {
 		this.thanhVien = thanhVien;
 	}
 
+	public XuLy(String hinhThucXL, Integer soTien, Date ngayXL, Integer trangThaiXL,
+				ThanhVien thanhVien) {
+		this.hinhthucxl = hinhThucXL;
+		this.sotien = soTien;
+		this.ngayXL = ngayXL;
+		this.trangthaixl = trangThaiXL;
+		this.thanhVien = thanhVien;
+	}
+
 	public Integer getMaXL() {
 		return maXL;
 	}

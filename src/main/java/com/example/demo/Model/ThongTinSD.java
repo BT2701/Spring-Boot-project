@@ -62,6 +62,16 @@ public class ThongTinSD {
 		this.thietBi = thietBi;
 	}
 
+	public ThongTinSD(Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVien thanhVien,
+					  ThietBi thietBi) {
+		this.tgVao = tgVao;
+		this.tgMuon = tgMuon;
+		this.tgTra = tgTra;
+		this.tgdatcho = tgDatCho;
+		this.thanhVien = thanhVien;
+		this.thietBi = thietBi;
+	}
+
 	public Integer getMaTT() {
 		return maTT;
 	}

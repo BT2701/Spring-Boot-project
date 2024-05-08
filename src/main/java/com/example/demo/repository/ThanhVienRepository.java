@@ -12,12 +12,8 @@ import java.util.List;
 
 @Repository
 public interface ThanhVienRepository extends JpaRepository<ThanhVien, Integer>{
-//    @Modifying
-//    @Transactional
-//    @Query("DELETE FROM ThanhVienModel tv WHERE :condition AND tv.maTV NOT IN " +
-//            "(SELECT x.thanhVien.maTV FROM XuLyModel x) " +
-//            "AND tv.maTV NOT IN (SELECT t.thanhVien.maTV FROM ThongTinSdModel t)")
-//    void deleteByCondition(String condition);
+    @Query("SELECT tv FROM thanhvien tv ORDER BY CAST(SUBSTRING(CAST(tv.maTV AS STRING), -6, 6) AS INTEGER) ASC")
+    List<ThanhVien> findAllOrderByLast6Digits();
 
     List<ThanhVien> findByHotenContaining(String hoten);
 }
