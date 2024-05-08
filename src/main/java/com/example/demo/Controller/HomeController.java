@@ -18,4 +18,20 @@ public class HomeController {
 	public String forgotPass(){
 		return "resetpasword";
 	}
+	@GetMapping("/admin-header")
+	public String header_admin(){
+		return "header-footer/admin-header";
+	}
+	@GetMapping("/user-header")
+	public String header_user(){
+		return "header-footer/user-header";
+	}
+	@GetMapping("/footer")
+	public String footer(){
+		return "header-footer/footer";
+	}
+	@GetMapping("/home")
+	public String home() {
+		return "slider/slider";
+	}
 }

@@ -66,7 +66,7 @@ public class ThanhVienCTL {
 		m.addAttribute("tvList", tvList);
 		m.addAttribute("tbList", tbList);
 
-        return "admin-thanhvien";
+        return "admin-thanhvien/admin-thanhvien";
     }
 	@DeleteMapping("/thanhvien/delete/{id}")
 	@ResponseBody
@@ -369,12 +369,12 @@ public class ThanhVienCTL {
     public String profile(Model m) {
 		Iterable<ThanhVien>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
-        return "user-profile";
+        return "user-profile/user-profile";
     }
 	@GetMapping("/profile/editProfile")
     public String editProfile(Model m) {
 		Iterable<ThanhVien>list= thanhVienRepository.findAll();
 		m.addAttribute("data", list);
-        return "user-editProfile";
+        return "user-profile/user-editProfile";
     }
 }
