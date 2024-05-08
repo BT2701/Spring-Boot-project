@@ -30,4 +30,8 @@ public class HomeController {
 	public String footer(){
 		return "header-footer/footer";
 	}
+	@GetMapping("/home")
+	public String home() {
+		return "slider/slider";
+	}
 }

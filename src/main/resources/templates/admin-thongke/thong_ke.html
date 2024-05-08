@@ -38,11 +38,11 @@
         <h2>Thống kê tổng quan</h2>
       </div>
       <div class="tong-quan-control">
-        <select name="type-selection" id="type-selection" class="form-select selection">
+        <select name="type-selection" id="type-selection" class="form-select selection" onchange="handleSelection()">
           <option value="all">Tất cả thời gian</option>
           <option value="time">Tùy chọn thời gian</option>
         </select>
-        <div class="tuy-chon">
+        <div class="tuy-chon" id="tuy-chon">
           <label for="from">Từ</label>
           <input type="date" class="form-control" id="from">
           <label for="to">Đến</label>
@@ -83,6 +83,7 @@
     </div>
   </div>
   <iframe src="/footer" frameborder="0"></iframe>
+<script src="../js/thongke.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
