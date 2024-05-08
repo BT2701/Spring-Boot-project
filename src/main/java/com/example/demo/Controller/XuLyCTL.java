@@ -38,35 +38,53 @@ public class XuLyCTL {
             
         List<ThanhVien> tvlist = tvService.getAll();
         model.addAttribute("tvlist", tvlist);
-            
+         
         return "admin-xuly";
     }
         
     @PostMapping("/admin-xuly/add")
     public String themXuLy(@RequestParam Integer MaTV,
             @RequestParam String HinhThucXL,
-            @RequestParam(required = false) Integer soTien,
+            @RequestParam(required = false) Integer SoTien,
             Model model) {
         ThanhVien tv = tvService.getById(MaTV);
         
-        Date ngay = new Date();
-        
-        
-        XuLy xuly = new XuLy(null,HinhThucXL,soTien,ngay,0,tv);
-        System.out.println(xuly.toString());
 
-        // Thêm dữ liệu vào cơ sở dữ liệu bằng cách gọi phương thức từ service
-        xuLyService.save(xuly);
-    
-        // Load lại dữ liệu và cập nhật model
-        List<XuLy> list = xuLyService.findAll();
-        model.addAttribute("list", list);
-            
-        List<ThanhVien> tvlist = tvService.getAll();
-        model.addAttribute("tvlist", tvlist);
+        XuLy xuly = new XuLy(null,HinhThucXL,SoTien,null,0,tv);
+
         
-            // Trả về cùng một trang
+        System.out.println(xuly.toString());
+        
+        xuLyService.save(xuly);
+
+
         return "admin-xuly";
     }
-        
+    
+    @PostMapping("/admin-xuly/delete")
+    public String xoaXuLy(@RequestParam Integer MaXL,
+            Model model) {
+        xuLyService.delete(MaXL);
+        return "admin-xuly";
+    }
+    
+    @PostMapping("/admin-xuly/check")
+    public String updateXN(@RequestParam Integer MaXL,
+            Model model) {
+        xuLyService.updateXN(MaXL);
+        return "admin-xuly";
+    }
+    
+    @PostMapping("/admin-xuly/update")
+    public String update(@RequestParam Integer MaXL,
+            @RequestParam Integer MaTV,
+            @RequestParam String HinhThucXL,
+            @RequestParam(required = false) Integer SoTien,
+            Model model) {
+        ThanhVien tv = tvService.getById(MaTV);
+        XuLy xl = new XuLy(MaXL,HinhThucXL,SoTien,null,null,tv);
+        xuLyService.update(xl);
+        return "admin-xuly";
+    }
+
 }
