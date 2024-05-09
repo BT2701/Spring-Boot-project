@@ -7,18 +7,12 @@ import com.example.demo.service.ThanhVienService;
 import org.springframework.stereotype.Controller;
 
 import com.example.demo.service.XuLyService;
-import jakarta.servlet.http.HttpServletRequest;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -39,7 +33,7 @@ public class XuLyCTL {
         List<ThanhVien> tvlist = tvService.getAll();
         model.addAttribute("tvlist", tvlist);
          
-        return "admin-xuly";
+        return "admin-xuly/admin-xuly";
     }
         
     @PostMapping("/admin-xuly/add")
@@ -58,21 +52,21 @@ public class XuLyCTL {
         xuLyService.save(xuly);
 
 
-        return "admin-xuly";
+        return "admin-xuly/admin-xuly";
     }
     
     @PostMapping("/admin-xuly/delete")
     public String xoaXuLy(@RequestParam Integer MaXL,
             Model model) {
         xuLyService.delete(MaXL);
-        return "admin-xuly";
+        return "admin-xuly/admin-xuly";
     }
     
     @PostMapping("/admin-xuly/check")
     public String updateXN(@RequestParam Integer MaXL,
             Model model) {
         xuLyService.updateXN(MaXL);
-        return "admin-xuly";
+        return "admin-xuly/admin-xuly";
     }
     
     @PostMapping("/admin-xuly/update")
@@ -84,7 +78,7 @@ public class XuLyCTL {
         ThanhVien tv = tvService.getById(MaTV);
         XuLy xl = new XuLy(MaXL,HinhThucXL,SoTien,null,null,tv);
         xuLyService.update(xl);
-        return "admin-xuly";
+        return "admin-xuly/admin-xuly";
     }
 
 }

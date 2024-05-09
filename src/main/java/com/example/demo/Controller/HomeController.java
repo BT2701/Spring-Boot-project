@@ -8,15 +8,15 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "login-signup/login";
 	}
 	@GetMapping("/sign-up")
 	public String sigup() {
-		return "register";
+		return "login-signup/register";
 	}
 	@GetMapping("/forgot-password")
 	public String forgotPass(){
-		return "resetpasword";
+		return "login-signup/resetpasword";
 	}
 	@GetMapping("/admin-header")
 	public String header_admin(){
