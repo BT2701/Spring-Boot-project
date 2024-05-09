@@ -1,210 +1,180 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xử lý vi phạm</title>
 
     <link rel="stylesheet" href="/css/XuLyViPham.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Xử lý vi phạm</h1>
         <div class="group1">
-            <span for="search-option">Tìm kiếm theo:</span>
-            <select class="search-option" name="" id="">
-                <option value="0">Mặc định</option>
-                <option value="1">Tên thành viên</option>
-                <option value="2">Tên thành viên</option>
-                <option value="3">Số tiền</option>
-                <option value="4">Ngày xử phạt</option>
-                <option value="5">Trạng thái</option>
-            </select>
-            
-            <br>
-            <span for="search-input">Nhập thông tin tìm kiếm:</span>
-            <input type="text" id="search-input" name="search-input" placeholder="Nhập thông tin tìm kiếm">
-
-            <div class="btn-group1" >
-                <button type="submit">Tìm kiếm</button>
-                <button type="button">Refresh</button>
+            <div class="group-search" >
+                
+                <span for="search-input">Nhập thông tin tìm kiếm:</span>
+                <input style="margin-left: 10px;" type="text" id="search-input" name="search-input" placeholder="Nhập thông tin tìm kiếm...">    
             </div>
+ 
         </div>
-        
-
-        <div class="table-container">
-            <div class="table">
-                <div class="thead">
-                    <div class="tr">
-                        <div class="th">Tên thành viên</div>
-                        <div class="th">Hình thức xử lý</div>
-                        <div class="th">Số tiền</div>
-                        <div class="th">Ngày xử lý</div>
-                        <div class="th">Trạng thái</div>
-                        <div class="th thao-tac">Thao tác</div>
-                    </div>
-                </div>
-                <div class="tbody">
-                    <div class="tr">
-                        <div class="td">Lê Đức Toàn</div>
-                        <div class="td">Khóa thẻ 1 tháng</div>
-                        <div class="td">3.000.000</div>
-                        <div class="td">2023-09-12</div>
-                        <div class="td">Chưa xử lý</div>
-                        <div class="td group-btn thao-tac">
-                            <button class="btn-xuly">Xử lý</button>
-                            <button class="btn-sua">Sửa</button>
-                            <button class="btn-xoa">Xóa</button>
-                        </div>
-                        <div class="drop-down">
-                            <span class="material-symbols-outlined" onclick="toggleDropDown(this)">
-                                expand_more
-                            </span>
-                            <div class="drop-down-content">
-                                <button class="btn-xuly">Xử lý</button>
-                                <button class="btn-sua">Sửa</button>
-                                <button class="btn-xoa">Xóa</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tr">
-                        <div class="td">Lê Đức</div>
-                        <div class="td">Khóa thẻ 1 tháng</div>
-                        <div class="td">3.000.000</div>
-                        <div class="td">2023-09-12</div>
-                        <div class="td">Chưa xử lý</div>
-                        <div class="td group-btn thao-tac">
-                            <button class="btn-xuly">Xử lý</button>
-                            <button class="btn-sua">Sửa</button>
-                            <button class="btn-xoa">Xóa</button>
-                        </div>
-                        <div class="drop-down">
-                            <span class="material-symbols-outlined" onclick="toggleDropDown(this)">
-                                expand_more
-                            </span>
-                            <div class="drop-down-content">
-                                <button class="btn-xuly">Xử lý</button>
-                                <button class="btn-sua">Sửa</button>
-                                <button class="btn-xoa">Xóa</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tr">
-                        <div class="td">Lê Đức Toàn</div>
-                        <div class="td">Khóa thẻ 1 tháng</div>
-                        <div class="td">3.000.000</div>
-                        <div class="td">2023-09-12</div>
-                        <div class="td">Chưa xử lý</div>
-                        <div class="td group-btn thao-tac">
-                            <button class="btn-xuly">Xử lý</button>
-                            <button class="btn-sua">Sửa</button>
-                            <button class="btn-xoa">Xóa</button>
-                        </div>
-                        <div class="drop-down">
-                            <span class="material-symbols-outlined" onclick="toggleDropDown(this)">
-                                expand_more
-                            </span>
-                            <div class="drop-down-content">
-                                <button class="btn-xuly">Xử lý</button>
-                                <button class="btn-sua">Sửa</button>
-                                <button class="btn-xoa">Xóa</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tr">
-                        <div class="td">Lê Đức Toàn</div>
-                        <div class="td">Khóa thẻ 1 tháng</div>
-                        <div class="td">3.000.000</div>
-                        <div class="td">2023-09-12</div>
-                        <div class="td">Chưa xử lý</div>
-                        <div class="td group-btn thao-tac">
-                            <button class="btn-xuly">Xử lý</button>
-                            <button class="btn-sua">Sửa</button>
-                            <button class="btn-xoa">Xóa</button>
-                        </div>
-                        <div class="drop-down">
-                            <span class="material-symbols-outlined" onclick="toggleDropDown(this)">
-                                expand_more
-                            </span>
-                            <div class="drop-down-content">
-                                <button class="btn-xuly">Xử lý</button>
-                                <button class="btn-sua">Sửa</button>
-                                <button class="btn-xoa">Xóa</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tr">
-                        <div class="td">Lê Đức Toàn</div>
-                        <div class="td">Khóa thẻ 1 tháng</div>
-                        <div class="td">3.000.000</div>
-                        <div class="td">2023-09-12</div>
-                        <div class="td">Chưa xử lý</div>
-                        <div class="td group-btn thao-tac" >
-                            <button class="btn-xuly">Xử lý</button>
-                            <button class="btn-sua">Sửa</button>
-                            <button class="btn-xoa">Xóa</button>
-                        </div>
-
-                        <div class="drop-down">
-                            <span class="material-symbols-outlined" onclick="toggleDropDown(th)">
-                                expand_more
-                            </span>
-                            <div class="drop-down-content">
-                                <button class="btn-xuly">Xử lý</button>
-                                <button class="btn-sua">Sửa</button>
-                                <button class="btn-xoa">Xóa</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="table-responsive table-wrapper "> 
+            <table class="table table-bordered table-hover" id="viewTable">
+                <thead>
+                  <tr class="bg-primary">
+                    <th>Mã Xử lý</th>
+                    <th>Tên thành viên</th>
+                    <th>Hình thức xử lý</th>
+                    <th>Số Tiền</th>
+                    <th>Ngày xử lý</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr th:each = "xl : ${list}">
+                        <td style="width:50px" th:text="${xl.getMaXL()}"></td>
+                        <td th:text="${xl.getThanhVien().getHoTen()}"></td>
+                        <td th:text="${xl.getHinhThucXL()}"></td>
+                        <td th:text="${xl.getSoTien()}"></td>
+                        <td th:text="${xl.getNgayXL()}"></td>
+                        <td th:style="${xl.getTrangThaiXL() == 0 ? 'color: red;' : 'color: green;'}" th:text="${xl.getTrangThaiXL() == 1 ? 'Đã xử lý' : 'Chưa xử lý'}"></td>
+                        <td>
+                            <button class="btn-xuly" th:if="${xl.getTrangThaiXL() == 0}" th:onclick="'updateCheck(\'' + ${xl.getMaXL()} + '\')'">
+                                <span class="material-symbols-outlined">
+                                    check_circle
+                                </span>
+                            </button>
+                         
+                            <button class="btn-sua">
+                                <span class="material-symbols-outlined">
+                                    edit
+                                </span>
+                            </button>
+                            
+                            <button class="btn-xoa">
+                                <span class="material-symbols-outlined" th:onclick="'deleteItem(\'' + ${xl.getMaXL()} + '\')'">
+                                        delete
+                                    </span>
+                            </button>
+                            
+                            <button class="btn-info">
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
         </div>
-
 
         <div class="btn-group">
-            <button class="btn-them" onclick="openModal()">Thêm</button>
+            <button class="btn-them" onclick="openModal()">
+                <span class="material-symbols-outlined">
+                    add
+                </span>    
+
+                <span>
+                    Thêm
+                </span>
+            </button>
         </div>
     </div>
-
+    
+    <!--Thông tin chi tiêt-->
+    <div class="form-container" id="detail">
+        <h2>Thông tin chi tiết</h2>
+        <div class="form-group">
+            <label for="maXL">Mã xử lý:</label>
+            <input type="text" id="maXL" name="maXL" readonly>
+        </div>
+        <div class="form-group">
+            <label for="tenKH">Tên khách hàng:</label>
+            <input type="text" id="tenKH" name="tenKH" readonly>
+        </div>
+        <div class="form-group">
+            <label for="hinhThuc">Hình thức:</label>
+            <input type="text" id="hinhThuc" name="hinhThuc" readonly>
+        </div>
+        <div class="form-group">
+            <label for="tienPhat">Tiền phạt:</label>
+            <input type="text" id="tienPhat" name="tienPhat" readonly>
+        </div>
+        <div class="form-group">
+            <label for="ngayXL">Ngày xử lý:</label>
+            <input type="text" id="ngayXL" name="ngayXL" readonly>
+        </div>
+        <div class="form-group">
+            <label for="tinhTrang">Tình trạng:</label>
+            <input type="text" id="tinhTrang" name="tinhTrang" readonly>
+        </div>
+        <button onclick="closeDetail()">
+            <p align="center">Xác nhận
+        </button>
+    </div>
+    
+    
     <!-- Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content show">
-            <div class="btn-close"  style="margin-bottom: 50px;">
-                <span class="close" onclick="closeModal()" >&times;</span>
-
-            </div>
-
-            <h1>Thêm Vi Phạm</h1>
-            
-            <div class="group">
-                <div class="group-info">
-                    <span>Tên Thành Viên</span>
-                    <input type="text" id="name">
+    <div id="myModal" class="modal" >
+            <div class="modal-content">
+                <div  style="margin-bottom: 20px;">
+                    <span class="close" onclick="closeModal()" >&times;</span>
                 </div>
-                <div class="group-info">
-                    <span>Hình thức xử lý</span>
-                    <select name="" id="">
-                        <option value="0">Chọn hình thức</option>
-                        <option value="1">Khóa thẻ 1 tháng</option>
-                        <option value="2">Khóa thẻ 2 tháng</option>
-                        <option value="3">Bồi thường mất tài sản</option>
-                    </select>
+
+                <h1 style="padding: 20px">Thêm Vi Phạm</h1>
+
+                <div class="group">
+                    <div class="group-info">
+                        <span>Tên Thành Viên</span>
+                        <select style="width: 300px;" name ="MaTV" id ="name">
+                            <option value="0">Chọn thành viên</option>
+                            <option th:each ="tv : ${tvlist}" 
+                                    th:value="${tv.getMaTV()}" 
+                                    th:text ="${tv.getHoTen()}"> 
+                            </option>
+                        </select>
+                    </div>
+                    <div class="group-info">
+                        <span>Hình thức xử lý</span>
+                        <select style="width: 300px;" name="HinhThucXL" id="hinhthuc">
+                            <option value="0">Chọn hình thức</option>
+                            <option value="Khóa thẻ 1 tháng">Khóa thẻ 1 tháng</option>
+                            <option value="Khóa thẻ 2 tháng">Khóa thẻ 2 tháng</option>
+                            <option value="Bồi thường mất tài sản">Bồi thường mất tài sản</option>
+                        </select>
+                    </div>
+                    <div class="group-info">
+                        <span>Số tiền phạt</span>
+                         <input type="text" name="soTien" id="price">
+                    </div>
                 </div>
-                <div class="group-info">
-                    <span>Số tiền phạt</span>
-                    <input type="text"  id="price">
+
+                <div class="group-btn-modal">
+                    <button class="btn-xacnhan" >Xác Nhận</button>
+                    <button class="btn-huy" onclick="closeModal()">Hủy</button>
                 </div>
             </div>
-
-            <div class="group-btn-modal">
-                <button class="btn-xacnhan">Xác Nhận</button>
-                <button class="btn-huy" onclick="closeModal()">Hủy</button>
-            </div>
-
-        </div>
     </div>
+    
+    <div class="thongbao">
+        <div class="process"></div>
+        <div class="circle">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+        </div>
+        <span class="mess">Thông báo</span>
+    </div>
+    
 </body>
+
+
+
 <script>
 
     // Hàm mở modal cho nút "Thêm"
@@ -212,46 +182,92 @@ function openModalForAdd() {
     var modal = document.getElementById("myModal");
     var modalContent = document.querySelector(".modal-content");
     modal.style.display = "block";
+    modal.style.zIndex= 0;
     modalContent.classList.add("show");
 
-    // Reset giá trị của các input và select
-    document.querySelector('#myModal #name').value = '';
-    document.querySelector('#myModal select').value = 0;
-    document.querySelector('#myModal #price').value = '';
+    document.querySelector('.btn-xacnhan').addEventListener('click', function() {
+        themXuLy(); // Gọi hàm themXuLy() khi nút "Xác Nhận" được nhấn
+    });
 
     // Thay đổi tiêu đề
     document.querySelector('#myModal h1').textContent = "Thêm Xử Lý";
+    
+    
 }
+
+function openDetail() {
+    var modal = document.getElementById("detail");
+    modal.style.display = "block";
+    modal.style.zIndex= 0;
+
+    var row = this.parentElement.parentElement;
+    var maxl = row.querySelector('td:nth-child(1)').textContent;
+    var tenThanhVien = row.querySelector('td:nth-child(2)').textContent;
+    var hinhThucXuLy = row.querySelector('td:nth-child(3)').textContent;
+    var soTienPhat = row.querySelector('td:nth-child(4)').textContent;
+    var ngayXL = row.querySelector('td:nth-child(5)').textContent;
+    var trangthai = row.querySelector('td:nth-child(6)').textContent;
+    
+    console.log(maxl + tenThanhVien);
+    
+    document.querySelector('#detail #maXL').value = maxl;
+    document.querySelector('#detail #tenKH').value = tenThanhVien;
+    document.querySelector('#detail #hinhThuc').value = hinhThucXuLy;
+    document.querySelector('#detail #tienPhat').value = soTienPhat;
+    document.querySelector('#detail #ngayXL').value = ngayXL;
+    document.querySelector('#detail #tinhTrang').value = trangthai;
+    
+}
+
+
+var infoButtons = document.querySelectorAll('.btn-info');
+infoButtons.forEach(function(button) {
+    button.addEventListener('click', openDetail);
+});
 
 // Hàm mở modal cho nút "Sửa"
 function openModalForEdit() {
     var modal = document.getElementById("myModal");
     var modalContent = document.querySelector(".modal-content");
     modal.style.display = "block";
+    modal.style.zIndex= 0;
     modalContent.classList.add("show");
 
     // Lấy thông tin từ dòng đã chọn và gán vào modal
     var row = this.parentElement.parentElement;
-    var tenThanhVien = row.querySelector('.td:nth-child(1)').textContent;
-    var hinhThucXuLy = row.querySelector('.td:nth-child(2)').textContent;
-    var soTienPhat = row.querySelector('.td:nth-child(3)').textContent;
+    var maxl = row.querySelector('td:nth-child(1)').textContent;
+    var tenThanhVien = row.querySelector('td:nth-child(2)').textContent;
+    var hinhThucXuLy = row.querySelector('td:nth-child(3)').textContent;
+    var soTienPhat = row.querySelector('td:nth-child(4)').textContent;
 
-    var valueXuLy = 0;
 
-    if (hinhThucXuLy == "Khóa thẻ 1 tháng") {
-        valueXuLy = 1;
-    } else if (hinhThucXuLy == "Khóa thẻ 2 tháng") {
-        valueXuLy = 2;
-    } else if (hinhThucXuLy == "Bồi thường mất tài sản") {
-        valueXuLy = 3;
-    }
+    
+    document.querySelector('.btn-xacnhan').addEventListener('click', function() {
+        update(maxl); // Gọi hàm themXuLy() khi nút "Xác Nhận" được nhấn
+    });
 
-    document.querySelector('#myModal #name').value = tenThanhVien;
-    document.querySelector('#myModal select').value = valueXuLy;
+    let cbbName = document.getElementById("name");
+    selectOptionByText(cbbName,tenThanhVien);
+    
+    let cbbHT = document.getElementById("hinhthuc");
+    selectOptionByText(cbbHT,hinhThucXuLy);
+    
     document.querySelector('#myModal #price').value = soTienPhat;
 
     document.querySelector('#myModal h1').textContent = "Sửa Vi Phạm";
 }
+
+
+function selectOptionByText(selectElement, text) {
+    for (let option of selectElement.options) {
+        if (option.innerText === text || option.textContent === text) {
+            option.selected = true;
+            break;
+        }
+    }
+}
+
+
 
 document.querySelector('.btn-them').addEventListener('click', openModalForAdd);
 
@@ -267,6 +283,18 @@ window.onclick = function(event) {
     }
 }
 
+function resetModel(){
+    document.querySelector('#myModal #name').value = 0;
+    document.querySelector('#myModal #hinhthuc').value = 0;
+    document.querySelector('#myModal #price').value = '';
+}
+
+function closeDetail() {
+    var modal = document.getElementById("detail");
+    setTimeout(function() {
+        modal.style.display = "none";
+    }, 100);
+}
 
 function closeModal() {
     var modal = document.getElementById("myModal");
@@ -274,11 +302,9 @@ function closeModal() {
     modalContent.classList.remove("show");
     setTimeout(function() {
         modal.style.display = "none";
-    }, 100); 
-
-    document.querySelector('#myModal #name').value = '';
-    document.querySelector('#myModal select').value = 0;
-    document.querySelector('#myModal #price').value = '';
+    }, 100);
+    resetModel();
+    location.reload();
 }
 
 function toggleDropDown(element) {
@@ -292,6 +318,150 @@ function toggleDropDown(element) {
     }
 }
 
+ function themXuLy() {
+        var matv = document.getElementById('name').value
+        var hinhthuc = document.getElementById('hinhthuc').value
+        var gia = document.getElementById('price').value
+        
+        var data = {
+            MaTV: matv,
+            HinhThucXL: hinhthuc,
+            SoTien: gia,
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "/admin-xuly/add",
+            data: data,
+            success: function(response) {
+                thongbao("Thêm thành công !");
+                resetModel();
+            },
+            error: function(xhr, status, error) {
+                thongbao("Thêm thất bại !");
+            }
+        });
+    }
+    
+    function update(maxl) {
+        var matv = document.getElementById('name').value
+        var hinhthuc = document.getElementById('hinhthuc').value
+        var gia = document.getElementById('price').value
+        
+        var data = {
+            MaXL:maxl,
+            MaTV: matv,
+            HinhThucXL: hinhthuc,
+            SoTien: gia,
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "/admin-xuly/update",
+            data: data,
+            success: function(response) {
+                thongbao("Sửa thành công !");
+                resetModel();
+            },
+            error: function(xhr, status, error) {
+                thongbao("Sửa thất bại !");
+            }
+        });
+    }
+    
+    function thongbao(message){
+        const tb = document.querySelector(".thongbao")
+        tb.style.right = '20px'
+        let length = 70
+        let process = document.querySelector(".process")
+        const mess = document.querySelector(".mess");
+        mess.textContent = message;
+        const run = setInterval(() =>{
+            process.style.height = length + 'px'
+            length -= 5
+            if (length <= -10){
+                clearInterval(run)
+                tb.style.right = '-500px'
+            }
+        },200)
+    }
+    
+    
+    function deleteItem(maxl) {
+        $.ajax({
+                type: "POST",
+                url: "/admin-xuly/delete", // Đặt URL của controller tại đây
+                data: { MaXL: maxl }, // Truyền mã cần xoá
+                success: function(response) {
+                    thongbao("Đã xoá thành công !");
+                    loadPage();
+                },
+                error: function(xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.error(error);
+                }
+        });
+    }
+    
+    function loadPage(){
+        setTimeout(function() {
+                        location.reload();
+                    }, 4000);
+    }
+    
+    function updateCheck(maxl) {
+        $.ajax({
+                type: "POST",
+                url: "/admin-xuly/check", // Đặt URL của controller tại đây
+                data: { MaXL: maxl }, // Truyền mã cần xoá
+                success: function(response) {
+                    thongbao("Đã xử lý thành công !");
+                    loadPage();
+                },
+                error: function(xhr, status, error) {
+                    thongbao("Đã có lỗi xảy ra !");
+                }
+        });
+    }
+
+  var search = document.getElementById("search-input");
+  var dataTable = document.getElementById("viewTable");
+  var tableRows = dataTable.getElementsByTagName("tr");
+
+  search.addEventListener("input", function() {
+    var keyword = search.value.trim().toLowerCase();
+
+    // Duyệt qua từng dòng của bảng
+    for (var i = 1; i < tableRows.length; i++) {
+      var row = tableRows[i];
+      var cells = row.getElementsByTagName("td");
+      var matchFound = false;
+
+      // Duyệt qua từng ô dữ liệu trong dòng
+      for (var j = 0; j < cells.length; j++) {
+        var cell = cells[j];
+        var cellText = cell.textContent.toLowerCase();
+
+        // Nếu từ khóa khớp với nội dung của ô dữ liệu
+        if (cellText.includes(keyword)) {
+          matchFound = true;
+          break;
+        }
+      }
+
+      // Hiển thị hoặc ẩn dòng dựa trên kết quả tìm kiếm
+      if (matchFound) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    }
+  });
+    
+   function resetForm() {
+        document.getElementById("addViolationForm").reset();
+}
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

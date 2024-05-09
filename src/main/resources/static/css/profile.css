@@ -1,6 +1,12 @@
 body {
     background-color: #f8f9fa; /* Màu nền */
+    max-width: 100vw;
+    width: 100%;
 }
+iframe{
+    max-width: 100%;
+    width: 100%;
+}   
 .container {
     background-color: #ffffff; /* Màu nền container */
     border-radius: 10px; /* Bo tròn viền container */

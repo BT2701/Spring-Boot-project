@@ -21,17 +21,50 @@ h1 {
     margin-bottom: 20px;
 }
 
-.btn-group1 {
-    float: right;
+.group-search {
+    display: inline-flex;
+    align-items: center;
 }
 
+.group-search > button {
+    margin-left: 20px;
+}
+
+.btn-search {
+    width: 150px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.btn-search > span {
+    margin: 0 5px;
+}
+
+.btn-group1 {
+
+    float: right;
+    
+}
+
+.btn-group1 > button {
+    width: 150px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+
+.btn-group1 > button > span {
+    margin: 0 5px;
+}
 .search-option {
     padding: 3px;
     margin-bottom: 10px;
 }
 
 #search-input {
-    width: 200px;   
+    width: 250px;   
     box-shadow: 1px 3px #ccc;
     border-radius: 6px;
 }
@@ -50,57 +83,50 @@ input[type="button"] {
     box-sizing: border-box;
 }
 
-.table-container {
-    max-height: 300px; 
-    overflow-y: auto; 
-    position: relative; 
-    top: 20px;
-    padding-bottom: 20px;
+.table-wrapper {
+    height: 500px; 
+    overflow-y: auto;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
+.table-wrapper thead {
+    position:sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 0; 
 }
 
-.thead {
-    background-color: #99CCFF;
-    color: #000; 
-    font-weight: bold; 
-    background-color: #99CCFF;
-    color: #000;
+.table-wrapper th, .table-wrapper td {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+}
+
+.table-wrapper th {
+    background-color: #f0f0f0;
     font-weight: bold;
-    position: sticky;
-    top: 0; 
-    z-index: 1;
 }
 
-.tbody {
-    display: block;
+.table thead {
+    margin-bottom: 20px;
 }
 
-.tr {
-    display: flex;
-    
-}
-
-.th {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #ccc;
+.table thead th {
+    background-color: #007bff;
+    color: #fff;
     text-align: center;
-    justify-content: center;
+    height: 50px;
+    vertical-align: middle;
+}
+
+.table td button {
+    margin-bottom: 10px;
+    border-radius: 40px;
 }
 
 
-.td {
-    flex: 1; 
-    padding: 15px;
-    border: 1px solid #ccc;
+.table td {
     text-align: center;
-    justify-content: center;
+    vertical-align: middle;
 }
-
 a {
     display: inline-block;
     padding: 5px 10px;
@@ -133,38 +159,62 @@ button:hover {
     box-shadow: 2px 3px #8eeef5;
 }
 
-.btn-xuly, .btn-sua, .btn-xoa {
-    width: 60px;
+.btn-xuly, .btn-sua, .btn-xoa, .btn-info {
+    width: 50px;
 }
 
-/* CSS cho modal */
+.btn-info {
+    background-color: 	gray;
+}
+
+.btn-xuly {
+    background-color: 	#0099FF;
+}
+
+.btn-sua {
+    background-color: #33FF99;
+}
+
+.btn-xoa {
+    background-color: #FF3333;
+}
+
+.btn-them {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-them > span {
+    margin: 0 5px;
+}
+
+
+/* CSS Modal */
+
 .modal {
-    display: block;
+    display: none;
     position: fixed;
-    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); 
-    transition: opacity 0.3s ease; 
+    height: 100%;
+    overflow: hidden; 
+    background-color: rgba(0,0,0,0.4);
+    z-index: 0;
 }
+
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 10% auto 0;
     padding: 20px;
     border: 1px solid #888;
-    width: 40%;
-    transition: transform 0.3s ease, opacity 0.3s ease; 
-    transform: scale(0.9); 
-    opacity: 0;
-    position: relative;
+    width: 40% !important;
 }
 
-.modal-content.show {
-    opacity: 1; 
-    transform: scale(1); 
+.btn-close {
+    text-align: right; 
 }
 
 .close {
@@ -181,44 +231,51 @@ button:hover {
     cursor: pointer;
 }
 
-.modal-content > h1 {
-}
-
-.group {
+.show {
     display: block;
 }
 
+.group {
+    margin-bottom: 20px;
+}
+
 .group-info {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 200px 20px;
+    margin-bottom: 10px;
 }
 
-.group-info > input {
-    width: 200px;
-    border-radius: 6px;
+.group-info span {
+    display: block;
+    margin-bottom: 5px;
 }
 
-.group-info > input:focus {
-    width: 200px;
-    border: 0px;
-}
-.group-info > select {
-    padding: 6px;
-    width: 200px;
+.group-info input {
+    border-radius: 3px;
 }
 
 .group-btn-modal {
     text-align: center;
-} 
-
-.drop-down {
-    display: none;
 }
 
-.material-symbols-outlined:hover {
+.btn-xacnhan,
+.btn-huy {
+    background-color: #dff9fb;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 10px;
     cursor: pointer;
+    width: 100px !important;
 }
+
+.btn-xacnhan:hover,
+.btn-huy:hover {
+    cursor: pointer;
+    background-color: #bffaff;
+    box-shadow: 2px 3px #8eeef5;
+}
+
+
 
 /* Reponsive */
 @media screen and (min-width: 1025px) {
@@ -235,32 +292,19 @@ button:hover {
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     
-    .thead > th:nth-child(6) {
-        display: none;
+    .container {
+        min-width: 960px;
     }
-
-
-    .td > button {
-        margin-bottom: 10px;
-    }
-
 
     .modal {
         height: 100%;
     }
 
     .modal-content {
-        width: 60%;
-        max-width: 432.17px;
-        min-width: 432.17px;
+        width: 80% !important;
     }
 
-
-
-    .group-info {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 50px 20px;
+    .btn-group1 {
     }
 
     .drop-down-content button:hover {
@@ -274,21 +318,44 @@ button:hover {
     .material-symbols-outlined {
         cursor: pointer;
     }
+
+    .btn-search,
+    .btn-group1 > button {
+        width: 100px;
+    }
+
+    .btn-search span:nth-child(2),
+    .btn-group1 > button span:nth-child(2) {
+        display: none;
+    }
+
+    
 }
 
 /* Phone */
 
 @media screen and (max-width: 767px) {
+    
+    .container {
+        min-width: 960px;
+    }
+
     span {
         font-size: 14px;
     }
 
-    #search-input {
-        margin-bottom: 20px;
+    .btn-search,
+    .btn-group1 > button {
+        width: 100px;
+    }
+
+    .btn-search span:nth-child(2),
+    .btn-group1 > button span:nth-child(2) {
+        display: none;
     }
     
     .btn-group1 {
-        float: none;
+        float: right;
     }
 
     .td:nth-child(3) {
@@ -333,13 +400,102 @@ button:hover {
         height: 100%;
     }
 
-    .group-info {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 40px 20px;
-    }
-
     .modal-content {
-        min-width: 447.16px;
+        width: 60% !important;
     }
 }
+
+.thongbao {
+    z-index: 1;
+    width:400px;
+    height:70px;
+    display:flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 0px 5px #0ebaec;
+    position: fixed;
+    top: 20px;
+    right: -500px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.4s;
+}
+
+.process{
+    height: 70px;
+    border-left: 5px solid aqua;
+    top:0;
+    left: 0;
+    position: absolute;
+    transition: all 0.2s;
+}
+
+.thongbao .circle .material-symbols-outlined{
+    padding: 0px 10px;
+    font-size: 20px;
+    color: #0ebaec;
+}
+
+.thongbao .circle{
+    width: 40px;
+    height: 40px;
+    border: 2px solid #0ebaec;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.form-container {
+            display: none;
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            
+            transform: translate(-50%, -50%);
+        }
+        
+        .form-container h2,
+    .form-container button {
+        display: block;
+        margin: 0 auto; /* Căn giữa theo trục x */
+    }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-group input[readonly] {
+            background-color: #f0f0f0;
+            height:30px;
+        }
+        
+        .form-group input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
