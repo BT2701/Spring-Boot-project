@@ -89,10 +89,10 @@ input[type="button"] {
 }
 
 .table-wrapper thead {
-    position: sticky;
+    position:sticky;
     top: 0;
     background-color: #fff;
-    z-index: 1; 
+    z-index: 0; 
 }
 
 .table-wrapper th, .table-wrapper td {
@@ -159,8 +159,12 @@ button:hover {
     box-shadow: 2px 3px #8eeef5;
 }
 
-.btn-xuly, .btn-sua, .btn-xoa {
-    width: 60px;
+.btn-xuly, .btn-sua, .btn-xoa, .btn-info {
+    width: 50px;
+}
+
+.btn-info {
+    background-color: 	gray;
 }
 
 .btn-xuly {

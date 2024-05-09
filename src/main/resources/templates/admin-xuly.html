@@ -20,17 +20,7 @@
                 <span for="search-input">Nhập thông tin tìm kiếm:</span>
                 <input style="margin-left: 10px;" type="text" id="search-input" name="search-input" placeholder="Nhập thông tin tìm kiếm...">    
             </div>
-            
-            <div class="btn-group1" >
-                <button type="button">
-                    <span class="material-symbols-outlined">
-                        refresh
-                    </span>
-                    <span>
-                        Refresh
-                    </span>
-                </button>
-            </div>
+ 
         </div>
         <div class="table-responsive table-wrapper "> 
             <table class="table table-bordered table-hover" id="viewTable">
@@ -59,15 +49,23 @@
                                     check_circle
                                 </span>
                             </button>
+                         
                             <button class="btn-sua">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
                             </button>
+                            
                             <button class="btn-xoa">
                                 <span class="material-symbols-outlined" th:onclick="'deleteItem(\'' + ${xl.getMaXL()} + '\')'">
                                         delete
                                     </span>
+                            </button>
+                            
+                            <button class="btn-info">
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
                             </button>
                         </td>
                     </tr>
@@ -89,7 +87,7 @@
     </div>
     
     <!--Thông tin chi tiêt-->
-    <div class="form-container">
+    <div class="form-container" id="detail">
         <h2>Thông tin chi tiết</h2>
         <div class="form-group">
             <label for="maXL">Mã xử lý:</label>
@@ -115,7 +113,7 @@
             <label for="tinhTrang">Tình trạng:</label>
             <input type="text" id="tinhTrang" name="tinhTrang" readonly>
         </div>
-        <button>
+        <button onclick="closeDetail()">
             <p align="center">Xác nhận
         </button>
     </div>
@@ -197,6 +195,36 @@ function openModalForAdd() {
     
 }
 
+function openDetail() {
+    var modal = document.getElementById("detail");
+    modal.style.display = "block";
+    modal.style.zIndex= 0;
+
+    var row = this.parentElement.parentElement;
+    var maxl = row.querySelector('td:nth-child(1)').textContent;
+    var tenThanhVien = row.querySelector('td:nth-child(2)').textContent;
+    var hinhThucXuLy = row.querySelector('td:nth-child(3)').textContent;
+    var soTienPhat = row.querySelector('td:nth-child(4)').textContent;
+    var ngayXL = row.querySelector('td:nth-child(5)').textContent;
+    var trangthai = row.querySelector('td:nth-child(6)').textContent;
+    
+    console.log(maxl + tenThanhVien);
+    
+    document.querySelector('#detail #maXL').value = maxl;
+    document.querySelector('#detail #tenKH').value = tenThanhVien;
+    document.querySelector('#detail #hinhThuc').value = hinhThucXuLy;
+    document.querySelector('#detail #tienPhat').value = soTienPhat;
+    document.querySelector('#detail #ngayXL').value = ngayXL;
+    document.querySelector('#detail #tinhTrang').value = trangthai;
+    
+}
+
+
+var infoButtons = document.querySelectorAll('.btn-info');
+infoButtons.forEach(function(button) {
+    button.addEventListener('click', openDetail);
+});
+
 // Hàm mở modal cho nút "Sửa"
 function openModalForEdit() {
     var modal = document.getElementById("myModal");
@@ -259,6 +287,13 @@ function resetModel(){
     document.querySelector('#myModal #name').value = 0;
     document.querySelector('#myModal #hinhthuc').value = 0;
     document.querySelector('#myModal #price').value = '';
+}
+
+function closeDetail() {
+    var modal = document.getElementById("detail");
+    setTimeout(function() {
+        modal.style.display = "none";
+    }, 100);
 }
 
 function closeModal() {
