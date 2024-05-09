@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Model.ThanhVien;
+
+import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,4 +20,15 @@ public interface ThanhVienRepository extends JpaRepository<ThanhVien, Integer>{
     List<ThanhVien> findAllOrderByLast6Digits();
 
     List<ThanhVien> findByHotenContaining(String hoten);
+  ThanhVien findByMaTVAndPassword(int maTV, String password);
+
+    // Thêm phương thức để thực hiện việc thêm một bản ghi mới vào bảng ThanhVien
+    ThanhVien saveAndFlush(ThanhVien thanhvien);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByMaTV(int maTV);
+
+    ThanhVien findByEmail(String email); // Phương thức mới để lấy thông tin thành viên bằng email
 }
+
