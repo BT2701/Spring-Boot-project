@@ -1,94 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
-    <!-- font-awesome  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- normalize reset css  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <!-- bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- style css  -->
-    <link rel="stylesheet" href="/css/style.css">
-    <style>
-      
-    </style>
-</head>
-<body>
-    <section class="forgot-password-page">
-        <!-- form user nhập email để khôi phục mật khẩu  -->
-        <div class="forgot-password-form d-none" id="forgot-password-form">
-            <h2 class="text-center mb-4">Quên mật khẩu</h2>
-            <form>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email">
-                    <div class="error">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <span class="error-message">Tài khoản không tồn tại</span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Forgot Password</title>
+        <!-- font-awesome  -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <!-- normalize reset css  -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+        <!-- bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- style css  -->
+        <link rel="stylesheet" href="/css/style.css">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <section class="forgot-password-page">
+            <!-- form user nhập email để khôi phục mật khẩu  -->
+            <div class="forgot-password-form " id="forgot-password-form">
+                <h2 class="text-center mb-4">Quên mật khẩu</h2>
+                <form action="/SendOTP" method="post" onsubmit="return validateForm()">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter your email">
+                        <div class="error">
+                            <div class="error">
+                                <div id="emailError" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
+                            </div>                        </div>
                     </div>
-                </div>
-                <div class="text-center mb-3">
-                    <button type="submit" class="btn btn-primary w-100">Reset Password</button>
-                </div>
-                <p class="text-center mb-0">Chưa có tài khoản? <a href="./register.html">Đăng ký ngay</a></p>
-            </form>
-        </div>
-
-        <!-- Sau khi user nhập email thì render ra form này -->
-        <div class="confirm-email-form d-none" id="confirm-email-form">
-            <h2 class="text-center mb-4">Kiểm tra email</h2>
-            <p>Nhập mã OTP được gửi đến email của bạn</p>
-            <form>
-                <div class="mb-3 d-flex justify-content-center">
-                  <input type="text" class="form-control otp-input mx-1" maxlength="1" required>
-                  <input type="text" class="form-control otp-input mx-1" maxlength="1" required>
-                  <input type="text" class="form-control otp-input mx-1" maxlength="1" required>
-                  <input type="text" class="form-control otp-input mx-1" maxlength="1" required>
-                  <input type="text" class="form-control otp-input mx-1" maxlength="1" required>
-                  <input type="text" class="form-control otp-input mx-1" maxlength="1" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Verify OTP</button>
-            </form>
-        </div>
-
-        <!-- Sau khi kiem tra ma OTP dung thi hien thi form nay  -->
-        <div class="reset-password-form d-none" id="reset-password-form">
-            <h2 class="text-center mb-4">Đổi mật khẩu</h2>
-            <form>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Mật khẩu mới</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter new password">
-                    <div class="error">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <span class="error-message">Trường hợp có lỗi</span>
+                    <div class="text-center mb-3">
+                        <button type="submit" class="btn btn-primary w-100">Reset Password</button>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-                    <div class="error">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <span class="error-message">Trường hợp có lỗi</span>
-                    </div>
-                </div>
-                <div class="text-center mb-3">
-                    <button type="submit" class="btn btn-primary w-100">Reset Password</button>
-                </div>
-            </form>
-        </div>
+                    <p class="text-center mb-0">Chưa có tài khoản? <a href="./register.html">Đăng ký ngay</a></p>
+                </form>
 
-        <!-- Nếu đổi mật khẩu thành công, hiển thị phản hồi -->
-        <div class="password-changed-success d-block" id="password-changed-success">
-            <h2 class="text-center mb-4">Mật khẩu đã được đổi thành công!</h2>
-            <p class="text-center">Bạn đã có thể đăng nhập bằng mật khẩu mới của mình.</p>
-            <p class="text-center mb-0"><a href="./login">Quay lại đăng nhập</a></p>
-        </div>
-    </section>
+                <!-- Thông báo lỗi -->
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+        </section>
 
-    <!-- Bootstrap JS (optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        <!-- Bootstrap JS (optional) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    <script>
+                    function validateForm() {
+                        // Lấy giá trị của trường email
+                        var email = document.getElementById("email").value;
+
+                        // Kiểm tra định dạng email bằng regular expression
+                        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(email)) {
+                            // Hiển thị thông báo lỗi
+                            document.getElementById('emailError').innerHTML = "Email không hợp lệ";
+                            return false; // Ngăn form submit
+                        }
+
+                        // Nếu email hợp lệ, không có lỗi
+                        document.getElementById('emailError').innerHTML = ""; // Xóa thông báo lỗi
+                        return true; // Cho phép form submit
+                    }
+    </script>
+
 </html>

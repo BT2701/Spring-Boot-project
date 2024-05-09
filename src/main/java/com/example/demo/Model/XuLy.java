@@ -36,8 +36,6 @@ public class XuLy {
 	@Column
 	private Integer trangthaixl;
 	
-	@Transient
-    private String trangthai;
 
 	@ManyToOne
 	@JoinColumn(name = "MaTV")
@@ -49,6 +47,15 @@ public class XuLy {
 	public XuLy(Integer maXL, String hinhThucXL, Integer soTien, Date ngayXL, Integer trangThaiXL,
 			ThanhVien thanhVien) {
 		this.maXL = maXL;
+		this.hinhthucxl = hinhThucXL;
+		this.sotien = soTien;
+		this.ngayXL = ngayXL;
+		this.trangthaixl = trangThaiXL;
+		this.thanhVien = thanhVien;
+	}
+
+	public XuLy(String hinhThucXL, Integer soTien, Date ngayXL, Integer trangThaiXL,
+				ThanhVien thanhVien) {
 		this.hinhthucxl = hinhThucXL;
 		this.sotien = soTien;
 		this.ngayXL = ngayXL;
@@ -103,14 +110,6 @@ public class XuLy {
 	public void setThanhVien(ThanhVien thanhVien) {
 		this.thanhVien = thanhVien;
 	}
-	public String getTrangthai() {
-        if (this.trangthaixl == 0) return "Chưa xử lý";
-        else return "Đã xử lý";
-    }
-
-    public void setTrangthai(String trangthai) {
-        this.trangthai = trangthai;
-    }
 
 	@Override
 	public String toString() {

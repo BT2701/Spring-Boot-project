@@ -2,22 +2,39 @@ package com.example.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.Model.ThanhVien;
 import com.example.demo.repository.ThanhVienRepository;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import java.util.Random;
+import org.springframework.ui.Model;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.apache.poi.ss.usermodel.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class ThanhVienService {
 	private final ThanhVienRepository thanhVienRepository;
+  private final JavaMailSender javaMailSender;
 	
 	@Autowired
 	public ThanhVienService(ThanhVienRepository thanhVienRepository) {
 		this.thanhVienRepository=thanhVienRepository;
 	}
+   @Autowired
+    public ThanhVienService(ThanhVienRepository thanhVienRepository, JavaMailSender javaMailSender) {
+        this.thanhVienRepository = thanhVienRepository;
+        this.javaMailSender = javaMailSender;
+
+    }
 	public List<ThanhVien> getAll() {
 		return thanhVienRepository.findAll();
 	}
@@ -60,6 +77,17 @@ public class ThanhVienService {
 	private ThanhVien parseMemberFromRow(Row row) {
 		int id = (int) row.getCell(0).getNumericCellValue();
 
+		String idStr = Integer.toString(id);
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int last2DigitsOfYear = Integer.parseInt(String.valueOf(year).substring(2,4));
+		if(idStr.length() != 10 || !idStr.startsWith("11") || Integer.parseInt(idStr.substring(2,4)) > last2DigitsOfYear) {
+			return null;
+		}
+
+		if(getById(id) != null) {
+			return null;
+		}
+
 		String hoTen = getCellStringValue(row.getCell(1));
 		String khoa = getCellStringValue(row.getCell(2));
 		String nganh = getCellStringValue(row.getCell(3));
@@ -68,7 +96,7 @@ public class ThanhVienService {
 		String password = getCellStringValue(row.getCell(6));
 
 		if (thanhVienRepository.findById(id).isPresent()) {
-			return null; // Nếu thành viên đã tồn tại
+			return null;
 		}
 
 		return new ThanhVien(id, hoTen, khoa, nganh, sdt, email, password);
@@ -82,54 +110,99 @@ public class ThanhVienService {
 			case STRING:
 				return cell.getStringCellValue();
 			case NUMERIC:
-				return String.valueOf(cell.getNumericCellValue());
+				if (DateUtil.isCellDateFormatted(cell)) {
+					DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+					return df.format(cell.getDateCellValue());
+				} else {
+					return String.valueOf((int) cell.getNumericCellValue());
+				}
 			case BOOLEAN:
 				return String.valueOf(cell.getBooleanCellValue());
+			case FORMULA:
+				return cell.getCellFormula();
 			default:
 				return null;
 		}
 	}
+  public ThanhVien addMember(ThanhVien mem) {
+        return thanhVienRepository.save(mem);
+    }
 
-	// hàm thêm bên ctl cũ
+    public Integer processLogin(int maTV, String password, Model model) {
+        ThanhVien user = thanhVienRepository.findByMaTVAndPassword(maTV, password);
 
-//	public String addModelFromFileExcel(String filePath) {
-//		try {
-//			FileInputStream excelFile = new FileInputStream(new File(filePath));
-//			Workbook workbook = new XSSFWorkbook(excelFile);
-//			Sheet sheet = workbook.getSheetAt(0);
-//
-//			// Kiểm tra định dạng của tệp Excel
-//			if (isExcelFormatValid(sheet)) {
-//				dal.addModelFromFileExcel(sheet);
-//				workbook.close();
-//				return "Thêm thành viên từ file Excel thành công.";
-//			} else {
-//				workbook.close();
-//				return "Định dạng của tệp Excel không đúng.";
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return "Định dạng của tệp Excel không đúng.";
-//		}
-//	}
-//
-//	private boolean isExcelFormatValid(Sheet sheet) {
-//		// Kiểm tra số cột của dòng đầu tiên (header) có đúng định dạng không
-//		Row headerRow = sheet.getRow(0);
-//		int expectedColumnCount = 7; // Số cột mong muốn
-//		if (headerRow == null || headerRow.getLastCellNum() != expectedColumnCount) {
-//			return false;
-//		}
-//
-//		// Kiểm tra tên các cột có đúng định dạng không
-//		String[] expectedColumnNames = {"MaTV", "Ho Ten", "Khoa", "Nganh", "SDT", "email", "password"};
-//		for (int i = 0; i < expectedColumnCount; i++) {
-//			Cell cell = headerRow.getCell(i);
-//			if (cell == null || !cell.getStringCellValue().equals(expectedColumnNames[i])) {
-//				return false;
-//			}
-//		}
-//
-//		return true;
-//	}
+        if (user != null) {
+            // Đăng nhập thành công, trả về maTV
+            return user.getMaTV();
+        } else {
+            // Đăng nhập không thành công, trả về null
+            return null;
+        }
+    }
+
+    // Phương thức để thêm một bản ghi mới vào bảng ThanhVien
+    public ThanhVien addThanhVien(ThanhVien thanhVien) {
+
+        // Lưu đối tượng thanhVien vào cơ sở dữ liệu
+        return thanhVienRepository.saveAndFlush(thanhVien);
+    }
+
+    public boolean emailExists(String email) {
+        return thanhVienRepository.existsByEmail(email);
+    }
+
+    public boolean idExists(int id) {
+        return thanhVienRepository.existsByMaTV(id);
+    }
+
+//    // Method to send OTP
+    public String sendOTP(String email) {
+        // Generate OTP
+        String otp = generateOTP();
+
+        // Send OTP via email
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject("OTP for Password Reset");
+            helper.setText("Your OTP for password reset is: " + otp);
+            javaMailSender.send(message);
+            return "" + otp; // Email sent successfully
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return "false"; // Failed to send email
+        }
+    }
+
+    // Method to generate random OTP
+    private String generateOTP() {
+        // Implement logic to generate OTP
+        // For example, using Random class to generate a random 6-digit OTP
+        Random random = new Random();
+        int otpNumber = 100000 + random.nextInt(900000);
+        return String.valueOf(otpNumber);
+    }
+
+    public boolean SendPassword(String email) {
+        ThanhVien thanhVien = thanhVienRepository.findByEmail(email);
+        String password="";
+        if (thanhVien != null) {
+            password= thanhVien.getPassword();
+        } 
+        // Send OTP via email
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject("Password Reset");
+            helper.setText("Your password is:"+password);
+            javaMailSender.send(message);
+            return true; // Email sent successfully
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false; // Failed to send email
+        }
+    }
+
 }
