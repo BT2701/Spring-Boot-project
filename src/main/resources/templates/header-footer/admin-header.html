@@ -30,7 +30,7 @@
                     <!-- <a class="navbar-brand" href="#">
                         <img src="your-logo.png" alt="Logo" height="30" class="d-inline-block align-top">
                     </a> -->
-                    <a href="">Learning material</a>
+                    <a href="./home" id="homepage">Learning material</a>
                 </div>
 
 
@@ -52,7 +52,7 @@
                             <div class="user-actions">
                                 <ul class="user-action_list">
                                 
-                                <li>Đăng xuất</li>
+                                <li ><a href="./login" style="text-decoration: none; color: black;">Đăng xuất</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -103,12 +103,12 @@
                     </li>
 
                     <li class="nav-item dropdown navbar-item">
-                        <a class="nav-link " href="./thiet-bi" id="device" role="button" aria-expanded="false">
+                        <a class="nav-link " href="./thiet-bi-admin" id="device" role="button" aria-expanded="false">
                             Quản lý thiết bị
                         </a>
                     </li>
                     <li class="nav-item dropdown navbar-item">
-                        <a class="nav-link " href="./xu-ly-vi-pham" id="handle" role="button" aria-expanded="false">
+                        <a class="nav-link " href="./admin-xuly" id="handle" role="button" aria-expanded="false">
                             Quản lý xử lý vi phạm
                         </a>
                     </li>
@@ -141,6 +141,11 @@
     crossorigin="anonymous"></script>
 
 <script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
-
+<script>
+    const logout=document.getElementById('logout');
+    logout.addEventListener('click',function (){
+        window.logout.href='./login';
+    });
+</script>
 </body>
 </html>

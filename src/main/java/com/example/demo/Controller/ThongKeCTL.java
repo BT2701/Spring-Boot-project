@@ -43,19 +43,19 @@ public class ThongKeCTL {
 		m.addAttribute("fee", txtFee);
 		return "admin-thongke/thong_ke";
 	}
-	@GetMapping("/thong-ke/member-chart")
+	@GetMapping("/member-chart")
 	public String member() {
 		return "admin-thongke/member_chart";
 	}
-	@GetMapping("/thong-ke/device-chart")
+	@GetMapping("/device-chart")
 	public String device() {
 		return "admin-thongke/device_chart";
 	}
-	@GetMapping("/thong-ke/current-chart")
+	@GetMapping("/current-chart")
 	public String current() {
 		return "admin-thongke/current_chart";
 	}
-	@GetMapping("/thong-ke/handle-chart")
+	@GetMapping("/handle-chart")
 	public String handle() {
 		return "admin-thongke/handle_chart";
 	}
