@@ -25,10 +25,7 @@ public class ThanhVienService {
 	private final ThanhVienRepository thanhVienRepository;
   private final JavaMailSender javaMailSender;
 	
-	@Autowired
-	public ThanhVienService(ThanhVienRepository thanhVienRepository) {
-		this.thanhVienRepository=thanhVienRepository;
-	}
+
    @Autowired
     public ThanhVienService(ThanhVienRepository thanhVienRepository, JavaMailSender javaMailSender) {
         this.thanhVienRepository = thanhVienRepository;

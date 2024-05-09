@@ -87,6 +87,7 @@ public class ThanhVienCTL {
             // Chuyển hướng đến trang thành công sau khi đăng ký
             return "sign-upSucess";
         }
+  }
 
 	@GetMapping("/thanh-vien/getAll")
 	@ResponseBody
