@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Model.ThanhVien;
@@ -29,7 +30,9 @@ public class ThongKeCTL {
 	
 	
 	@GetMapping("/thong-ke")
-	public String thongKeIndex(Model m) {
+	public String thongKeIndex(Model m
+							   ) {
+
 		m.addAttribute("countMember", thongKeService.countMemberIntoMaterial());
 		m.addAttribute("borrowed", thongKeService.countBorrowedDevice());
 		m.addAttribute("borrowing", thongKeService.countBorrowingDevice());
