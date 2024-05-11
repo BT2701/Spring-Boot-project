@@ -16,36 +16,65 @@
         <title>Register</title>
     </head>
     <body>
-    <div id="header"></div>
+        <div id="header"></div>
         <section class="login-page container">
             <div class="row d-flex justify-content-center ">
                 <div class="col-lg-6 intro-side">
-                    <h2 class="text-center">Chào mừng đến nhà của tụi anh</h2>
-                    <p>Anh sống như thế này sao? nhà nhỏ mà xe to. </p>
+                    <h2 class="text-center">Chào mừng đến với trang đăng ký</h2>
+                    <p>Hệ thống quản lý,cho mượn thiết bị số 1 trường đại học sài gòn. </p>
                 </div>
                 <div class="col-lg-6 register-side">
                     <h2 class="text-center mb-4">Tạo tài khoản</h2>
-                    <form action="/sign-up" method="post" onsubmit="return validateForm()">
+                    <form id="formdangky">
                         <div class="mb-3">
                             <div>
-                                <label for="email" class="form-label">Mã Sinh Viên: <span style="color: red">*</span></label>
-                                <input type="text" class="form-control" id="id" name="id"placeholder="11xxxxxxxx">
+                                <label for="email" class="form-label">Mã Thành Viên: <span style="color: red">*</span></label>
+                                <div style="display:flex">
+                                    <input type="text" class="form-control mb-2" id="idfirst" name="idfirst" readonly style="width:20%;" >
+                                    <input type="text" class="form-control mb-2" id="id" name="id"placeholder="123456" maxlength="6" oninput="validateMathanhvien(this)">
+                                </div>
                             </div>
                             <div class="error">
-                                <div id="nameError" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
-
+                                <div id="idError" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div>
                                 <label for="username" class="form-label">Email: <span style="color: red">*</span></label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="abc@gmail.com">
+                                <input type="text" class="form-control mb-2" id="email" name="email" placeholder="abc@gmail.com">
                             </div>
                             <div class="error">
                                 <div id="EmailError" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
                             </div>
                         </div>
-
+                        <div>
+                            <label for="khoa" class="form-label">Chọn khoa:<span style="color: red">*</span></label>
+                            <select id="comboboxKhoa" name="khoa" onchange="changekhoa(this)" class="form-select mb-2">
+                                <!--js se fill du lieu vao-->
+                            </select>
+                        </div>
+                        <div class="error">
+                            <div id="comboboxKhoaherror" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
+                        </div>
+                        <div>
+                            <label for="khoa" class="form-label">Chọn Ngành:<span style="color: red">*</span></label>
+                            <select id="comboboxNganh" name="Nganh" class="form-select mb-2">
+                                <option value="nonekhoa" selected disabled>Chọn Ngành</option>
+                                <!--js se fill du lieu vao-->
+                            </select>
+                        </div>
+                        <div class="error">
+                            <div id="comboboxNganherror" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
+                        </div>
+                        <div>
+                            <label for="khoa" class="form-label">Chọn Khóa:<span style="color: red">*</span></label>
+                            <select id="comboboxKhoahoc" name="khoahoc"class="form-select mb-2" onchange="changekhoahoc();">
+                                <!--js se fill du lieu vao-->
+                            </select>
+                        </div>
+                        <div class="error">
+                            <div id="comboboxKhoahocerror" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
+                        </div>
                         <div class="mb-3">
                             <div>
                                 <label for="password" class="form-label">Mật khẩu: <span style="color: red">*</span></label>
@@ -53,14 +82,22 @@
                             </div>
                             <div class="error">
                                 <div id="passwordError" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
-
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div>
+                                <label for="password" class="form-label">Xác nhận mật khẩu: <span style="color: red">*</span></label>
+                                <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="aaaa1234">
+                            </div>
+                            <div class="error">
+                                <div id="confirmpasswordError" class="error-message " style="color: red; margin-bottom: 3%;" ></div>
                             </div>
                         </div>
                         <input type="checkbox" id="showPasswordCheckbox"  onchange="changeCheckbox()">
                         <label style="font-weight: bold;">Hiện mật khẩu</label>
                         <div class="form-operation">
                             <div class="text-center mb-3">
-                                <button type="submit" class="btn btn-primary btn-login">Đăng ký</button>
+                                <button type="button" class="btn btn-primary btn-login" onclick="dangky();">Đăng ký</button>
                             </div>
                             <div class="text-center mb-3">
                                 <a href="./login" class="btn btn-primary btn-register">Đăng nhập</a>
@@ -69,15 +106,200 @@
                         <div th:if="${error}" class="alert alert-danger" role="alert">
                             <span th:text="${error}"></span>
                         </div>
-
                     </form>
                 </div>
             </div>
         </section>
 
-    <script src="js/homepage.js"></script>
+        <script src="/js/homepage.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="/js/Sign-up.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+                                    $(document).ready(function () {
+                                        // Gọi hàm khi trang được tải
+                                        getAllKhoa();
+                                        fillKhoaHoc();
 
+                                    });
+
+                                    function getAllKhoa() {
+                                        // Gửi yêu cầu AJAX khi trang được tải
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "/getAllKhoa",
+                                            success: function (data) {
+                                                console.log(data);
+                                                // Xóa tất cả các option hiện có trong combobox khoa
+                                                $('#comboboxKhoa').empty();
+
+                                                // Thêm option "Chọn khoa" vào đầu tiên
+                                                $('#comboboxKhoa').append('<option value="nonekhoa" selected disabled>Chọn khoa</option>');
+
+                                                // Thêm các option mới dựa trên dữ liệu từ controller
+                                                $.each(data, function (index, value) {
+                                                    $('#comboboxKhoa').append('<option value="' + value + '">' + formatKhoaText(value) + '</option>');
+                                                });
+                                            },
+
+                                            error: function (xhr, status, error) {
+                                                console.error(xhr.responseText);
+                                            }
+                                        });
+                                    }
+                                    function formatKhoaText(value) {
+                                        var upperCaseValue = value.toUpperCase();
+                                        switch (upperCaseValue) {
+                                            case "CNTT":
+                                                return "Công nghệ thông tin";
+                                                // Thêm các case cho các giá trị khác nếu cần
+                                            case "QTKD":
+                                                return"Quản trị kinh doanh";
+                                            case "TLH":
+                                                return"Tâm lý học";
+                                            case "GDTH":
+                                                return"Giáo dục tiếu học";
+                                            default:
+                                                return value;
+                                        }
+                                    }
+
+                                    function changekhoa(selectElement) {
+                                        var selectedValue = selectElement.value;
+
+                                        // Gửi yêu cầu AJAX khi giá trị của combobox thay đổi
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/nganhByKhoa",
+                                            data: {khoa: selectedValue},
+                                            success: function (data) {
+                                                // Xóa tất cả các option hiện có trong combobox ngành
+                                                $('#comboboxNganh').empty();
+
+                                                // Thêm option "Chọn Ngành" vào đầu tiên
+                                                $('#comboboxNganh').append('<option value="nonekhoa" selected disabled>Chọn Ngành:</option>');
+
+                                                // Thêm các option mới dựa trên dữ liệu từ controller
+                                                $.each(data, function (index, value) {
+                                                    $('#comboboxNganh').append('<option value="' + value + '">' + formatNganhText(value) + '</option>');
+                                                });
+                                            },
+                                            error: function (xhr, status, error) {
+                                                console.error(xhr.responseText);
+                                            }
+                                        });
+                                    }
+                                    function formatNganhText(value) {
+                                        var upperCaseValue = value.toUpperCase();
+                                        switch (upperCaseValue) {
+                                            case "CNTT":
+                                                return "Công nghệ thông tin";
+                                            case "MKT":
+                                                return "Marketing";
+                                            case "HTTT":
+                                                return "Hệ thống thông tin";
+                                            case "GDTH":
+                                                return "Giáo dục tiểu học";
+                                            case "QLDG":
+                                                return "Quản lý giáo dục";
+                                            case "QTKD":
+                                                return "Quản trị kinh doanh";
+                                            case "KTPM":
+                                                return "Kỹ thuật phần mềm";
+                                                // Thêm các case cho các giá trị khác nếu cần
+                                            default:
+                                                return value;
+                                        }
+                                    }
+                                    function fillKhoaHoc() {
+                                        // Lấy năm hiện tại
+                                        var currentYear = new Date().getFullYear();
+                                        // Khởi tạo mảng để lưu trữ các khóa học
+                                        var khoaHocList = [];
+                                        // Lấy 5 khóa học, bắt đầu từ năm hiện tại
+                                        for (var i = 0; i < 7; i++) {
+                                            var khoaHocValue = currentYear.toString().substr(2);
+                                            var khoaHocText = "K" + khoaHocValue;
+                                            khoaHocList.push({value: khoaHocValue, text: khoaHocText});
+                                            // Giảm năm đi 1 để lấy khóa học tiếp theo
+                                            currentYear--;
+                                        }
+                                        // Lấy select element
+                                        var selectElement = document.getElementById("comboboxKhoahoc");
+                                        // Đặt giá trị mặc định cho select element
+                                        selectElement.innerHTML = '<option value="noneKhoahoc" selected disabled>Chọn Khóa Học</option>';
+                                        // Điền dữ liệu vào dropdown
+                                        khoaHocList.forEach(function (khoaHoc) {
+                                            var option = document.createElement("option");
+                                            option.value = khoaHoc.value;
+                                            option.text = khoaHoc.text;
+                                            selectElement.appendChild(option);
+                                        });
+                                    }
+                                    function changekhoahoc() {
+                                        var khoaHoc = document.getElementById("comboboxKhoahoc").value;
+                                        var idInput = document.getElementById("idfirst");
+                                        idInput.value = 11 + "" + khoaHoc;
+
+                                    }
+                                    function validateMathanhvien(input) {
+                                        // Loại bỏ mọi ký tự không phải số
+                                        input.value = input.value.replace(/\D/g, '');
+
+                                        // Giới hạn chiều dài của chuỗi nhập vào là 6 ký tự
+                                        if (input.value.length > 6) {
+                                            input.value = input.value.slice(0, 6);
+                                        }
+
+                                        // Kiểm tra độ dài của chuỗi nhập vào
+                                        if (input.value.length === 6) {
+                                            var confirmationCode = input.value;
+                                            var isValid = validateConfirmationCode(confirmationCode);
+                                            var errorElement = document.getElementById('idError');
+                                            if (!isValid) {
+                                                errorElement.style.display = 'block';
+                                            } else {
+                                                errorElement.style.display = 'none';
+                                            }
+                                        }
+                                    }
+                                    function validateConfirmationCode(code) {
+                                        // Kiểm tra xem mã xác nhận có đúng định dạng hay không (6 chữ số)
+                                        var pattern = /^\d{6}$/;
+                                        return pattern.test(code);
+                                    }
+                                    function dangky() {
+                                        if (validateForm()) {
+                                            var idfirst = document.getElementById("idfirst").value;
+                                            var id = document.getElementById("id").value;
+                                            var maTV = "";
+                                            maTV = idfirst + "" + id;
+                                            alert(maTV);
+
+                                            // Gửi yêu cầu AJAX khi giá trị của combobox thay đổi
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "/sign-up",
+                                                data: {id: maTV,
+                                                    email: document.getElementById("email").value,
+                                                    khoa: document.getElementById("comboboxKhoa").value,
+                                                    Nganh: document.getElementById("comboboxNganh").value,
+                                                    password: document.getElementById("password").value},
+                                                success: function (response) {
+                                                    if (response === "done") {
+                                                        window.location.href = "./sign-upSucess";
+                                                    } else {
+                                                        alert(response);
+                                                    }
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.error(xhr.responseText);
+                                                }
+                                            });
+                                        }
+                                    }
+
+
+        </script>
     </body>
 </html>

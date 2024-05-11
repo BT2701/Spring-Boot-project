@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
+    <title>Trang chủ</title>
 </head>
 <body>
-<div id="header"></div>
-    <h1>Welcome to the Index </h1>
-    <p>MaTV: <span th:text="${maTV}"></span></p>
-
-<script src="js/homepage.js"></script>
+    <h1>Xin chào, <span th:text="${session.HoTen}"></span>!</h1>
+    <p>Mã thành viên của bạn là: <span th:text="${session.maTV}"></span></p>
 </body>
 </html>
-
