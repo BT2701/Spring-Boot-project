@@ -61,11 +61,11 @@ public class ThanhVienCTL {
             request.getSession().setAttribute("HoTen", TVResult.getHoTen());
             if (TVResult.getMaTV() == 1111111111) {
                 //dang nhap vao admin
-                return "header-footer/admin-header";
+                return "slider/slider";
 
             } else {
                 //dang nhap vao user
-                return "header-footer/user-header";
+                return "user-muontra/user-muontra";
             }
         } else {
             model.addAttribute("error", "Email, Số điện thoại hoặc mật khẩu không chính xác");

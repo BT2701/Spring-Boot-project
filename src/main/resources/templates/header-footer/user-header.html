@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +30,7 @@
                         <!-- <a class="navbar-brand" href="#">
                             <img src="your-logo.png" alt="Logo" height="30" class="d-inline-block align-top">
                         </a> -->
-                        <a href="">Learning material</a>
+                        <a href="./DanhSachThietBi">Learning material</a>
                     </div>
 
 
@@ -48,11 +48,13 @@
 
                             <div class="user-info_wrapper">
                                 <i class="fa-solid fa-user circle-bg-icon"></i>
-                                <!--<span th:text="${session.HoTen}"></span>-->
+                                <span th:text="${session.HoTen}"></span>
                                 <!--session de lay ten-->
                                 <div class="user-actions">
                                     <ul class="user-action_list">
-                                        <li><a href="./profile" style="text-decoration: none; color: black;">Profile</a></li>
+                                        <li>
+                                            <a th:href="@{'./profile?id=' + ${session.maTV}}" style="text-decoration: none; color: black;">Profile</a>
+                                        </li>
                                         <li><a href="./login" style="text-decoration: none; color: black;">Đăng xuất</a></li>
                                     </ul>
                                 </div>
