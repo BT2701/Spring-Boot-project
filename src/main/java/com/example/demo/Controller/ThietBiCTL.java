@@ -106,4 +106,39 @@ public class ThietBiCTL {
         }
     };
 
+    @PostMapping("/thiet-bi/deleteList")
+    public ResponseEntity<?> deleteListThietBi(
+            @RequestParam("idOp") Integer idOp,
+            @RequestParam("tenTB") String ten,
+            @RequestParam("moTaTB") String moTa) {
+        Iterable<ThietBi> tbList = thietBiRepository.findAll();
+
+        List<Integer> successIds = new ArrayList<>();
+        List<Integer> failureIds = new ArrayList<>();
+
+        for (ThietBi thietBi : tbList) {
+            Integer id = thietBi.getMaTB();
+            String idString = id.toString(); // Chuyển id thành chuỗi để dễ xử lý
+            // Kiểm tra xem id của thiết bị có bắt đầu bằng idOp không
+            if (idString.startsWith(idOp.toString())) {
+                // Nếu có, thêm thiết bị vào danh sách đã lọc
+                try {
+                    thietBiRepository.deleteById(id);
+                    successIds.add(id);
+                } catch (Exception e) {
+                    failureIds.add(id);
+                    e.printStackTrace(); // In ra stack trace của lỗi
+                }
+
+            }
+        }
+
+        Map<String, List<Integer>> responseData = new HashMap<>();
+        responseData.put("successIds", successIds);
+        responseData.put("failureIds", failureIds);
+
+        return ResponseEntity.ok().body(responseData);
+
+    };
+
 }
