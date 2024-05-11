@@ -24,13 +24,11 @@ import java.util.List;
 public class ThanhVienService {
 	private final ThanhVienRepository thanhVienRepository;
   private final JavaMailSender javaMailSender;
-	
 
-   @Autowired
+   	@Autowired
     public ThanhVienService(ThanhVienRepository thanhVienRepository, JavaMailSender javaMailSender) {
         this.thanhVienRepository = thanhVienRepository;
         this.javaMailSender = javaMailSender;
-
     }
 	public List<ThanhVien> getAll() {
 		return thanhVienRepository.findAll();
@@ -38,22 +36,6 @@ public class ThanhVienService {
 
 	public ThanhVien getById(int id) {
 		return thanhVienRepository.findById(id).orElse(null);
-	}
-
-	public ThanhVien add(ThanhVien member) {
-		return thanhVienRepository.save(member);
-	}
-
-	public ThanhVien update(ThanhVien updatedMember) {
-		return thanhVienRepository.save(updatedMember); // Sử dụng save để update nếu đối tượng đã tồn tại
-	}
-
-	public void deleteById(int id) {
-		thanhVienRepository.deleteById(id);
-	}
-
-	public void deleteByCondition(String condition) {
-//		thanhVienRepository.deleteByCondition(condition);
 	}
 
 	public List<ThanhVien> addMembersFromExcel(Sheet sheet) {
@@ -121,9 +103,6 @@ public class ThanhVienService {
 				return null;
 		}
 	}
-  public ThanhVien addMember(ThanhVien mem) {
-        return thanhVienRepository.save(mem);
-    }
 
     public Integer processLogin(int maTV, String password, Model model) {
         ThanhVien user = thanhVienRepository.findByMaTVAndPassword(maTV, password);
