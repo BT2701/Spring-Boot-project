@@ -27,7 +27,7 @@ public class ThietBiCTL {
     @Autowired
     private ThietBiRepository thietBiRepository;
 
-    @GetMapping("/thiet-bi")
+    @GetMapping("/thiet-bi-admin")
     public String getAllthietBi(Model m, @RequestParam(name = "message", required = false) String message) {
         Iterable<ThietBi> tbList = thietBiRepository.findAll();
         m.addAttribute("tbList", tbList);
@@ -37,7 +37,7 @@ public class ThietBiCTL {
         return "admin-thietbi/admin-thietbi";
     }
 
-    @GetMapping("/thiet-bi/delete/{id}")
+    @GetMapping("/thiet-bi-admin/delete/{id}")
     public String deleteThietBi(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         Optional<ThietBi> tbOptional = thietBiRepository.findById(id);
         if (tbOptional.isPresent()) {
@@ -48,7 +48,7 @@ public class ThietBiCTL {
                     String tenThanhVien = thongTinSD.getThanhVien().getHoTen();
                     redirectAttributes.addAttribute("message",
                             "Xóa thất bại! Thiết bị đang được mượn bởi " + tenThanhVien);
-                    return "redirect:/thiet-bi";
+                    return "redirect:/thiet-bi-admin";
                 }
             }
         } else {
@@ -58,10 +58,10 @@ public class ThietBiCTL {
         thietBiRepository.deleteById(id);
         redirectAttributes.addAttribute("message", "Xóa thành công");
 
-        return "redirect:/thiet-bi";
+        return "redirect:/thiet-bi-admin";
     }
 
-    @GetMapping("thiet-bi/newestId/{tenTB}")
+    @GetMapping("thiet-bi-admin/newestId/{tenTB}")
     public ResponseEntity<?> getNewestId(@PathVariable String tenTB) {
         Optional<Integer> maxIdOptional = thietBiRepository.findMaxIdByTenTB(tenTB);
         Integer maxId = maxIdOptional.orElse(0); // Nếu không tìm thấy giá trị, mặc định là 0
@@ -70,7 +70,7 @@ public class ThietBiCTL {
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("/thiet-bi/add")
+    @PostMapping("/thiet-bi-admin/add")
     public ResponseEntity<?> addThietBi(
             @RequestParam("idTB") Integer id,
             @RequestParam("tenTB") String ten,
@@ -88,7 +88,7 @@ public class ThietBiCTL {
         }
     };
 
-    @PostMapping("/thiet-bi/update")
+    @PostMapping("/thiet-bi-admin/update")
     public ResponseEntity<?> updateThietBi(
             @RequestParam("idTB") Integer id,
             @RequestParam("tenTB") String ten,
@@ -106,7 +106,7 @@ public class ThietBiCTL {
         }
     };
 
-    @PostMapping("/thiet-bi/deleteList")
+    @PostMapping("/thiet-bi-admin/deleteList")
     public ResponseEntity<?> deleteListThietBi(
             @RequestParam("idOp") Integer idOp,
             @RequestParam("tenTB") String ten,
