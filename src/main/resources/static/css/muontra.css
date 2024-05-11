@@ -85,3 +85,13 @@ div.col {
 button i{
     padding-right: 5px;
 }
+.search-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.search-control select{
+    max-width: 150px;
+    margin-left: 3%;
+}

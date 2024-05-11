@@ -154,7 +154,19 @@
               .catch(error => console.error('Error:', error));
     }
     function resetStatistics() {
-      window.location.href="./thong-ke";
+      fetch('/api/resetStatistic?action=reset')
+              .then(response => response.json())
+              .then(data => {
+                // Cập nhật giá trị của các input statistic
+                document.getElementById("txt1").value = data.countMember;
+                document.getElementById("txt2").value = data.borrowed;
+                document.getElementById("txt3").value = data.borrowing;
+                document.getElementById("txt4").value = data.violation;
+                document.getElementById("txt5").value = data.handled;
+                document.getElementById("txt6").value = data.handling;
+                document.getElementById("txt7").value = data.fee + ' VND';
+              })
+              .catch(error => console.error('Error:', error));
     }
 
   </script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -18,13 +18,19 @@
   <div class="container">
     <h1 class="mt-4 mb-4 text-center">Danh sách thiết bị</h1>
     <div class="row mb-3">
-      <div class="col-md-6 offset-md-3">
+      <div class="col-md-6 offset-md-3 search-control">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Tìm kiếm theo tên thiết bị">
+          <input type="text" class="form-control" placeholder="Nhập tên thiết bị...">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
           </div>
         </div>
+        <select name="boloc" id="boloc" class="form-select">
+          <option value="0">Trạng thái</option>
+          <option value="1">Đang rảnh</option>
+          <option value="2">Đang được đặt</option>
+          <option value="3">Đang được mượn</option>
+        </select>
       </div>
     </div>
     <div class="row mb-3">
@@ -55,35 +61,54 @@
         </div>
       </div>
 
-      <div class="row device-container-body" id="device-container-body">
+      <div class="row device-container-body" th:each="device:${list}">
         <div class="device pt-1 pb-1 border-bottom  d-flex justify-content-center">
           <div class="col">
-            <p class="mb-0 text-center ">
-              3121410128
+            <p class="mb-0 text-center " th:text="${device.getThietBi().getMaTB()}">
+
             </p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center">
+            <p class="mb-0  text-center" th:text="${device.getThietBi().getTenTB()}">
               Quạt Đứng
             </p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center ">
+            <p class="mb-0  text-center " th:text="${device.getThietBi().getMoTaTB()}">
               cây quạt
             </p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center">
-              còn
-            </p>
+            <th:block th:if="${device.getTgDatCho()!= null}">
+              <p class="mb-0  text-center">
+                Đang được đặt
+              </p>
+            </th:block>
+            <th:block th:unless="${device.getTgDatCho()!= null}">
+              <th:block th:if="${device.getTgMuon()!=null and device.getTgTra()==null}">
+                <p class="mb-0  text-center" >
+                  Đang được mượn
+                </p>
+              </th:block>
+              <th:block th:unless="${device.getTgMuon()!=null and device.getTgTra()==null}">
+                <p class="mb-0  text-center" >
+                  Đang rảnh
+                </p>
+              </th:block>
+
+            </th:block>
+
           </div>
           <div class="col text-center">
-            <button class="btn btn-success btn-sm active borrow"><i class="fa-solid fa-notes-medical"></i>Mượn</button>
+            <button class="btn btn-success btn-sm active muon"><i class="fa-solid fa-notes-medical"></i>Mượn</button>
+            <button class="btn btn-danger btn-sm active tra" style="display: none;"><i class="fa-solid fa-newspaper"></i>Trả</button>
             <button class="btn btn-primary btn-sm active datcho"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
+            <button class="btn btn-danger btn-sm active huy" style="display: none;"><i class="fa-solid fa-newspaper"></i>Hủy đặt chỗ</button>
             <button class="btn btn-info btn-sm active detail"><i class="fa-solid fa-list"></i></button>
           </div>
-        </div>       
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -98,23 +123,24 @@
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="inputMTV" class="form-label">Mã thiết bị</label>
-              <input type="text" readonly class="form-control" id="inputMTV">
+              <label for="id" class="form-label">Mã thiết bị</label>
+              <input type="text" readonly class="form-control" id="id">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Tên thiết bị</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="name" class="form-label">Tên thiết bị</label>
+              <input type="text" readonly class="form-control" id="name">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Mô tả</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="desc" class="form-label">Mô tả</label>
+              <input type="text" readonly class="form-control" id="desc">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Trạng thái</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="status" class="form-label">Trạng thái</label>
+              <input type="text" readonly class="form-control" id="status">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Đang được mượn bởi:</label>
+              <label for="borrowed" class="form-label">Đang được mượn bởi:</label>
+              <input type="text" readonly class="form-control" id="borrowed">
             </div>
           </form>
         </div>

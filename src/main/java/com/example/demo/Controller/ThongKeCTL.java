@@ -73,6 +73,35 @@ public class ThongKeCTL {
 
 		return ThongKe;
 	}
+	@GetMapping("/api/resetStatistic")
+	@ResponseBody // Đánh dấu để Spring trả về kết quả như là dữ liệu JSON
+	public ThongKe reset(@RequestParam("action") String action ) {
+		if(action.equalsIgnoreCase("reset")){
+			ThongKe ThongKe = new ThongKe();
+
+			// Lấy dữ liệu thống kê từ service
+			int countMember = thongKeService.countMemberIntoMaterial();
+			int borrowed = thongKeService.countBorrowedDevice();
+			int borrowing = thongKeService.countBorrowingDevice();
+			int violation = thongKeService.countViolation();
+			int handled = thongKeService.countHandledViolation();
+			int handling = thongKeService.countHandlingViolation();
+			int fee = thongKeService.countFee();
+
+			// Đặt các giá trị vào đối tượng ThongKe
+			ThongKe.setCountMember(countMember);
+			ThongKe.setBorrowed(borrowed);
+			ThongKe.setBorrowing(borrowing);
+			ThongKe.setViolation(violation);
+			ThongKe.setHandled(handled);
+			ThongKe.setHandling(handling);
+			ThongKe.setFee(fee);
+
+			return ThongKe;
+		}
+		return null;
+
+	}
 
 
 
