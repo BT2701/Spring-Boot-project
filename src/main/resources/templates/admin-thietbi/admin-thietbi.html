@@ -18,15 +18,16 @@
       <!-- Header -->
       <h1 class="mt-4 mb-4 text-center fw-bold">Quản lý thiết bị</h1>
       <!-- Ô tìm kiếm và bộ lọc -->
-      <form class="d-flex w-100 me-3" role="search">
-        <input type="search" class="form-control fs-5 w-50" placeholder="Search..." aria-label="Search" />
-        <select class="form-select fs-5 w-25" aria-label="Default select example">
-          <option selected>All</option>
-          <option value="1">ID</option>
-          <option value="2">Tên thiết bị</option>
-          <option value="3">Mô tả thiết bị</option>
+      <div class="d-flex w-100 me-3" role="search">
+        <input id="searchInput" type="search" class="form-control fs-5 w-50" placeholder="Search..." aria-label="Search" />
+        <select id="searchOption" class="form-select fs-5 w-25" aria-label="Default select example">
+            <option value="all" selected>All</option>
+            <option value="id">ID</option>
+            <option value="tenTB">Tên thiết bị</option>
+            <option value="moTaTB">Mô tả thiết bị</option>
         </select>
-      </form>
+    </div>
+    
     </div>
   </header>
 
@@ -50,7 +51,7 @@
           <div class="table100-body js-pscroll">
             <table>
               <tbody>
-                <tr class="row100 body" th:each="tb: ${tbList}">
+                <tr class="row100 body table-row" th:each="tb: ${tbList}">
                   <td class="cell100 column1" th:utext="${tb.maTB}"></td>
                   <td class="cell100 column2" th:utext="${tb.tenTB}"></td>
                   <td class="cell100 column3" th:utext="${tb.moTaTB}"></td>
@@ -127,18 +128,18 @@
         </div>
         <div class="modal-body p-5 pt-0">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-3" id="" placeholder="" disabled />
+            <input type="text" class="form-control rounded-3" id="idTB-modal-add" placeholder="" disabled />
             <label for="">ID</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-3" id="" placeholder="" />
+            <input type="text" class="form-control rounded-3" id="tenTB-modal-add" placeholder=""  oninput="getNewestId()"/>
             <label for="">Tên thiết bị</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-3" id="" placeholder="" />
+            <input type="text" class="form-control rounded-3" id="moTaTB-modal-add" placeholder="" />
             <label for="">Mô tả thiết bị</label>
           </div>
-          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" onclick="addNewTB()">
             Xác nhận
           </button>
           <button class="w-100 mb-2 btn btn-lg rounded-3 btn-danger" type="submit" onclick="toggleClassAddItemRemove()">
@@ -165,14 +166,14 @@
             <label for="">ID</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-3" id="tenTB-modal-update" placeholder="" />
+            <input type="text" class="form-control rounded-3" id="tenTB-modal-update" placeholder=""/>
             <label for="">Tên thiết bị</label>
           </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control rounded-3" id="moTaTB-modal-update" placeholder="" />
             <label for="">Mô tả thiết bị</label>
           </div>
-          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" onclick="updateThietBi()">
             Xác nhận
           </button>
           <button class="w-100 mb-2 btn btn-lg rounded-3 btn-danger" type="submit"
@@ -261,7 +262,7 @@
         </div>
 
         <div class="modal-body p-5 pt-0">
-          <span class="text-body-secondary" th:text="${message}"></span>
+          <span class="text-body-secondary" th:text="${message}" id="message-modal-noti"></span>
           <button class="w-100 mb-2 mt-4 btn btn-lg rounded-3 btn-primary" type="submit"
             onclick="toggleClassNotiRemove()">
             Xác nhận
@@ -274,12 +275,36 @@
       element.classList.toggle("d-none");
     </script>
   </div>
+
+  <!-- Modal thông báo -->
+  <div class="ps-ab modal modal-sheet d-block bg-body-secondary p-4 py-md-5 d-none" tabindex="-1" role="dialog"
+    id="modalNoti">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0 justify-content-center">
+          <h1 class="fw-bold mb-0 fs-2">Thông báo</h1>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <span class="text-body-secondary" id="message-modal-noti"></span>
+          <a class="w-100 mb-2 mt-4 btn btn-lg rounded-3 btn-primary" type="submit"
+            onclick="toggleClassNotiRemove()" href="/thiet-bi">
+            Xác nhận
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
   <iframe src="/footer" frameborder="0"></iframe>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <script>
     function toggleClassAddItem() {
+      document.getElementById("idTB-modal-add").value = "";
+      document.getElementById("tenTB-modal-add").value = "";
+      document.getElementById("moTaTB-modal-add").value = "";
+
       var element = document.getElementById("addItem");
       element.classList.toggle("d-none");
     }
@@ -343,6 +368,155 @@
       var element = document.getElementById("modalNoti");
       element.classList.toggle("d-none");
     }
+    async function getNewestId() {
+      const tenTB = document.getElementById("tenTB-modal-add").value.trim(); // Lấy giá trị của trường "Tên thiết bị" và loại bỏ khoảng trắng thừa
+      const words = tenTB.split(/\s+/); // Tách từ trong tên thiết bị thành mảng các từ
+
+      let id = 0;
+
+      switch (words[0]) {
+        case "Micro":
+          id = await getNewestIdByTenTB("Micro");
+          if(id == 1) id = 100001;
+          break;
+        case "Máy":
+          if (words.length >= 2) {
+            if (words[1] === "chiếu") {
+              id = await getNewestIdByTenTB("Máy chiếu");
+              if(id == 1) id = 200001;
+            } else if (words[1] === "ảnh") {
+              id = await getNewestIdByTenTB("Máy ảnh");
+              if(id == 1) id = 300001;
+            }
+          }
+          break;
+        case "Cassette":
+          id = await getNewestIdByTenTB("Cassette");
+          if(id == 1) id = 400001;
+          break;
+        case "Tivi":
+          id = await getNewestIdByTenTB("Tivi");
+          if(id == 1) id = 500001;
+          break;
+        case "Quạt":
+          if (words.length >= 2 && words[1] === "đứng") {
+            id = await getNewestIdByTenTB("Quạt đứng");
+            if(id == 1) id = 600001;
+          }
+          break;
+      }
+
+      if (id !== 0) {
+        document.getElementById("idTB-modal-add").value = id;
+      } else {
+        document.getElementById("idTB-modal-add").value = "";
+      }
+    }
+
+    async function getNewestIdByTenTB(tenTB) {
+      const response = await fetch(`/thiet-bi/newestId/${tenTB}`);
+      const data = await response.json();
+      return data.id;
+    }
+
+    async function addNewTB() {
+      const idTB = document.getElementById("idTB-modal-add").value;
+      if (idTB === "") {
+    // Trường idTB-modal-add đang trống
+          alert("Bạn nhập sai định dạng tên! Bạn phải nhập tên có chữ cái đầu: Micro, Máy chiếu, Máy ảnh, Cassette, Tivi, Quạt đứng");
+
+      } else {
+          // Trường idTB-modal-add không trống
+          const tenTB = document.getElementById("tenTB-modal-add").value;
+          const moTaTB = document.getElementById("moTaTB-modal-add").value;
+
+          const data = {idTB, tenTB, moTaTB};
+
+          const response = await fetch(`/thiet-bi/add`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams(data)
+        });
+          const rs = await response.json();
+
+          var element = document.getElementById("addItem");
+          element.classList.toggle("d-none");
+
+          var element = document.getElementById("modalNoti");
+          element.classList.toggle("d-none");
+
+          document.getElementById("message-modal-noti").innerText = rs.message;  
+      }
+    }
+
+    async function updateThietBi() {
+          // Trường idTB-modal-add không trống
+          const idTB = document.getElementById("idTB-modal-update").value;
+          const tenTB = document.getElementById("tenTB-modal-update").value;
+          const moTaTB = document.getElementById("moTaTB-modal-update").value;
+
+          const data = {idTB, tenTB, moTaTB};
+
+          const response = await fetch(`/thiet-bi/update`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams(data)
+        });
+          const rs = await response.json();
+
+          var element = document.getElementById("updateItem");
+          element.classList.toggle("d-none");
+
+          var element = document.getElementById("modalNoti");
+          element.classList.toggle("d-none");
+
+          document.getElementById("message-modal-noti").innerText = rs.message;  
+      
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchOption = document.getElementById('searchOption');
+
+    // Bắt sự kiện khi người dùng thay đổi giá trị của ô input tìm kiếm
+    searchInput.addEventListener('input', function() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        const selectedOption = searchOption.value;
+
+        // Gọi hàm để lọc thông tin bảng
+        filterTable(searchText, selectedOption);
+    });
+
+    // Bắt sự kiện khi người dùng thay đổi giá trị của dropdown menu
+    searchOption.addEventListener('change', function() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        const selectedOption = searchOption.value;
+
+        // Gọi hàm để lọc thông tin bảng
+        filterTable(searchText, selectedOption);
+    });
+
+    // Hàm để lọc thông tin bảng dựa trên từ khóa tìm kiếm và tùy chọn đã chọn
+    function filterTable(searchText, selectedOption) {
+        const tableRows = document.querySelectorAll('.table-row');
+
+        tableRows.forEach(function(row) {
+            const rowData1 = row.querySelector(`.column1`); 
+
+            if (selectedOption === 'id' && rowData1.textContent.trim().toLowerCase().includes(searchText)) {
+                row.style.display = ''; // Hiển thị hàng nếu dữ liệu khớp với từ khóa tìm kiếm và tùy chọn đã chọn
+            } else {
+                row.style.display = 'none'; // Ẩn hàng nếu không khớp
+            }
+        });
+    }
+});
+
   </script>
   <script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
 </body>
