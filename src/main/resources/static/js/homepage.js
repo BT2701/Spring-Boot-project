@@ -6,9 +6,15 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("header").innerHTML = html;
         });
 
-    fetch("./footer")
+
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // Tải header và footer bằng AJAX
+    fetch("./notification")
         .then(response => response.text())
         .then(html => {
-            document.getElementById("footer").innerHTML = html;
+            document.getElementById("notification").innerHTML = html;
         });
+
+
 });
