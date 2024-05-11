@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="css/thong_ke.css">
 
 <!-- link css header style  -->
-    <title>Document</title>
+    <title >Document</title>
 </head>
 <body>
     
@@ -37,7 +37,7 @@
         </div>
         <div class="member-mid">
             <select name="control" id="control" class="form-select" style="max-width: 100px;">
-                <option value="1">1</option>
+
             </select>
         </div>
         <div class="member-south">
@@ -50,9 +50,149 @@
                 <canvas id="chartBranch" width="400" height="300"></canvas>
             </div>
         </div>
+    </div>
 
         <script src="js/homepage.js"></script>
-    <script src="js/chart.js"></script>
+<!--    <script src="js/chart.js"></script>-->
+        <script>
+            // Dữ liệu cho biểu đồ 1
+            var dataMember = {
+                labels: ['A', 'B', 'C', 'D', 'E'],
+                datasets: [{
+                    label: 'Tổng quan',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [20, 30, 25, 40, 35],
+                    fill: false,
+                }]
+            };
+
+            // Dữ liệu cho biểu đồ 2
+            var dataDepartment = {
+                labels: ['X', 'Y', 'Z'],
+                datasets: [{
+                    label: 'Khoa',
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    data: [50, 60, 55],
+                    fill: false,
+                }]
+            };
+
+            // Dữ liệu cho biểu đồ 3
+            var dataBranch = {
+                labels: ['M', 'N', 'O', 'P'],
+                datasets: [{
+                    label: 'Ngành',
+                    backgroundColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    data: [15, 25, 20, 30],
+                    fill: false,
+                }]
+            };
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+            // Vẽ biểu đồ 1
+            var ctx1 = document.getElementById('chartMember').getContext('2d');
+            var myChart1 = new Chart(ctx1, {
+                type: 'line',
+                data: dataMember,
+                options: options
+            });
+
+            // Vẽ biểu đồ 2
+            var ctx2 = document.getElementById('chartDepartment').getContext('2d');
+            var myChart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: dataDepartment,
+                options: options
+            });
+
+            // Vẽ biểu đồ 3
+            var ctx3 = document.getElementById('chartBranch').getContext('2d');
+            var myChart3 = new Chart(ctx3, {
+                type: 'bar',
+                data: dataBranch,
+                options: options
+            });
+            // Hàm để lấy dữ liệu từ endpoint cho biểu đồ 1 (Lượng sinh viên vào khu học liệu)
+            function getChartDataForMember(year) {
+                fetch(`/memberchart?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Cập nhật dữ liệu cho biểu đồ 1
+                        myChart1.data.labels = data.labels;
+                        myChart1.data.datasets[0].data = data.data;
+                        myChart1.update();
+                    });
+            }
+
+            // Hàm để lấy dữ liệu từ endpoint cho biểu đồ 2 (Theo các khoa)
+            function getChartDataForDepartment() {
+                fetch('/departmentchart')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Cập nhật dữ liệu cho biểu đồ 2
+                        myChart2.data.labels = data.labels;
+                        myChart2.data.datasets[0].data = data.data;
+                        myChart2.update();
+                    });
+            }
+
+            // Hàm để lấy dữ liệu từ endpoint cho biểu đồ 3 (Theo các ngành)
+            function getChartDataForBranch() {
+                fetch('/branchchart')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Cập nhật dữ liệu cho biểu đồ 3
+                        myChart3.data.labels = data.labels;
+                        myChart3.data.datasets[0].data = data.data;
+                        myChart3.update();
+                    });
+            }
+            function createYearOptions() {
+                var select = document.getElementById('control');
+                var currentYear = new Date().getFullYear();
+
+                // Xóa các option cũ trong thẻ select (nếu có)
+                select.innerHTML = '';
+
+                // Tạo và thêm các option vào thẻ select
+                for (var i = 0; i < 5; i++) {
+                    var option = document.createElement('option');
+                    option.value = currentYear - i;
+                    option.text = currentYear - i;
+                    select.appendChild(option);
+                }
+            }
+            function onYearChange() {
+                var selectedYear = document.getElementById('control').value;
+                getChartDataForMember(selectedYear);
+            }
+
+            // Gọi hàm getChartDataForMember khi trang được load
+            window.onload = function() {
+                createYearOptions();
+                document.getElementById('control').onchange = onYearChange;
+                // Mặc định, lấy dữ liệu cho năm hiện tại
+                var currentYear = new Date().getFullYear();
+                getChartDataForMember(currentYear);
+
+                // Gọi các hàm để lấy dữ liệu cho các biểu đồ còn lại
+                getChartDataForDepartment();
+                getChartDataForBranch();
+            };
+
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
