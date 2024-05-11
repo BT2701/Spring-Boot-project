@@ -12,8 +12,8 @@
 </head>
 
 <body>
-  <iframe src="/admin-header" frameborder="0"></iframe>
-  <header class="mb-4">
+  <div id="header"></div>
+    <header class="py-3 mb-4 border-bottom">
     <div class="container d-flex flex-wrap justify-content-center">
       <!-- Header -->
       <h1 class="mt-4 mb-4 text-center fw-bold">Quản lý thiết bị</h1>
@@ -196,6 +196,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
             onclick="toggleClassDeleteItemRemove()"></button>
         </div>
+
+<script src="js/homepage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      function toggleClassAddItem() {
+        var element = document.getElementById("addItem");
+        element.classList.toggle("d-none");
+      }
 
         <div class="modal-body p-5 pt-0">
           <span class="text-body-secondary" id="span-modal-delete">Bạn có chắc chắn muốn xóa không</span>

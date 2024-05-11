@@ -8,15 +8,19 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "login-signup/login";
 	}
-	@GetMapping("/sig-up")
+	@GetMapping("/sign-up")
 	public String sigup() {
-		return "register";
+		return "login-signup/register";
 	}
 	@GetMapping("/forgot-password")
 	public String forgotPass(){
-		return "resetpasword";
+		return "login-signup/resetpasword";
+	}
+        @GetMapping("/sign-upSucess")
+	public String signupSucess() {
+		return "login-signup/sign-upSucess";
 	}
 	@GetMapping("/admin-header")
 	public String header_admin(){
@@ -29,5 +33,13 @@ public class HomeController {
 	@GetMapping("/footer")
 	public String footer(){
 		return "header-footer/footer";
+	}
+	@GetMapping("/home")
+	public String home() {
+		return "slider/slider";
+	}
+	@GetMapping("/notification")
+	public String notification() {
+		return "slider/notification";
 	}
 }

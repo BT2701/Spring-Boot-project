@@ -11,10 +11,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/QuanLyThanhVien.css">
+
+  <script src="js/homepage.js" defer></script>
 </head>
 
 <body>
-	<iframe src="/admin-header" frameborder="0"></iframe>
+	<div id="header"></div>
   <div class="container">
     <h1 class="mt-4 mb-4 text-center">Quản Lý Thành Viên</h1>
     <div class="row mb-3">
@@ -36,7 +38,7 @@
       </div>
     </div>
 
-    <div class="member-container mt-5">
+    <div class="member-container mt-5 w-100" style="overflow-x: hidden;">
       <div class="row member-container-header border-bottom border-dark ">
         <div class="col">
           <p class="fw-bold">Mã TV</p>
@@ -61,7 +63,7 @@
       <div th:each="thanhVien : ${tvList}" class="row member-container-body" id="member-container-body">
         <div class="member pt-1 pb-1 border-bottom  d-flex justify-content-center">
           <div class="col">
-            <p class="mb-0 text-center" th:text="${thanhVien.maTV}"></p>
+            <p class="mb-0 text-center" th:text="${thanhVien.maTV}" id="mathanhvien"></p>
           </div>
           <div class="col">
             <p class="mb-0 text-center" th:text="${thanhVien.hoTen}"></p>
@@ -94,7 +96,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <a class="btn btn-primary" th:href="@{'/thanhvien/delete/' + ${thanhVien.maTV}}" id="aTagDeleteMatv">Xóa</a>
+                <button class="btn btn-primary" th:onclick="DeleteOneTv()" id="deleteTvBtn">Xóa</button>
               </div>
             </div>
           </div>
@@ -105,25 +107,24 @@
     <div id="rightclicked"
       style="background-color: rgb(200, 200, 200);z-index: 100000;height: auto; position: absolute; display: none;">
       <div class="btn-group-vertical">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSua">
+        <button id="openModalUpdateTVBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSua">
           Sửa thông tin
         </button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKhuVucHocTap">
+        <button id="openModalJoinKVHTBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalKhuVucHocTap">
           Khu vực học tập
         </button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCanhBaoViPham">
+        <button id="openModalCanhBaoViPhamBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCanhBaoViPham">
           Cảnh báo vi phạm
         </button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMuonTra">
+        <button id="openModalMuonTraTbBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalMuonTra">
           Mượn trả
         </button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalXemChiTiet">
+        <button id="openModalDetailTVBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalXemChiTiet">
           Xem chi tiết
         </button>
       </div>
     </div>
   </div>
-
 
   <!-- Modal sưa-->
   <div class="modal fade" id="modalThemThanhVien" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
@@ -137,11 +138,7 @@
           <form>
             <div class="mb-2">
               <label for="inputMTV1" class="form-label">Mã thành viên</label>
-              <input type="number" class="form-control" id="inputMTV1">
-              <div class="error">
-                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-                <span class="error-message">Trường hợp có lỗi</span>
-            </div>
+              <input type="number" class="form-control" id="inputMTV1" disabled>
             </div>
             <div class="mb-2">
               <label for="inputHVT1" class="form-label">Họ và tên</label>
@@ -194,10 +191,6 @@
             <div class="mb-2">
               <label for="inputHVT2" class="form-label">Họ và tên</label>
               <input type="text" class="form-control" id="inputHVT2">
-              <div class="error">
-                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-                <span class="error-message">Trường hợp có lỗi</span>
-            </div>
             </div>
             <div class="mb-2">
               <label for="selectKhoa2" class="form-label">Khoa</label>
@@ -221,8 +214,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalUpdateTVBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" id="updateTVBtn">Lưu</button>
         </div>
       </div>
     </div>
@@ -242,23 +235,21 @@
             <div class="mb-2">
               <label for="selectKhoaThu" class="form-label">Khóa thứ</label>
               <select class="form-select" id="selectKhoaThu" name="KhoaThu">
-                <option value="K21">K21</option>
-                <option value="K22">K22</option>
-                <option value="K23">K23</option>
-                <option value="K24">K24</option>
+                <option value=""></option>
+                <option value="21">K21</option>
+                <option value="22">K22</option>
+                <option value="23">K23</option>
+                <option value="24">K24</option>
               </select>
             </div>
             <div class="mb-2">
               <label for="inputHVT3" class="form-label">Họ và tên</label>
               <input type="text" class="form-control" id="inputHVT3">
-              <div class="error">
-                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-                <span class="error-message">Trường hợp có lỗi</span>
-            </div>
             </div>
             <div class="mb-2">
               <label for="selectKhoa3" class="form-label">Khoa</label>
               <select class="form-select s_faculty" id="selectKhoa3" name="Khoa" onchange="updateMajor()">
+                <option value=""></option>
                 <option value="CNTT">Khoa Công nghệ Thông tin</option>
                 <option value="GD">Khoa Giáo dục</option>
                 <option value="GDMN">Khoa Giáo dục Mầm non</option>
@@ -268,6 +259,7 @@
             <div class="mb-2">
               <label for="selectNganh3" class="form-label">Ngành</label>
               <select class="form-select s_major" id="selectNganh3" name="Nganh">
+                <option value=""></option>
                 <!-- Options will be populated dynamically based on faculty selection -->
               </select>
             </div>
@@ -278,8 +270,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeDeleteManyTvModalBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" id="deleteManyTvBtn">Xóa</button>
         </div>
       </div>
     </div>
@@ -298,33 +290,33 @@
           <form>
             <div class="mb-2">
               <label for="inputMaTV4" class="form-label">Mã thành viên</label>
-              <input type="text" class="form-control" id="inputMaTV4">
-              <div class="error">
-                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-                <span class="error-message">Trường hợp có lỗi</span>
-            </div>
+              <input type="text" class="form-control" id="inputMaTV4" disabled>
+<!--              <div class="error">-->
+<!--                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>-->
+<!--                <span class="error-message">Trường hợp có lỗi</span>-->
+<!--            </div>-->
             </div>
             <div class="mb-2">
               <label for="inputHVT4" class="form-label">Họ và tên</label>
-              <input type="text" class="form-control" id="inputHVT4">
+              <input type="text" class="form-control" id="inputHVT4" disabled>
             </div>
             <div class="mb-2">
               <label for="inputKhoa4" class="form-label">Khoa</label>
-              <input type="text" class="form-control" id="inputKhoa4">
+              <input type="text" class="form-control" id="inputKhoa4" disabled>
             </div>
             <div class="mb-2">
               <label for="inputNganh4" class="form-label">Ngành</label>
-              <input type="text" class="form-control" id="inputNganh4">
+              <input type="text" class="form-control" id="inputNganh4" disabled>
             </div>
             <div class="mb-2">
               <label for="inputSdt4" class="form-label">Số điện thoại</label>
-              <input type="text" class="form-control" id="inputSdt4">
+              <input type="text" class="form-control" id="inputSdt4" disabled>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalJoinKvhtTVBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" id="joinKVHTBtn">Vào</button>
         </div>
       </div>
     </div>
@@ -345,20 +337,14 @@
             <div class="mb-2">
               <label for="selectThanhVien5" class="form-label">Thành viên</label>
               <select class="form-select" id="selectThanhVien5" name="ThanhVien">
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
-                <option value="3121410128">3121410128-PhamVanDu</option>
+                <option th:each="thanhVien : ${tvList}"
+                        th:value="${thanhVien.maTV + '-' + thanhVien.hoTen}"
+                        th:text="${thanhVien.maTV + '-' + thanhVien.hoTen}"></option>
               </select>
             </div>
             <div class="mb-2">
               <label for="inputViPham5" class="form-label">Vi phạm</label>
               <input type="text" class="form-control" id="inputViPham5">
-              <div class="error">
-                <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-                <span class="error-message">Trường hợp có lỗi</span>
-            </div>
             </div>
             <div class="mb-2">
               <label for="inputSoTien5" class="form-label">Số tiền</label>
@@ -367,8 +353,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalCbcpBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" id="addViPhamBtn">Lưu</button>
         </div>
       </div>
     </div>
@@ -385,12 +371,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
             <div class="mb-2" th:if="${tvList != null}">
               <label for="selectThanhVien6" class="form-label">Thành viên</label>
               <select class="form-select" id="selectThanhVien6" name="ThanhVien">
                 <option th:each="thanhVien : ${tvList}"
-                        th:value="${thanhVien.maTV}"
+                        th:value="${thanhVien.maTV + '-' + thanhVien.hoTen}"
                         th:text="${thanhVien.maTV + '-' + thanhVien.hoTen}"></option>
               </select>
             </div>
@@ -399,16 +384,15 @@
               <label for="selectThietBi6" class="form-label">Thiết bị</label>
               <select class="form-select" id="selectThietBi6" name="ThietBi">
                 <option th:each="thietbi : ${tbList}"
-                        th:value="${thietbi.tenTB}"
-                        th:text="${thietbi.tenTB}"></option>
+                        th:value="${thietbi.maTB + '-' + thietbi.tenTB}"
+                        th:text="${thietbi.maTB + '-' + thietbi.tenTB}"></option>
               </select>
             </div>
-          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary">Mượn</button>
-          <button type="button" class="btn btn-primary">Trả</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalMuonTraTbBtn">Hủy</button>
+          <button type="button" class="btn btn-primary" id="muonThietBiBtn">Mượn</button>
+          <button type="button" class="btn btn-primary" id="traThietBiBtn">Trả</button>
         </div>
       </div>
     </div>
@@ -424,7 +408,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
             <div class="mb-2">
               <label for="inputMTV7" class="form-label">Mã thành viên</label>
               <input type="text" readonly class="form-control" id="inputMTV7">
@@ -456,6 +439,11 @@
             </div>
 
             <div class="mb-2">
+              <label for="inputTbdc7" class="form-label">Thiết bị đã đặt chỗ</label>
+              <input type="text" readonly class="form-control" id="inputTbdc7">
+            </div>
+
+            <div class="mb-2">
               <label for="inputTbdm7" class="form-label">Thiết bị đã mượn</label>
               <input type="text" readonly class="form-control" id="inputTbdm7">
             </div>
@@ -464,7 +452,6 @@
               <label for="inputVp7" class="form-label">Vi phạm</label>
               <input type="text" readonly class="form-control" id="inputVp7">
             </div>
-          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -482,7 +469,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">
-          <button class="btn btn-primary base-btn" data-bs-toggle="modal" data-bs-target="#modalThemThanhVien"
+          <button id="addTVByFormBtn" class="btn btn-primary base-btn" data-bs-toggle="modal" data-bs-target="#modalThemThanhVien"
             data-bs-dismiss="modal"><i class="fas fa-plus"></i>Thông qua form</button>
           <button class="btn btn-success base-btn" data-bs-toggle="modal" data-bs-target="#modalChonFile"
             data-bs-dismiss="modal"><i class="fas fa-plus"></i>Thông qua file</button>
@@ -509,153 +496,19 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalUploadFile">Đóng</button>
+          <button type="button" class="btn btn-primary" id="uploadFileBtn">Tải lên</button>
         </div>
       </div>
     </div>
   </div>
-<iframe src="/footer" frameborder="0"></iframe>
+
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-  <script>
-    function ClickDeleteOneTVBtn(matv) {
-      document.getElementById("modal-body-idTV").innerText = matv.toString();
-
-      document.getElementById("aTagDeleteMatv").href = `/thanhvien/delete/${matv}`;
-    }
-
-    document.body.addEventListener('click', function () {
-      document.getElementById("rightclicked").style.display = "none";
-    })
-    document.body.addEventListener('contextmenu', function () {
-      document.getElementById("rightclicked").style.display = "none";
-    })
-
-    members = document.querySelectorAll('.member');
-    members.forEach(member => {
-      member.addEventListener('contextmenu', function (ev) {
-      ev.stopPropagation();
-      ev.preventDefault();
-      rightclick();
-      return false;
-    }, false);
-    });
-
-    function rightclick() {
-      var e = window.event;
-      var cantThinkOfAName = document.getElementById("rightclicked");
-      cantThinkOfAName.style.display = "block";
-      cantThinkOfAName.style.left = e.clientX + "px";
-      cantThinkOfAName.style.top = e.clientY + "px";
-    }
-
-    function renderMajorFirstTime() {
-      const facultySelects = document.querySelectorAll(".s_faculty");
-      const majorSelects = document.querySelectorAll(".s_major");
-
-      const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
-
-      facultySelects.forEach((facultySelect, index) => {
-          const majorSelect = majorSelects[index];
-
-          if (facultySelect.value === "CNTT") {
-              majorSelect.innerHTML = "";
-
-             majors.forEach(major => {
-                  const option = document.createElement("option");
-                  option.text = major;
-                  option.value = major;
-                  majorSelect.add(option);
-              });
-         }
-      });
-    }
-    renderMajorFirstTime();
-
-    function updateMajor() {
-            const facultySelects = document.querySelectorAll(".s_faculty");
-            const majorSelects = document.querySelectorAll(".s_major");
-
-            facultySelects.forEach((facultySelect, index) => {
-                const majorSelect = majorSelects[index];
-                majorSelect.innerHTML = "";
-
-                if (facultySelect.value === "CNTT") {
-                    const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
-                    majors.forEach(major => {
-                        const option = document.createElement("option");
-                        option.text = major;
-                        option.value = major;
-                        majorSelect.add(option);
-                    });
-                } else if (facultySelect.value === "GD") {
-                    const majors = ["Tư vấn học đường", "Tâm lý giáo dục", "Sư phạm", "Công nghệ giáo dục"];
-                    majors.forEach(major => {
-                        const option = document.createElement("option");
-                        option.text = major;
-                        option.value = major;
-                        majorSelect.add(option);
-                    });
-                } else if (facultySelect.value === "GDMN") {
-                    const majors = ["Ngành giáo dục mầm non"];
-                    majors.forEach(major => {
-                        const option = document.createElement("option");
-                        option.text = major;
-                        option.value = major;
-                        majorSelect.add(option);
-                    });
-                } else if (facultySelect.value === "KL") {
-                    const majors = ["Luật Hình sự", "Luật Dân sự", "Luật Hành chính","Luật Thương mại","Luật Quốc tế","Cố vấn pháp lý","Thẩm phán"];
-                    majors.forEach(major => {
-                        const option = document.createElement("option");
-                        option.text = major;
-                        option.value = major;
-                        majorSelect.add(option);
-                    });
-                }
-            });
-        }
-
-    function saveNewThanhVien() {
-        const maTV = document.getElementById("inputMTV1").value;
-        const hoten = document.getElementById("inputHVT1").value;
-        const khoa = document.getElementById("selectKhoa1").value;
-        const nganh = document.getElementById("major1").value;
-        const sdt = document.getElementById("inputSdt1").value;
-        const email = "";
-        const password = "";
-
-        const data = {
-            maTV,
-            hoten,
-            khoa,
-            nganh,
-            sdt,
-            email,
-            password
-        };
-
-        fetch("/thanhvien/add", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams(data)
-        })
-        .then(response => {
-            if (response.ok) {
-                document.getElementById("closeModalAddTVBtn").click();
-                window.location.reload(); // Hoặc chuyển hướng đến trang khác
-            } else {
-                console.error("Có lỗi khi thêm thành viên");
-            }
-        })
-        .catch(error => console.error("Lỗi:", error));
-    }
-  </script>
 </body>
 
 </html>

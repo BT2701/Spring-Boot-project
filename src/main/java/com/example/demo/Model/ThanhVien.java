@@ -2,6 +2,7 @@ package com.example.demo.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +30,11 @@ public class ThanhVien {
 
 	@Column
 	private String sdt;
-
+	@JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
 	@OneToMany(mappedBy = "thanhVien")
 	private List<ThongTinSD> listInfomation;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "thanhVien")
 	private List<XuLy> listHandle;
 
