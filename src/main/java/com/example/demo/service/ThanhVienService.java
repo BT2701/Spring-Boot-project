@@ -30,13 +30,37 @@ public class ThanhVienService {
         this.thanhVienRepository = thanhVienRepository;
         this.javaMailSender = javaMailSender;
     }
-	public List<ThanhVien> getAll() {
-		return thanhVienRepository.findAll();
-	}
 
-	public ThanhVien getById(int id) {
-		return thanhVienRepository.findById(id).orElse(null);
-	}
+    public List<ThanhVien> getAll() {
+        return thanhVienRepository.findAll();
+    }
+
+
+    public ThanhVien getById(int id) {
+        return thanhVienRepository.findById(id).orElse(null);
+    }
+
+    public ThanhVien add(ThanhVien member) {
+        return thanhVienRepository.save(member);
+    }
+
+    public ThanhVien update(ThanhVien updatedMember) {
+        return thanhVienRepository.save(updatedMember); // Sử dụng save để update nếu đối tượng đã tồn tại
+    }
+
+    public void deleteById(int id) {
+        thanhVienRepository.deleteById(id);
+    }
+
+    public void deleteByCondition(String condition) {
+//		thanhVienRepository.deleteByCondition(condition);
+    }
+
+    
+
+    public ThanhVien addMember(ThanhVien mem) {
+        return thanhVienRepository.save(mem);
+    }
 
 	public List<ThanhVien> addMembersFromExcel(Sheet sheet) {
 		List<ThanhVien> newMembers = new ArrayList<>();
@@ -104,12 +128,13 @@ public class ThanhVienService {
 		}
 	}
 
-    public Integer processLogin(int maTV, String password, Model model) {
+
+    public ThanhVien processLogin(int maTV, String password, Model model) {
         ThanhVien user = thanhVienRepository.findByMaTVAndPassword(maTV, password);
 
         if (user != null) {
             // Đăng nhập thành công, trả về maTV
-            return user.getMaTV();
+            return user;
         } else {
             // Đăng nhập không thành công, trả về null
             return null;
@@ -118,7 +143,16 @@ public class ThanhVienService {
 
     // Phương thức để thêm một bản ghi mới vào bảng ThanhVien
     public ThanhVien addThanhVien(ThanhVien thanhVien) {
-
+       try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(thanhVien.getEmail());
+            helper.setSubject("Welcome to the system");
+            helper.setText("your membership code is: " + thanhVien.getMaTV() +"your password is: "+thanhVien.getPassword());
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
         // Lưu đối tượng thanhVien vào cơ sở dữ liệu
         return thanhVienRepository.saveAndFlush(thanhVien);
     }
@@ -135,7 +169,6 @@ public class ThanhVienService {
     public String sendOTP(String email) {
         // Generate OTP
         String otp = generateOTP();
-
         // Send OTP via email
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -162,23 +195,31 @@ public class ThanhVienService {
 
     public boolean SendPassword(String email) {
         ThanhVien thanhVien = thanhVienRepository.findByEmail(email);
-        String password="";
+        String password = "";
         if (thanhVien != null) {
-            password= thanhVien.getPassword();
-        } 
+            password = thanhVien.getPassword();
+        }
         // Send OTP via email
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
             helper.setSubject("Password Reset");
-            helper.setText("Your password is:"+password);
+            helper.setText("Your password is:" + password);
             javaMailSender.send(message);
             return true; // Email sent successfully
         } catch (MessagingException e) {
             e.printStackTrace();
             return false; // Failed to send email
         }
+    }
+
+    public List<String> getAllKhoa() {
+        return thanhVienRepository.findDistinctKhoa();
+    }
+
+    public List<String> findDistinctNganhByKhoa(String khoa) {
+        return thanhVienRepository.findDistinctNganhByKhoa(khoa);
     }
 
 }
