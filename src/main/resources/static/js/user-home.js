@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("user-header").innerHTML = html;
         });
 
-    fetch("./../user-header")
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("sub-header").innerHTML = html;
-        });
+//    fetch("./../user-header")
+//        .then(response => response.text())
+//        .then(html => {
+//            document.getElementById("sub-header").innerHTML = html;
+//        });
 });

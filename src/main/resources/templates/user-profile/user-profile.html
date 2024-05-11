@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,23 +17,20 @@
             <div class="mb-3 row">
                 <label for="memberCode" class="col-sm-2 col-form-label form-label">Mã thành viên</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="memberCode" value="123456" disabled>
+                    <input type="text" class="form-control" id="memberCode" th:value="${data.thanhVien.maTV}" disabled>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="fullName" class="col-sm-2 col-form-label form-label">Họ và tên</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="fullName" value="Nguyễn Văn A" readonly>
+                    <input type="text" class="form-control" id="fullName" th:value="${data.thanhVien.hoTen}" readonly>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="faculty" class="col-sm-2 col-form-label form-label">Khoa</label>
                 <div class="col-sm-10">
-                    <select class="form-select" id="faculty" onchange="updateMajor()">
-                        <option value="CNTT">Khoa Công nghệ Thông tin</option>
-                        <option value="GD">Khoa Giáo dục</option>
-                        <option value="GDMN">Khoa Giáo dục Mầm non</option>
-                        <option value="KL">Khoa Luật</option>
+                    <select class="form-select" id="faculty" disabled >
+                        <option th:value="${data.thanhVien.khoa}" th:text="${data.thanhVien.khoa}">Khoa Công nghệ Thông tin</option>
                     </select>
                 </div>
             </div>
@@ -41,96 +38,60 @@
             <div class="mb-3 row">
                 <label for="major" class="col-sm-2 col-form-label form-label">Ngành</label>
                 <div class="col-sm-10">
-                    <select class="form-select" id="major">
-                        <!-- Options will be populated dynamically based on faculty selection -->
+                    <select class="form-select" id="major" disabled >
+                        <option th:value="${data.thanhVien.nganh}" th:text="${data.thanhVien.nganh}">Khoa học máy tính</option>
                     </select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="phone" class="col-sm-2 col-form-label form-label">Số điện thoại</label>
                 <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="phone" pattern="[0-9]*" value="0904332938" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11)">
-                    <small id="phoneHelp" class="form-text text-muted">Vui lòng chỉ nhập số.</small>
+                    <input readonly type="tel" class="form-control" id="phone" pattern="[0-9]*" th:value="${data.thanhVien.sdt}" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11)">
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="email" class="col-sm-2 col-form-label form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" value="nguyenvana@example.com">
+                    <input type="email" class="form-control" id="email"
+                           th:value="${data.thanhVien.email != '' ? data.thanhVien.email : 'Chưa tạo'}" readonly>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="password" class="col-sm-2 col-form-label form-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" value="********">
+                    <input type="password" id="password" class="form-control"
+                           th:value="${data.thanhVien.password != '' ? data.thanhVien.password : 'Không có'}" readonly>
                 </div>
-            </div>    
+            </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label form-label">Xem trạng thái vi phạm</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  readonly>
-                </div>          
-            </div>  
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label form-label">Xem đặt chỗ mượn thiết bị</label> 
-                <div class="col-sm-10">
-                    <input type="text" class="form-control"  readonly>
-                </div>     
+                    <input type="text" class="form-control"
+                           th:value="${data.viPham != '' ? data.viPham : 'Không có'}" readonly>
+                </div>
             </div>
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label form-label">Xem thiết bị đang được mượnn</label>
+                <label class="col-sm-2 col-form-label form-label">Xem thiết bị đang đặt chỗ</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control"  readonly>
-                </div>      
-            </div>              
+                    <input type="text" class="form-control"
+                           th:value="${data.thietBiDaDatCho != '' ? data.thietBiDaDatCho : 'Không có'}" readonly>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label form-label">Xem thiết bị đang mượn</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"
+                           th:value="${data.thietBiDaMuon != '' ? data.thietBiDaMuon : 'Không có'}" readonly>
+                </div>
+            </div>
             <div class="text-center mt-5">
-                <a href="./profile/editProfile" class="btn btn-custom1">
+                <a th:href="@{/profile/editProfile(id=${data.thanhVien.maTV})}" class="btn btn-custom1">
                     <i class="fas fa-edit"></i> Chỉnh sửa thông tin cá nhân
                 </a>
             </div>              
         </form>
     </div>
-<script src="js/user-home.js"></script>
-    <script>
-        function updateMajor() {
-            const facultySelect = document.querySelector("#faculty");
-            const majorSelect = document.querySelector("#major");
-            majorSelect.innerHTML = "";
 
-            if (facultySelect.value === "CNTT") {
-                const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
-            } else if (facultySelect.value === "GD") {
-                const majors = ["Tư vấn học đường", "Tâm lý giáo dục", "Sư phạm", "Công nghệ giáo dục"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
-            } else if (facultySelect.value === "GDMN") {
-                const majors = ["Ngành giáo dục mầm non"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
-            } else if (facultySelect.value === "KL") {
-                const majors = ["Luật Hình sự", "Luật Dân sự", "Luật Hành chính","Luật Thương mại","Luật Quốc tế","Cố vấn pháp lý","Thẩm phán"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
-            }
-        }
-    </script>
+    <script src="js/user-home.js"></script>
 </body>
 </html>

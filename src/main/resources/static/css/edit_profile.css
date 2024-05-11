@@ -9,7 +9,7 @@ body {
 iframe{
     max-width: 100%;
     width: 100%;
-}   
+}
 .container {
     background-color: #ffffff;
     border-radius: 10px;
@@ -109,4 +109,15 @@ iframe{
     background-color: #c82333;
     border-color: #bd2130;
     transform: scale(1.05); /* Phóng to nút khi hover */
+}
+
+.input-group {
+    position: relative;
+}
+#togglePassword {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+
+    transform: translateY(-50%);
 }

@@ -172,3 +172,32 @@ iframe{
 .back i{
     padding-right: 10px;
 }
+.container1{
+    display: flex;
+    max-width: 90vw;
+    max-height: 90vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 2.5% 0;
+}
+.container1 .title{
+    padding-left: 10%;
+}
+.chart-popular{
+    display: block;
+    padding-left: 10%;
+    max-width: 100%;
+    width: 100%;
+}
+.control-popular{
+    padding-left: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.control-popular select{
+    margin: 10px 5px;
+}
