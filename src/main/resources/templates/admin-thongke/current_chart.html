@@ -14,34 +14,117 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="../css/thong_ke.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/thong_ke.css">
 <!-- link css header style  -->
     <title>Document</title>
 </head>
 <body>
-  <iframe src="/admin-header" frameborder="0"></iframe>
+  <div id="header"></div>
 	<div class="back">
         <a href="../thong-ke"><i class="fa-solid fa-arrow-left"></i>Quay lại</a>
     </div>
-    <div class="container">
+    <div class="container1">
       <div class="title">
         <h2>Lượng thiết bị đang được mượn</h2>
       </div>
       <div class="chart-popular">
-        <canvas id="chartCurrent" width="400" height="300"></canvas>
+        <canvas id="chartCurrent" width="400" height="400"></canvas>
       </div>
       <div class="control-popular">
-        <select name="current" id="current" class="form-select">
-          <option value="1">1</option>
+        <select name="month" id="month" class="form-select">
+        </select>
+        <select name="year" id="year" class="form-select">
         </select>
       </div>
     </div>
-    <iframe src="/footer" frameborder="0"></iframe>
-    <script src="../js/chart.js"></script>
+
+  <script src="js/homepage.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
 <script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
+<!--  <script src="js/chart.js"></script>-->
+  <script>
+    var dataCurrent = {
+      labels: ['M', 'N', 'O', 'P'],
+      datasets: [{
+        label: 'Thiết bị',
+        backgroundColor: 'rgb(58,237,108)',
+        borderColor: 'rgb(75, 192, 192)',
+        data: [15, 25, 20, 30],
+        fill: false,
+      }]
+    };
+    var options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+    // Vẽ biểu đồ 5
+    var ctx5 = document.getElementById('chartCurrent').getContext('2d');
+    var myChart5 = new Chart(ctx5, {
+      type: 'bar',
+      data: dataCurrent,
+      options: options
+    });
+    function getChartDataForCurrent(year, month) {
+      fetch(`/currentchart?year=${year}&month=${month}`)
+              .then(response => response.json())
+              .then(data => {
+                // Cập nhật dữ liệu cho biểu đồ 1
+                myChart5.data.labels = data.labels;
+                myChart5.data.datasets[0].data = data.data;
+                myChart5.update();
+              });
+    }
+    function createYearOptions() {
+      var year = document.getElementById('year');
+      var month=document.getElementById('month');
+      var currentYear = new Date().getFullYear();
+      // Xóa các option cũ trong thẻ select (nếu có)
+      year.innerHTML = '';
+      month.innerHTML='';
+      // Tạo và thêm các option vào thẻ select
+      for (var i = 0; i < 5; i++) {
+        var option = document.createElement('option');
+        option.value = currentYear - i;
+        option.text = "Năm "+(currentYear - i);
+        year.appendChild(option);
+      }
+      for (var i=1;i<=12;i++){
+        var option = document.createElement('option');
+        option.value = i;
+        option.text = "Tháng "+i;
+        month.appendChild(option);
+      }
+    }
+    function onYearChange() {
+      var selectedYear = document.getElementById('year').value;
+      var selectedMonth=document.getElementById('month').value;
+      getChartDataForCurrent(selectedYear,selectedMonth);
+
+    }
+
+    // Gọi hàm getChartDataForMember khi trang được load
+    window.onload = function() {
+      createYearOptions();
+      document.getElementById('year').onchange = onYearChange;
+      document.getElementById('month').onchange=onYearChange;
+      // Mặc định, lấy dữ liệu cho năm hiện tại
+      var currentYear = new Date().getFullYear();
+      var currentMonth= new Date().getMonth()+1;
+      getChartDataForCurrent(currentYear,currentMonth);
+
+    };
+  </script>
 </body>
 </html>
