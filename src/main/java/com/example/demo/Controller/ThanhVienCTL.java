@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -217,20 +218,20 @@ public class ThanhVienCTL {
 
 		List<ThongTinSD> ttsdList = thongTinSdRepository.findByThanhVien_MaTV(maTV);
 		String ttsd = ttsdList.stream()
-				.filter(thongTinSD -> {
-					ThietBi thietBi = thongTinSD.getThietBi();
-					return thietBi != null;
-				})
-				.map(thongTinSD -> {
-					ThietBi thietBi = thongTinSD.getThietBi();
-					return thietBi.getTenTB();
-				})
+				.filter(thongTinSD -> thongTinSD.getThietBi() != null)
+				.map(thongTinSD -> thongTinSD.getThietBi().getTenTB())
+				.collect(Collectors.joining(", "));
+
+		String tbddc = ttsdList.stream()
+				.filter(thongTinSD -> thongTinSD.getTgDatCho() != null)
+				.map(thongTinSD -> thongTinSD.getThietBi().getTenTB())
 				.collect(Collectors.joining(", "));
 
 		Map<String, Object> result = new HashMap<>();
 		result.put("thanhVien", thanhVien);
 		result.put("viPham", xuly);
 		result.put("thietBiDaMuon", ttsd);
+		result.put("thietBiDaDatCho", tbddc);
 
 		return ResponseEntity.ok(result);
 	}
@@ -303,12 +304,11 @@ public class ThanhVienCTL {
         Optional<ThongTinSD> thongTinSD = ttsdList.stream()
                 .filter(ttsd ->
 						(ttsd.getThietBi()!= null && Objects.equals(ttsd.getThietBi().getMaTB(), maTB))
-						&& ttsd.getTgMuon() != null
-						&& ttsd.getTgTra() == null
+						&& ((ttsd.getTgMuon() != null && ttsd.getTgTra() == null) || ttsd.getTgDatCho() != null)
 				)
                 .findFirst();
         if(thongTinSD.isPresent()) {
-            return ResponseEntity.badRequest().body("Thiết bị này đã được mượn !");
+            return ResponseEntity.badRequest().body("Thiết bị này đã được mượn hoặc đặt chỗ !");
         }
 
         ThongTinSD ttsd = new ThongTinSD(null, new Date(), null, null, thanhVien, thietbi);
@@ -413,15 +413,43 @@ public class ThanhVienCTL {
     }
 
     @GetMapping("/profile")
-    public String profile(Model m) {
-		Iterable<ThanhVien>list= thanhVienRepository.findAll();
-		m.addAttribute("data", list);
+    public String profile(Model m, @RequestParam(name = "id") Integer maTV) {
+		ThanhVien thanhVien = thanhVienRepository.findById(maTV).orElse(null);
+
+		if(thanhVien == null) return "login-signup/login";
+
+		List<XuLy> xuLyList = xuLyRepository.findByThanhVien_MaTV(maTV);
+		String xuly = xuLyList.stream()
+				.map(XuLy::getHinhThucXL)
+				.collect(Collectors.joining(", "));;
+
+		List<ThongTinSD> ttsdList = thongTinSdRepository.findByThanhVien_MaTV(maTV);
+		String ttsd = ttsdList.stream()
+				.filter(thongTinSD -> thongTinSD.getThietBi() != null && thongTinSD.getTgMuon() != null && thongTinSD.getTgTra() != null)
+				.map(thongTinSD -> thongTinSD.getThietBi().getTenTB())
+				.collect(Collectors.joining(", "));
+
+		String tbddc = ttsdList.stream()
+				.filter(thongTinSD -> thongTinSD.getTgDatCho() != null)
+				.map(thongTinSD -> thongTinSD.getThietBi().getTenTB())
+				.collect(Collectors.joining(", "));
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("thanhVien", thanhVien);
+		result.put("viPham", xuly);
+		result.put("thietBiDaMuon", ttsd);
+		result.put("thietBiDaDatCho", tbddc);
+
+		m.addAttribute("data", result);
         return "user-profile/user-profile";
     }
 	@GetMapping("/profile/editProfile")
-    public String editProfile(Model m) {
-		Iterable<ThanhVien>list= thanhVienRepository.findAll();
-		m.addAttribute("data", list);
+    public String editProfile(Model m, @RequestParam(name = "id") Integer maTV, RedirectAttributes redirectAttrs) {
+		ThanhVien thanhVien = thanhVienRepository.findById(maTV).orElse(null);
+
+		if(thanhVien == null) return "login-signup/login";
+
+		m.addAttribute("data", thanhVien);
         return "user-profile/user-editProfile";
     }
 
