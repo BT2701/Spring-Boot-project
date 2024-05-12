@@ -27,20 +27,17 @@ public class ThongTinSdService {
     public Iterable<ThanhVien> getMemberList(){
         return ThanhVienRepository.findAll();
     }
-    public String getTrangThaiThietBi(Integer idDevice){
-        String trangThai="Đang rảnh";
-        for(ThongTinSD model: getInforList()){
-            if (model.getThietBi().getMaTB()==idDevice && model.getTgDatCho()!=null){
-                trangThai="Đang được đặt";
-                return trangThai;
-            }
-            else if(model.getThietBi().getMaTB()==idDevice && model.getTgMuon()!=null && model.getTgTra()==null){
-                trangThai="Đang được mượn";
-                return trangThai;
+    public String getTrangThaiThietBi(Integer maTB){
+        for(ThongTinSD model: thongTinSdRepository.findAll()){
+            if(model.getThietBi()!=null){
+                if(model.getThietBi().getMaTB()==maTB && model.getTgDatCho()!=null){
+                    return "Đang được đặt";
+                }
+                else if(model.getThietBi().getMaTB()==maTB && model.getTgMuon()!=null && model.getTgTra()==null){
+                    return "Đang được mượn";
+                }
             }
         }
-
-
-        return trangThai;
+        return "Đang rảnh";
     }
 }
