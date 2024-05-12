@@ -204,9 +204,9 @@
 
                     <div class="modal-body p-5 pt-0">
                         <span class="text-body-secondary" id="span-modal-delete">Bạn có chắc chắn muốn xóa không</span>
-                        <a class="w-100 mt-4 mb-2 btn btn-lg rounded-3 btn-primary" href="" id="href-modal-delete">
+                        <button class="w-100 mt-4 mb-2 btn btn-lg rounded-3 btn-primary" onclick="deleteThietBi()">
                             Xác nhận
-                        </a>
+                        </button>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-danger" type="submit"
                                 onclick="toggleClassDeleteItemRemove()">
                             Hủy
@@ -383,7 +383,7 @@
 
                     <div class="modal-body p-5 pt-0">
                         <input type="file" class="form-control mb-3" id="filechooser" accept=".xls, .xlsx">
-                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" onclick="toggleClassWarningDelete()">
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" id="uploadBtn">
                             Xác nhận
                         </button>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-danger" type="submit"
