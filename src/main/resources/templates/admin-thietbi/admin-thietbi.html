@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -107,8 +109,8 @@
                                                       d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" />
                                                 </svg>
                                             </button>
-                                            <button class="btn btn-danger rounded-pill px-3" type="button">
-                                                <i class="fa-solid fa-list"></i>
+                                            <button class="btn btn-danger rounded-pill px-3" type="button" onclick="toggleClassThongTinChiTiet(this)">
+                                              <i class="fa-solid fa-list"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -152,6 +154,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- Modal sửa thiết bị  -->
         <div class="ps-ab modal modal-sheet d-block bg-body-secondary p-4 py-md-5 d-none" tabindex="-1" role="dialog"
@@ -236,6 +239,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Modal xóa nhiều thiết bị -->
         <div class="ps-ab modal modal-sheet d-block bg-body-secondary p-4 py-md-5 d-none" tabindex="-1" role="dialog"
              id="deleteItems">
@@ -277,6 +281,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- Modal thông báo -->
         <div class="ps-ab modal modal-sheet d-block bg-body-secondary p-4 py-md-5 d-none" tabindex="-1" role="dialog"
@@ -324,6 +329,47 @@
             </div>
         </div>
 
+
+  <!-- Modal chi tiết thiết bị -->
+  <div class="ps-ab modal modal-sheet d-block bg-body-secondary p-4 py-md-5 d-none" tabindex="-1" role="dialog"
+    id="modalThongTinChiTiet">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0 justify-content-center">
+          <h1 class="fw-bold mb-0 fs-2">Thông tin chi tiết thiết bị</h1>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <div class="mb-3">
+            <span for="idTB-modal-thongTinTB" class="form-label">ID:</span>
+            <span class="text-body-secondary" id="idTB-modal-thongTinTB"></span>
+          </div>
+          
+          <div class="mb-3">
+            <span for="tenTB-modal-thongTinTB" class="form-label">Tên:</span>
+            <span class="text-body-secondary" id="tenTB-modal-thongTinTB"></span>
+          </div>
+          
+          <div class="mb-3">
+            <span for="moTaTB-modal-thongTinTB" class="form-label">Mô tả:</span>
+            <span class="text-body-secondary" id="moTaTB-modal-thongTinTB"></span>
+          </div>
+          
+          <div class="mb-3">
+            <span for="tinhTrangTB-modal-thongTinTB" class="form-label">Tình trạng:</span>
+            <span class="text-body-secondary" id="tinhTrangTB-modal-thongTinTB"></span>
+          </div>
+          
+          <button class="w-100 mb-2 mt-4 btn btn-lg rounded-3 btn-danger" type="submit" onclick="toggleClassThongTinChiTietRemove()">
+            Thoát
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
         <!-- Modal chọn file excel -->
         <div class="ps-ab modal modal-sheet d-block bg-body-secondary p-4 py-md-5 d-none" tabindex="-1" role="dialog"
              id="chooseFileModal">
@@ -349,412 +395,12 @@
             </div>
         </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Tải header và footer bằng AJAX
-                fetch("./admin-header")
-                        .then(response => response.text())
-                        .then(html => {
-                            document.getElementById("header").innerHTML = html;
-                        });
-
-
-            });
-        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <script>
-            function toggleClassAddItem() {
-                document.getElementById("idTB-modal-add").value = "";
-                document.getElementById("tenTB-modal-add").value = "";
-                document.getElementById("moTaTB-modal-add").value = "";
-
-                var element = document.getElementById("addItem");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassAddItemRemove() {
-                var element = document.getElementById("addItem");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassDeleteItems() {
-                document.getElementById("idOption-modal-deleteList").value = 1;
-                document.getElementById("tenTB-modal-deleteList").value = "";
-                document.getElementById("moTaTB-modal-deleteList").value = "";
-                var element = document.getElementById("deleteItems");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassDeleteItemsRemove() {
-                var element = document.getElementById("deleteItems");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassDeleteItem(btn) {
-                var row = btn.closest("tr");
-                var maTB = row.querySelector(".column1").innerText; // Lấy giá trị của cột 1
-
-                // Gán giá trị cho các span
-                document.getElementById("span-modal-delete").innerText = "Bạn có chắc chắn muốn xóa thiết bị có ID " + maTB + " không?";
-
-                document.getElementById("href-modal-delete").href = `/thiet-bi-admin/delete/${maTB}`;
-
-                // Hiển thị modal delete
-                var element = document.getElementById("deleteItem");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassDeleteItemRemove() {
-                var element = document.getElementById("deleteItem");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassUpdateItem(btn) {
-                var row = btn.closest("tr");
-                var maTB = row.querySelector(".column1").innerText; // Lấy giá trị của cột 1
-                var tenTB = row.querySelector(".column2").innerText; // Lấy giá trị của cột 2
-                var moTaTB = row.querySelector(".column3").innerText; // Lấy giá trị của cột 3
-
-                // Gán giá trị cho các input
-                document.getElementById("idTB-modal-update").value = maTB;
-                document.getElementById("tenTB-modal-update").value = tenTB;
-                document.getElementById("moTaTB-modal-update").value = moTaTB;
-
-                // Hiển thị modal update
-                var element = document.getElementById("updateItem");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassUpdateItemRemove() {
-                var element = document.getElementById("updateItem");
-                element.classList.toggle("d-none");
-
-            }
-
-            function toggleClassNotiRemove() {
-                var element = document.getElementById("modalNoti");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassWarningDelete() {
-                const idOp = document.getElementById("idOption-modal-deleteList").value;
-                const tenTB = document.getElementById("tenTB-modal-deleteList").value;
-                const moTaTB = document.getElementById("moTaTB-modal-deleteList").value;
-
-                // Định nghĩa một đối tượng ánh xạ giữa giá trị option và tên tương ứng của loại thiết bị
-                const tenTBMap = {
-                    "1": "Micro",
-                    "2": "Máy chiếu",
-                    "3": "Máy ảnh",
-                    "4": "Cassette",
-                    "5": "Tivi",
-                    "6": "Quạt đứng"
-                };
-
-                // Lấy tên tương ứng của loại thiết bị dựa trên giá trị option đã chọn
-                const tenTBFromOption = tenTBMap[idOp];
-
-                let message = "Bạn có chắc chắn muốn xóa các thiết bị ";
-
-                // Thêm tên thiết bị vào câu thông báo
-                if (tenTBFromOption) {
-                    message += tenTBFromOption + " không?";
-                }
-
-                document.getElementById("span-modal-warningDelete").innerText = message;
-
-                var element = document.getElementById("deleteItems");
-                element.classList.toggle("d-none");
-
-                var element1 = document.getElementById("warningDelete");
-                element1.classList.toggle("d-none");
-            }
-
-            function toggleClassWarningDeleteRemove() {
-                var element = document.getElementById("warningDelete");
-                element.classList.toggle("d-none");
-
-                var element1 = document.getElementById("deleteItems");
-                element1.classList.toggle("d-none");
-            }
-
-            function toggleClassChooseFile() {
-                var element = document.getElementById("chooseFileModal");
-                element.classList.toggle("d-none");
-            }
-
-            function toggleClassChooseFileRemove() {
-                var element = document.getElementById("chooseFileModal");
-                element.classList.toggle("d-none");
-            }
-        </script>
-
-        <script>
-            async function getNewestId() {
-                const tenTB = document.getElementById("tenTB-modal-add").value.trim(); // Lấy giá trị của trường "Tên thiết bị" và loại bỏ khoảng trắng thừa
-                const words = tenTB.split(/\s+/); // Tách từ trong tên thiết bị thành mảng các từ
-
-                let id = 0;
-
-                switch (words[0]) {
-                    case "Micro":
-                        id = await getNewestIdByTenTB("Micro");
-                        if (id == 1)
-                            id = 100001;
-                        break;
-                    case "Máy":
-                        if (words.length >= 2) {
-                            if (words[1] === "chiếu") {
-                                id = await getNewestIdByTenTB("Máy chiếu");
-                                if (id == 1)
-                                    id = 200001;
-                            } else if (words[1] === "ảnh") {
-                                id = await getNewestIdByTenTB("Máy ảnh");
-                                if (id == 1)
-                                    id = 300001;
-                            }
-                        }
-                        break;
-                    case "Cassette":
-                        id = await getNewestIdByTenTB("Cassette");
-                        if (id == 1)
-                            id = 400001;
-                        break;
-                    case "Tivi":
-                        id = await getNewestIdByTenTB("Tivi");
-                        if (id == 1)
-                            id = 500001;
-                        break;
-                    case "Quạt":
-                        if (words.length >= 2 && words[1] === "đứng") {
-                            id = await getNewestIdByTenTB("Quạt đứng");
-                            if (id == 1)
-                                id = 600001;
-                        }
-                        break;
-                }
-
-                if (id !== 0) {
-                    document.getElementById("idTB-modal-add").value = id;
-                } else {
-                    document.getElementById("idTB-modal-add").value = "";
-                }
-            }
-
-            async function getNewestIdByTenTB(tenTB) {
-                const response = await fetch(`/thiet-bi-admin/newestId/${tenTB}`);
-                const data = await response.json();
-                return data.id;
-            }
-        </script>
-
-        <script>
-            async function addNewTB() {
-                const idTB = document.getElementById("idTB-modal-add").value;
-                if (idTB === "") {
-                    // Trường idTB-modal-add đang trống
-                    alert("Bạn nhập sai định dạng tên! Bạn phải nhập tên có chữ cái đầu: Micro, Máy chiếu, Máy ảnh, Cassette, Tivi, Quạt đứng");
-
-                } else {
-                    // Trường idTB-modal-add không trống
-                    const tenTB = document.getElementById("tenTB-modal-add").value;
-                    const moTaTB = document.getElementById("moTaTB-modal-add").value;
-
-                    const data = {idTB, tenTB, moTaTB};
-
-                    const response = await fetch(`/thiet-bi-admin/add`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: new URLSearchParams(data)
-                    });
-                    const rs = await response.json();
-
-                    var element = document.getElementById("addItem");
-                    element.classList.toggle("d-none");
-
-                    var element = document.getElementById("modalNoti");
-                    element.classList.toggle("d-none");
-
-                    document.getElementById("message-modal-noti").innerText = rs.message;
-                }
-            }
-        </script>
-
-        <script>
-            async function updateThietBi() {
-                // Trường idTB-modal-add không trống
-                const idTB = document.getElementById("idTB-modal-update").value;
-                const tenTB = document.getElementById("tenTB-modal-update").value;
-                const moTaTB = document.getElementById("moTaTB-modal-update").value;
-
-                const data = {idTB, tenTB, moTaTB};
-
-                const response = await fetch(`/thiet-bi-admin/update`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(data)
-                });
-                const rs = await response.json();
-
-                var element = document.getElementById("updateItem");
-                element.classList.toggle("d-none");
-
-                var element = document.getElementById("modalNoti");
-                element.classList.toggle("d-none");
-
-                document.getElementById("message-modal-noti").innerText = rs.message;
-            }
-        </script>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const searchInput = document.getElementById('searchInput');
-                const searchOption = document.getElementById('searchOption');
-
-                // Bắt sự kiện khi người dùng thay đổi giá trị của ô input tìm kiếm
-                searchInput.addEventListener('input', function () {
-                    const searchText = searchInput.value.trim().toLowerCase();
-                    const selectedOption = searchOption.value;
-
-                    // Gọi hàm để lọc thông tin bảng
-                    filterTable(searchText, selectedOption);
-                });
-
-                // Bắt sự kiện khi người dùng thay đổi giá trị của dropdown menu
-                searchOption.addEventListener('change', function () {
-                    const searchText = searchInput.value.trim().toLowerCase();
-                    const selectedOption = searchOption.value;
-
-                    // Gọi hàm để lọc thông tin bảng
-                    filterTable(searchText, selectedOption);
-                });
-
-                // Hàm để lọc thông tin bảng dựa trên từ khóa tìm kiếm và tùy chọn đã chọn
-                function filterTable(searchText, selectedOption) {
-                    const tableRows = document.querySelectorAll('.table-row');
-
-                    tableRows.forEach(function (row) {
-                        const rowData1 = row.querySelector('.column1').textContent.trim().toLowerCase();
-                        const rowData2 = row.querySelector('.column2').textContent.trim().toLowerCase();
-                        const rowData3 = row.querySelector('.column3').textContent.trim().toLowerCase();
-
-                        if (
-                                (selectedOption == 'all' && (rowData1.includes(searchText) || rowData2.includes(searchText) || rowData3.includes(searchText))) ||
-                                (selectedOption === 'id' && rowData1.includes(searchText)) ||
-                                (selectedOption === 'tenTB' && rowData2.includes(searchText)) ||
-                                (selectedOption === 'moTaTB' && rowData3.includes(searchText))
-                                ) {
-                            row.style.display = ''; // Hiển thị hàng nếu dữ liệu khớp với từ khóa tìm kiếm và tùy chọn đã chọn
-                        } else {
-                            row.style.display = 'none'; // Ẩn hàng nếu không khớp
-                        }
-                    });
-                }
-            });
-        </script>
-
-        <script>
-            async function deleteListThietBi() {
-
-                const idOp = document.getElementById("idOption-modal-deleteList").value;
-                const tenTB = document.getElementById("tenTB-modal-deleteList").value;
-                const moTaTB = document.getElementById("moTaTB-modal-deleteList").value;
-
-                const data = {idOp, tenTB, moTaTB};
-
-                const response = await fetch(`/thiet-bi-admin/deleteList`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(data)
-                });
-
-                const rs = await response.json();
-
-                var element = document.getElementById("deleteItems");
-                element.classList.toggle("d-none");
-
-                var element = document.getElementById("modalNoti");
-                element.classList.toggle("d-none");
-
-                let message = "";
-
-                if (rs.successIds.length == 0) {
-                    if (rs.failureIds.length != 0) {
-                        message += "Xóa thât bại " + rs.failureIds.length + " thiết bị có ID: " + rs.failureIds.join(", ");
-                    } else
-                        message += "Không có thiết bị nào thỏa mãn điều kiện";
-                } else {
-                    message += "Xóa thành công " + rs.successIds.length + " thiết bị có ID: " + rs.successIds.join(", ");
-                    if (rs.failureIds.length != 0) {
-                        message += "\nXóa thất bại " + rs.failureIds.length + " thiết bị có ID: " + rs.failureIds.join(", ");
-                    }
-                }
-
-                document.getElementById("message-modal-noti").innerText = message;
-
-            }
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
-        <script>
-
-            // Function to handle file change event
-            const handleFileChange = (event) => {
-                const file = event.target.files[0];
-                const reader = new FileReader();
-
-                // Define onload event handler
-                reader.onload = (e) => {
-                    // Get binary data from the loaded file
-                    const data = new Uint8Array(e.target.result);
-
-                    // Convert binary data to workbook object
-                    const workbook = XLSX.read(data, {type: 'array'});
-
-                    // Get the first sheet of the workbook
-                    const sheetName = workbook.SheetNames[0];
-                    const sheet = workbook.Sheets[sheetName];
-
-                    // Convert sheet data to JSON format
-                    const jsonData = XLSX.utils.sheet_to_json(sheet, {header: 1});
-
-                    // Process the JSON data (if needed)
-                    const list = [];
-
-                    // Skip header row
-                    jsonData.shift();
-
-                    // Iterate through rows
-                    jsonData.forEach((row) => {
-                        const id = parseInt(row[0]);
-                        const value2 = row[1];
-                        const value3 = row[2];
-
-                        const thietBiModel = {id, value2, value3};
-                        list.push(thietBiModel);
-                    });
-
-                    // Now you have the data in the 'list' array
-                    console.log(list);
-                };
-
-                // Read the file as binary string
-                reader.readAsArrayBuffer(file);
-            };
-
-      // Add event listener to file input element
-            const fileInput = document.getElementById('filechooser');
-            fileInput.addEventListener('change', handleFileChange);
-
-        </script>
+        <script src="js/thietbi.js"></script>
         <script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
     </body>
+
 
 </html>
