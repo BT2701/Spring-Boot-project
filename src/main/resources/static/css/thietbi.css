@@ -76,7 +76,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 33px 30px
+    padding: 30px 0 100px 0;
   }
 
   .wrap-table100 {
@@ -144,9 +144,9 @@ body {
   .table100.ver1 th {
     font-family: Lato-Bold;
     font-size: 18px;
-    color: #fff;
     line-height: 1.4;
-    background-color: #6c7ae0
+    background-color: #99ccff;
+    font-weight: 600;
   }
 
   .table100.ver1 td {
