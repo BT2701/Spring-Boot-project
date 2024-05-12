@@ -1,6 +1,6 @@
 package com.example.demo.Model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import jakarta.persistence.*;
 
@@ -26,19 +26,19 @@ public class ThongTinSD {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TGVao")
-	private Date tgVao;
+	private Timestamp tgVao;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TGMuon")
-	private Date tgMuon;
+	private Timestamp tgMuon;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TGTra")
-	private Date tgTra;
+	private Timestamp tgTra;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column
-	private Date tgdatcho;
+	private Timestamp tgdatcho;
 
 	@ManyToOne
 	@JoinColumn(name = "MaTV")
@@ -51,7 +51,7 @@ public class ThongTinSD {
 	public ThongTinSD() {
 	}
 
-	public ThongTinSD(Integer maTT, Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVien thanhVien,
+	public ThongTinSD(Integer maTT, Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho, ThanhVien thanhVien,
 			ThietBi thietBi) {
 		this.maTT = maTT;
 		this.tgVao = tgVao;
@@ -62,7 +62,7 @@ public class ThongTinSD {
 		this.thietBi = thietBi;
 	}
 
-	public ThongTinSD(Date tgVao, Date tgMuon, Date tgTra, Date tgDatCho, ThanhVien thanhVien,
+	public ThongTinSD(Timestamp tgVao, Timestamp tgMuon, Timestamp tgTra, Timestamp tgDatCho, ThanhVien thanhVien,
 					  ThietBi thietBi) {
 		this.tgVao = tgVao;
 		this.tgMuon = tgMuon;
@@ -80,35 +80,35 @@ public class ThongTinSD {
 		this.maTT = maTT;
 	}
 
-	public Date getTgVao() {
+	public Timestamp getTgVao() {
 		return tgVao;
 	}
 
-	public void setTgVao(Date tgVao) {
+	public void setTgVao(Timestamp tgVao) {
 		this.tgVao = tgVao;
 	}
 
-	public Date getTgMuon() {
+	public Timestamp getTgMuon() {
 		return tgMuon;
 	}
 
-	public void setTgMuon(Date tgMuon) {
+	public void setTgMuon(Timestamp tgMuon) {
 		this.tgMuon = tgMuon;
 	}
 
-	public Date getTgTra() {
+	public Timestamp getTgTra() {
 		return tgTra;
 	}
 
-	public void setTgTra(Date tgTra) {
+	public void setTgTra(Timestamp tgTra) {
 		this.tgTra = tgTra;
 	}
 
-	public Date getTgDatCho() {
+	public Timestamp getTgDatCho() {
 		return tgdatcho;
 	}
 
-	public void setTgDatCho(Date tgDatCho) {
+	public void setTgDatCho(Timestamp tgDatCho) {
 		this.tgdatcho = tgDatCho;
 	}
 

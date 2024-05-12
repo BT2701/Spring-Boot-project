@@ -22,6 +22,7 @@ import com.example.demo.Model.ThanhVien;
 import com.example.demo.repository.ThanhVienRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,8 +66,10 @@ public class ThanhVienCTL {
 
             } else {
                 //dang nhap vao user
-                return "user-muontra/user-muontra";
+//                return "user-muontra/user-muontra";
+                return "redirect:/DanhSachThietBi";
             }
+
         } else {
             model.addAttribute("error", "Email, Số điện thoại hoặc mật khẩu không chính xác");
             return "login-signup/login";
@@ -274,7 +277,7 @@ public class ThanhVienCTL {
             return ResponseEntity.badRequest().body(String.format("Thành viên với mã : %s đã vào khu vực học tập trước đó !", maTV));
         }
 
-        ThongTinSD thongTinSD = new ThongTinSD(new Date(), null, null, null, thanhVien, null);
+        ThongTinSD thongTinSD = new ThongTinSD(new Timestamp(System.currentTimeMillis()), null, null, null, thanhVien, null);
         thongTinSdRepository.save(thongTinSD);
 
         return ResponseEntity.ok(String.format("Đã thêm thành viên với mã : %s vào khu vực học tập !", maTV));
@@ -314,7 +317,7 @@ public class ThanhVienCTL {
 
         }
 
-        ThongTinSD ttsd = new ThongTinSD(null, new Date(), null, null, thanhVien, thietbi);
+        ThongTinSD ttsd = new ThongTinSD(null, new Timestamp(System.currentTimeMillis()), null, null, thanhVien, thietbi);
         thongTinSdRepository.save(ttsd);
 
         return ResponseEntity.ok(String.format("Đã cho thành viên với mã : %s mượn thiết bị có mã : %s !", maTV, maTB));
@@ -348,7 +351,7 @@ public class ThanhVienCTL {
 
         if (thongTinSD.isPresent()) {
             ThongTinSD ttsd = thongTinSD.get();
-            ttsd.setTgTra(new Date());
+            ttsd.setTgTra(new Timestamp(System.currentTimeMillis()));
             thongTinSdRepository.save(ttsd);
             return ResponseEntity.ok("Thành viên có mã: " + maTV + " đã trả thiết bị thành công!");
         } else {

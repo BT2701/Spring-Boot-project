@@ -52,10 +52,13 @@ input[type="number"] {
 
 
 .device-container {
-    position: relative;
-    overflow: auto;
-    height: 300px;
+    max-width: 90vw; /* Adjust as needed */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: auto; /* Enable vertical scrollbar */
+    height: 60vh;
     white-space: nowrap;
+    padding: 0;
+    margin: 0!important;
 }
 .device {
     cursor: pointer;
@@ -94,4 +97,20 @@ button i{
 .search-control select{
     max-width: 150px;
     margin-left: 3%;
+}
+.button-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+.button-control button{
+    margin: 10px !important;
+}
+#chonThoiGian{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

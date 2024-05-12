@@ -20,7 +20,7 @@
     <div class="row mb-3">
       <div class="col-md-6 offset-md-3 search-control">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Nhập tên thiết bị...">
+          <input type="text" class="form-control" placeholder="Nhập tên thiết bị..." id="input-name">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
           </div>
@@ -64,45 +64,20 @@
       <div class="row device-container-body" th:each="device:${list}">
         <div class="device pt-1 pb-1 border-bottom  d-flex justify-content-center">
           <div class="col">
-            <p class="mb-0 text-center " th:text="${device.getThietBi().getMaTB()}">
-
-            </p>
+            <p class="mb-0 text-center" th:text="${device.maTB}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center" th:text="${device.getThietBi().getTenTB()}">
-              Quạt Đứng
-            </p>
+            <p class="mb-0 text-left" th:text="${device.tenTB}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center " th:text="${device.getThietBi().getMoTaTB()}">
-              cây quạt
-            </p>
+            <p class="mb-0 text-left" th:text="${device.moTaTB}"></p>
           </div>
           <div class="col">
-            <th:block th:if="${device.getTgDatCho()!= null}">
-              <p class="mb-0  text-center">
-                Đang được đặt
-              </p>
-            </th:block>
-            <th:block th:unless="${device.getTgDatCho()!= null}">
-              <th:block th:if="${device.getTgMuon()!=null and device.getTgTra()==null}">
-                <p class="mb-0  text-center" >
-                  Đang được mượn
-                </p>
-              </th:block>
-              <th:block th:unless="${device.getTgMuon()!=null and device.getTgTra()==null}">
-                <p class="mb-0  text-center" >
-                  Đang rảnh
-                </p>
-              </th:block>
-
-            </th:block>
-
+            <p class="mb-0 text-left" th:text="${device.trangThai}"></p>
           </div>
           <div class="col text-center">
-            <button class="btn btn-success btn-sm active muon"><i class="fa-solid fa-notes-medical"></i>Mượn</button>
-            <button class="btn btn-danger btn-sm active tra" style="display: none;"><i class="fa-solid fa-newspaper"></i>Trả</button>
-            <button class="btn btn-primary btn-sm active datcho"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
+            <button class="btn btn-danger btn-sm active tra" style="display: none;"><i class="fa-solid fa-arrow-rotate-left"></i>Trả</button>
+            <button class="btn btn-primary btn-sm active datcho" data-bs-toggle="modal" data-bs-target="#datcho"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
             <button class="btn btn-danger btn-sm active huy" style="display: none;"><i class="fa-solid fa-newspaper"></i>Hủy đặt chỗ</button>
             <button class="btn btn-info btn-sm active detail"><i class="fa-solid fa-list"></i></button>
           </div>
@@ -111,6 +86,29 @@
 
     </div>
   </div>
+
+    <!-- Modal đặt chỗ-->
+    <div class="modal fade" id="datcho" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="select-datcho">Chọn phương thức đặt chỗ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="button-control">
+              <button type="button" class="btn btn-primary" id="muonNgayBtn">Mượn ngay</button>
+              <button type="button" class="btn btn-success" id="datChoMuonSauBtn">Đặt chỗ mượn sau</button>
+            </div>
+            <div id="chonThoiGian" style="display: none;">
+              <!-- Khu vực cho phép chọn thời gian -->
+              <label for="thoiGianDat">Chọn thời gian đặt:</label>
+              <input type="datetime-local" id="thoiGianDat" name="thoiGianDat">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <!-- Modal xem chi tiet-->
   <div class="modal fade" id="modalXemChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -151,7 +149,6 @@
     </div>
   </div>
 
-  </div>
     <script src="js/user-home.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -160,7 +157,7 @@
     crossorigin="anonymous"></script>
   <script>
     // Add event listener to the search button
-    document.querySelectorAll('.device-container-body .detail').forEach(button => {
+    document.querySelectorAll('.detail').forEach(button => {
       button.addEventListener('click', function() {
         // Find the modal with the ID "modalXemChiTiet" and show it
         var modal = document.getElementById('modalXemChiTiet');
@@ -169,6 +166,54 @@
       });
     });
   </script>
+    <script>
+      // Xử lý sự kiện khi người dùng nhấn vào nút "Đặt chỗ mượn sau"
+      document.getElementById('datChoMuonSauBtn').addEventListener('click', function() {
+        document.getElementById('chonThoiGian').style.display = 'block'; // Hiển thị khu vực chọn thời gian
+      });
+
+    </script>
+    <script>
+      const searchInput = document.getElementById('input-name');
+      const boloc=document.getElementById('boloc');
+
+      searchInput.addEventListener('keyup', function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const devices = document.querySelectorAll('.device-container-body');
+
+        devices.forEach(device => {
+          const deviceName = device.querySelector('.col:nth-child(2) p').textContent.toLowerCase();
+          if (deviceName.includes(searchTerm)) {
+            device.style.display = 'block';
+          } else {
+            device.style.display = 'none';
+          }
+        });
+      });
+      boloc.addEventListener('change', function (){
+        searchInput.value='';
+        const searchTerm = this.options[this.selectedIndex].text;
+        const devices = document.querySelectorAll('.device-container-body');
+
+        if(searchTerm!="Trạng thái"){
+          devices.forEach(device => {
+            const deviceName = device.querySelector('.col:nth-child(4) p').textContent;
+            if (deviceName===searchTerm) {
+              device.style.display = 'block';
+            }
+            else {
+              device.style.display = 'none';
+            }
+          });
+        }
+        else{
+          devices.forEach(device=>{
+            device.style.display = 'block';
+          });
+        }
+      });
+    </script>
+
   
 </body>
 

@@ -19,11 +19,11 @@ public class MuonTraCTL {
 
 	@GetMapping("/DanhSachThietBi")
 	public String index(Model model) {
-		ArrayList<ThongTinSD> list= new ArrayList<>();
-		for(ThongTinSD ob:thongTinSdService.getInforList()){
+		ArrayList<ThietBi> list= new ArrayList<>();
+		for(ThietBi ob:thongTinSdService.getDeviceList()){
+			ob.setTrangThai(thongTinSdService.getTrangThaiThietBi(ob.getMaTB()));
 			list.add(ob);
 		}
-
 		model.addAttribute("list", list);
 		return "user-muontra/user-muontra";
 	}
