@@ -15,6 +15,9 @@
 
 <body>
 	<div id="user-header"></div>
+    <div>
+      <input type="hidden" id="maTVvip" th:value="${maTV}">
+    </div>
   <div class="container">
     <h1 class="mt-4 mb-4 text-center">Danh sách thiết bị</h1>
     <div class="row mb-3">
@@ -64,7 +67,7 @@
       <div class="row device-container-body" th:each="device:${list}">
         <div class="device pt-1 pb-1 border-bottom  d-flex justify-content-center">
           <div class="col">
-            <p class="mb-0 text-center" th:text="${device.maTB}"></p>
+            <p id="maTB_${device.maTB}" class="mb-0 text-center" th:text="${device.maTB}"></p>
           </div>
           <div class="col">
             <p class="mb-0 text-left" th:text="${device.tenTB}"></p>
@@ -73,13 +76,13 @@
             <p class="mb-0 text-left" th:text="${device.moTaTB}"></p>
           </div>
           <div class="col">
-            <p class="mb-0 text-left" th:text="${device.trangThai}"></p>
+            <p id="trangthai_${device.trangThai}" class="mb-0 text-left" th:text="${device.trangThai}"></p>
           </div>
           <div class="col text-center">
             <button class="btn btn-danger btn-sm active tra" style="display: none;"><i class="fa-solid fa-arrow-rotate-left"></i>Trả</button>
-            <button class="btn btn-primary btn-sm active datcho" data-bs-toggle="modal" data-bs-target="#datcho"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
+            <button class="btn btn-primary btn-sm active datchobtn" data-bs-toggle="modal" data-bs-target="#datcho" ><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
             <button class="btn btn-danger btn-sm active huy" style="display: none;"><i class="fa-solid fa-newspaper"></i>Hủy đặt chỗ</button>
-            <button class="btn btn-info btn-sm active detail"><i class="fa-solid fa-list"></i></button>
+            <button style="display: none;" class="btn btn-info btn-sm active detail" th:onclick="'showDetailModal(\'' + ${device.maTB} + '\')'"><i class="fa-solid fa-list"></i></button>
           </div>
         </div>
       </div>
@@ -92,18 +95,20 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="select-datcho">Chọn phương thức đặt chỗ</h5>
+            <h5 class="modal-title" id="select-datcho">Chọn thời gian đặt chỗ</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="button-control">
-              <button type="button" class="btn btn-primary" id="muonNgayBtn">Mượn ngay</button>
-              <button type="button" class="btn btn-success" id="datChoMuonSauBtn">Đặt chỗ mượn sau</button>
-            </div>
-            <div id="chonThoiGian" style="display: none;">
+
+            <div id="chonThoiGian">
+              <input type="hidden" value="1000001" id="getMaTB">
+              <input type="hidden" value="Đang rảnh" id="getTrangThai">
               <!-- Khu vực cho phép chọn thời gian -->
               <label for="thoiGianDat">Chọn thời gian đặt:</label>
               <input type="datetime-local" id="thoiGianDat" name="thoiGianDat">
+            </div>
+            <div class="button-control">
+              <button type="button" class="btn btn-success" id="datChoMuonSauBtn" onclick="datCho()">Đặt chỗ</button>
             </div>
           </div>
         </div>
@@ -140,6 +145,10 @@
               <label for="borrowed" class="form-label">Đang được mượn bởi:</label>
               <input type="text" readonly class="form-control" id="borrowed">
             </div>
+            <div class="mb-2">
+              <label for="lending" class="form-label">Đang được đặt chỗ bởi:</label>
+              <input type="text" readonly class="form-control" id="lending">
+            </div>
           </form>
         </div>
         <div class="modal-footer">
@@ -155,24 +164,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-  <script>
-    // Add event listener to the search button
-    document.querySelectorAll('.detail').forEach(button => {
-      button.addEventListener('click', function() {
-        // Find the modal with the ID "modalXemChiTiet" and show it
-        var modal = document.getElementById('modalXemChiTiet');
-        var modalInstance = new bootstrap.Modal(modal);
-        modalInstance.show();
-      });
-    });
-  </script>
-    <script>
-      // Xử lý sự kiện khi người dùng nhấn vào nút "Đặt chỗ mượn sau"
-      document.getElementById('datChoMuonSauBtn').addEventListener('click', function() {
-        document.getElementById('chonThoiGian').style.display = 'block'; // Hiển thị khu vực chọn thời gian
-      });
 
-    </script>
+
+
     <script>
       const searchInput = document.getElementById('input-name');
       const boloc=document.getElementById('boloc');
@@ -212,7 +206,87 @@
           });
         }
       });
+
+
+
     </script>
+    <script>
+        // Hàm hiển thị dữ liệu trong modal
+        function showDetailModal(maTB) {
+          // Gửi yêu cầu fetch API để lấy dữ liệu từ backend
+          fetch('/api/DanhSachThietBi?maTB=' + maTB)
+                  .then(function(response) {
+                    return response.json(); // Chuyển đổi dữ liệu nhận được sang JSON
+                  })
+                  .then(function(data) {
+                    // Hiển thị dữ liệu lên modal
+                    $('#id').val(data.thietBi.maTB);
+                    $('#name').val(data.thietBi.tenTB);
+                    $('#desc').val(data.thietBi.moTaTB);
+                    $('#status').val(data.thietBi.trangThai);
+                    $('#borrowed').val(data.nguoiMuon);
+                    $('#lending').val(data.nguoiDat);
+                    $('#modalXemChiTiet').modal('show');
+                  })
+                  .catch(function(error) {
+                    console.error('Có lỗi xảy ra:', error);
+                  });
+        }
+
+        const datChoButtons = document.querySelectorAll('.datchobtn');
+
+        datChoButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            // Get the parent element (device container) of the clicked button
+            const deviceContainer = button.closest('.device-container-body');
+
+            // Find the elements with IDs containing the clicked button's parent device's maTB
+            const maTBElement = deviceContainer.querySelector(`#maTB_${deviceContainer.dataset.maTb}`); // Assuming data-maTb attribute holds maTB
+            const trangThaiElement = deviceContainer.querySelector(`#trangthai_${deviceContainer.dataset.trangThai}`); // Assuming data-maTb attribute holds maTB
+
+            // Extract the maTB and trangThai values
+            const maTB = maTBElement.innerText;
+            const trangThai = trangThaiElement.innerText;
+
+            // Call showDatChoModal with retrieved values
+            showDatChoModal(maTB, trangThai);
+          });
+        });
+
+
+
+        function showDatChoModal(maTB,trangthai){
+          document.getElementById('getMaTB').value=maTB;
+          document.getElementById('getTrangThai').value=trangthai;
+        }
+
+        // khu vực đặt chỗ
+        function datCho(){
+          const maTV=document.getElementById('maTVvip').value;
+          const maTB=document.getElementById('getMaTB').value;
+          const trangthai=document.getElementById('getTrangThai').value;
+          const tgDatCho=document.getElementById('thoiGianDat').value;
+          // alert("Tv"+maTV+"TB"+maTB+"TT"+trangthai+"dc"+tgDatCho);
+          var timestamp = new Date(tgDatCho).getTime();
+          if (trangthai==="Đang được mượn"){
+            alert("Thiết bị đang được mượn");
+          }
+          else{
+            datChoMuonThietBi(maTB,maTV,timestamp);
+          }
+        }
+        function datChoMuonThietBi(maTB, maTV, tgDatCho){
+          fetch('api/muontra?maTB='+maTB+'&maTV='+maTV+'&tgDatCho='+tgDatCho)
+                  .then(response => response.json())
+                  .then(data => {
+
+                      alert(data.txt);
+
+                  })
+                  .catch(error => console.error('Error:', error));
+        }
+    </script>
+
 
   
 </body>

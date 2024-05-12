@@ -67,7 +67,7 @@ public class ThanhVienCTL {
             } else {
                 //dang nhap vao user
 //                return "user-muontra/user-muontra";
-                return "redirect:/DanhSachThietBi";
+                return "redirect:/DanhSachThietBi?maTV="+TVResult.getMaTV();
             }
 
         } else {
@@ -435,7 +435,7 @@ public class ThanhVienCTL {
 		List<XuLy> xuLyList = xuLyRepository.findByThanhVien_MaTV(maTV);
 		String xuly = xuLyList.stream()
 				.map(XuLy::getHinhThucXL)
-				.collect(Collectors.joining(", "));;
+				.collect(Collectors.joining(", "));
 
 		List<ThongTinSD> ttsdList = thongTinSdRepository.findByThanhVien_MaTV(maTV);
 		String ttsd = ttsdList.stream()
