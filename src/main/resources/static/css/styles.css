@@ -26,8 +26,9 @@
 
 .web-logo a {
     text-decoration: none;
-    font-size: 3rem;
+    font-size: 3em;
     color: var(--text-color);
+    white-space: nowrap;
 }
 
 .web-logo a:hover {
@@ -386,6 +387,7 @@
         text-decoration: none;
         font-size: 2.4rem;
         color: var(--text-color);
+        
     }
 
 
