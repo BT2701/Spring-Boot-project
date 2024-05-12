@@ -1,12 +1,29 @@
 package com.example.demo.Controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Iterator;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,41 +31,51 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.Model.ThanhVien;
 import com.example.demo.Model.ThietBi;
 import com.example.demo.Model.ThongTinSD;
 import com.example.demo.repository.ThietBiRepository;
+import com.example.demo.service.ThietBiService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class ThietBiCTL {
     @Autowired
     private ThietBiRepository thietBiRepository;
 
+    @Autowired
+    private ThietBiService thietBiService;
+
     @GetMapping("/thiet-bi-admin")
-    public String getAllthietBi(Model m, @RequestParam(name = "message", required = false) String message) {
+    public String getAllthietBi(Model m) {
         Iterable<ThietBi> tbList = thietBiRepository.findAll();
         m.addAttribute("tbList", tbList);
-        if (message != null) {
-            m.addAttribute("message", message);
-        }
+
         return "admin-thietbi/admin-thietbi";
     }
 
     @GetMapping("/thiet-bi-admin/delete/{id}")
-    public String deleteThietBi(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<?> deleteThietBi(@PathVariable Integer id) {
         Optional<ThietBi> tbOptional = thietBiRepository.findById(id);
+        Map<String, String> response = new HashMap<>();
+
         if (tbOptional.isPresent()) {
             ThietBi tb = tbOptional.get();
             List<ThongTinSD> listInfomation = tb.getListInfomation();
             for (ThongTinSD thongTinSD : listInfomation) {
                 if (thongTinSD.getTgMuon() != null && thongTinSD.getTgTra() == null) {
                     String tenThanhVien = thongTinSD.getThanhVien().getHoTen();
-                    redirectAttributes.addAttribute("message",
-                            "Xóa thất bại! Thiết bị đang được mượn bởi " + tenThanhVien);
-                    return "redirect:/thiet-bi-admin";
+
+                    response.put("message", "Xóa thất bại! Thiết bị đang được mượn bởi " + tenThanhVien);
+                    return ResponseEntity.ok().body(response);
                 }
             }
         } else {
@@ -56,9 +83,9 @@ public class ThietBiCTL {
         }
 
         thietBiRepository.deleteById(id);
-        redirectAttributes.addAttribute("message", "Xóa thành công");
+        response.put("message", "Xóa thành công");
 
-        return "redirect:/thiet-bi-admin";
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("thiet-bi-admin/newestId/{tenTB}")
@@ -121,14 +148,16 @@ public class ThietBiCTL {
             String idString = id.toString(); // Chuyển id thành chuỗi để dễ xử lý
             // Kiểm tra xem id của thiết bị có bắt đầu bằng idOp không
             if (idString.startsWith(idOp.toString())) {
-                // Nếu có, thêm thiết bị vào danh sách đã lọc
-                try {
-                    thietBiRepository.deleteById(id);
-                    successIds.add(id);
-                } catch (Exception e) {
-                    failureIds.add(id);
-                    e.printStackTrace(); // In ra stack trace của lỗi
-                }
+                if (thietBi.getTenTB().contains(ten))
+                    if (thietBi.getMoTaTB().contains(moTa))
+                        // Nếu có, thêm thiết bị vào danh sách đã lọc
+                        try {
+                            thietBiRepository.deleteById(id);
+                            successIds.add(id);
+                        } catch (Exception e) {
+                            failureIds.add(id);
+                            e.printStackTrace(); // In ra stack trace của lỗi
+                        }
 
             }
         }
@@ -138,7 +167,87 @@ public class ThietBiCTL {
         responseData.put("failureIds", failureIds);
 
         return ResponseEntity.ok().body(responseData);
-
     };
+
+    @PostMapping("/thiet-bi-admin/addListThietBi")
+    @ResponseBody
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            // Xử lý file Excel
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("File không được rỗng.");
+            }
+            // Đọc và xử lý file Excel tại đây
+            InputStream inputStream = file.getInputStream();
+            String result = this.addModelFromFileExcel(inputStream);
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Lỗi khi xử lý file: " + e.getMessage());
+        }
+    }
+
+    public String addModelFromFileExcel(InputStream excelInputStream) {
+        try {
+            Workbook workbook = new XSSFWorkbook(excelInputStream); // Đọc Excel từ InputStream
+            Sheet sheet = workbook.getSheetAt(0);
+
+            if (isExcelFormatValid(sheet)) { // Kiểm tra định dạng tệp Excel
+                thietBiService.addThietBiFromExcel(sheet); // Thêm thành viên từ Excel
+                workbook.close();
+                return "Thêm thiết bị từ file Excel thành công.";
+            } else {
+                workbook.close();
+                return "Định dạng của tệp Excel không đúng.";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Định dạng của tệp Excel không đúng.";
+        }
+    }
+
+    private boolean isExcelFormatValid(Sheet sheet) {
+        // Kiểm tra số cột của dòng đầu tiên (header) có đúng định dạng không
+        Row headerRow = sheet.getRow(0);
+        int expectedColumnCount = 3; // Số cột mong muốn
+        if (headerRow == null || headerRow.getLastCellNum() != expectedColumnCount) {
+            return false;
+        }
+        // Kiểm tra tên các cột có đúng định dạng không
+        String[] expectedColumnNames = { "MaTB", "TenTB", "MoTaTB" };
+        for (int i = 0; i < expectedColumnCount; i++) {
+            Cell cell = headerRow.getCell(i);
+            if (cell == null || !cell.getStringCellValue().equals(expectedColumnNames[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @GetMapping("/thiet-bi-admin/thongTinTB/{id}")
+    public ResponseEntity<?> getNguoiMuon(@PathVariable Integer id) {
+        Optional<ThietBi> tbOptional = thietBiRepository.findById(id);
+        Map<String, String> response = new HashMap<>();
+
+        if (tbOptional.isPresent()) {
+            ThietBi tb = tbOptional.get();
+            List<ThongTinSD> listInfomation = tb.getListInfomation();
+            for (ThongTinSD thongTinSD : listInfomation) {
+                if (thongTinSD.getTgMuon() != null && thongTinSD.getTgTra() == null) {
+                    String tenThanhVien = thongTinSD.getThanhVien().getHoTen();
+
+                    response.put("message", "Thiết bị đang được mượn bởi " + tenThanhVien);
+                    return ResponseEntity.ok().body(response);
+                }
+            }
+        } else {
+            // Xử lý trường hợp không tìm thấy đối tượng
+        }
+
+        response.put("message", "Thiết bị đang rảnh");
+
+        return ResponseEntity.ok().body(response);
+    }
 
 }

@@ -9,18 +9,18 @@ iframe{
     width: 100%;
 }
 
-.container {
+/*.container {
     width: 90%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
-}
+}*/
 
-h1 {
+h1{
     text-align: center;
-    margin-bottom: 20px;
-    background-color: #dff9fb;
+    /*background-color: #dff9fb;*/
     line-height: 3;
+    padding: 24px 0 24px 0;
 }
 
 .group1{
@@ -28,8 +28,9 @@ h1 {
 }
 
 .group-search {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center
 }
 
 .group-search > button {
@@ -42,6 +43,7 @@ h1 {
     align-items: center; 
     justify-content: center;
 }
+
 
 .btn-search > span {
     margin: 0 5px;
@@ -92,6 +94,7 @@ input[type="button"] {
 .table-wrapper {
     height: 500px; 
     overflow-y: auto;
+    margin-bottom: 40px;
 }
 
 .table-wrapper thead {
@@ -116,10 +119,9 @@ input[type="button"] {
 }
 
 .table thead th {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #99ccff;
     text-align: center;
-    height: 50px;
+    height: 30px;
     vertical-align: middle;
 }
 
@@ -147,7 +149,10 @@ a:hover {
 }
 
 .btn-group{
-    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 24px 0;
+    width:100%;
 }
 
 button {
@@ -189,6 +194,10 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 6px;
+    background-color: #198754;
+    color:#fff;
+    width: 200px;
 }
 
 .btn-them > span {

@@ -7,11 +7,18 @@ iframe{
     max-width: 100%;
     width: 100%;
 }   
-.container {
-    background-color: #ffffff; /* Màu nền container */
-    border-radius: 10px; /* Bo tròn viền container */
-    padding: 20px; /* Khoảng cách giữa nội dung và viền container */
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Hiệu ứng bóng đổ */
+/*.container {
+    background-color: #ffffff;  Màu nền container 
+    border-radius: 10px;  Bo tròn viền container 
+    padding: 20px;  Khoảng cách giữa nội dung và viền container 
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);  Hiệu ứng bóng đổ 
+}*/
+.user-info-wraper{
+    background-color: #ffffff; 
+    border-radius: 10px; 
+    padding: 20px; 
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    margin-bottom: 48px;
 }
 .btn-custom {
     background-color: #007bff; /* Màu nút chính */
@@ -27,7 +34,7 @@ iframe{
 .page-title {
     font-family: Arial, sans-serif; /* Chọn font chữ */
     font-size: 2.5rem; /* Kích thước font chữ */
-    color: #ff5733; /* Màu sắc tiêu đề */
+    color: #212529; /* Màu sắc tiêu đề */
     text-align: center; /* Canh chỉnh giữa */
     text-transform: uppercase; /* Chuyển đổi chữ hoa */
     margin-bottom: 20px; /* Khoảng cách phía dưới */
@@ -68,7 +75,7 @@ iframe{
     font-size: 18px;
     text-decoration: none;
     color: #ffffff;
-    background-color: #ff6f61;
+    background-color: #198754;
     border: 2px solid transparent;
     border-radius: 30px;
     transition: all 0.3s ease;
