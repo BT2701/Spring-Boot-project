@@ -114,3 +114,6 @@ button i{
     align-items: center;
     text-align: center;
 }
+input{
+    background: white !important;
+}
