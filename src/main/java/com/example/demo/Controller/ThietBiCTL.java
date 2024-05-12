@@ -121,14 +121,15 @@ public class ThietBiCTL {
             String idString = id.toString(); // Chuyển id thành chuỗi để dễ xử lý
             // Kiểm tra xem id của thiết bị có bắt đầu bằng idOp không
             if (idString.startsWith(idOp.toString())) {
-                // Nếu có, thêm thiết bị vào danh sách đã lọc
-                try {
-                    thietBiRepository.deleteById(id);
-                    successIds.add(id);
-                } catch (Exception e) {
-                    failureIds.add(id);
-                    e.printStackTrace(); // In ra stack trace của lỗi
-                }
+                if (thietBi.getTenTB().contains(ten))
+                    // Nếu có, thêm thiết bị vào danh sách đã lọc
+                    try {
+                        thietBiRepository.deleteById(id);
+                        successIds.add(id);
+                    } catch (Exception e) {
+                        failureIds.add(id);
+                        e.printStackTrace(); // In ra stack trace của lỗi
+                    }
 
             }
         }
