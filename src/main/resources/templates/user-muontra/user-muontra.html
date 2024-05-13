@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coupon Manager</title>
+  <title>Danh sách thiết bị</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,16 +15,25 @@
 
 <body>
 	<div id="user-header"></div>
+    <div>
+      <input type="hidden" id="maTVvip" th:value="${maTV}">
+    </div>
   <div class="container">
     <h1 class="mt-4 mb-4 text-center">Danh sách thiết bị</h1>
     <div class="row mb-3">
-      <div class="col-md-6 offset-md-3">
+      <div class="col-md-6 offset-md-3 search-control">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Tìm kiếm theo tên thiết bị">
+          <input type="text" class="form-control" placeholder="Nhập tên thiết bị..." id="input-name">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
           </div>
         </div>
+        <select name="boloc" id="boloc" class="form-select">
+          <option value="0">Trạng thái</option>
+          <option value="1">Đang rảnh</option>
+          <option value="2">Đang được đặt</option>
+          <option value="3">Đang được mượn</option>
+        </select>
       </div>
     </div>
     <div class="row mb-3">
@@ -55,37 +64,65 @@
         </div>
       </div>
 
-      <div class="row device-container-body" id="device-container-body">
+      <div class="row device-container-body" th:each="device:${list}">
         <div class="device pt-1 pb-1 border-bottom  d-flex justify-content-center">
           <div class="col">
-            <p class="mb-0 text-center ">
-              3121410128
-            </p>
+            <p id="maTB_${device.maTB}" class="mb-0 text-center" th:text="${device.maTB}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center">
-              Quạt Đứng
-            </p>
+            <p class="mb-0 text-left" th:text="${device.tenTB}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center ">
-              cây quạt
-            </p>
+            <p class="mb-0 text-left" th:text="${device.moTaTB}"></p>
           </div>
           <div class="col">
-            <p class="mb-0  text-center">
-              còn
-            </p>
+            <p id="trangthai_${device.trangThai}" class="mb-0 text-left" th:text="${device.trangThai}"></p>
           </div>
           <div class="col text-center">
-            <button class="btn btn-success btn-sm active borrow"><i class="fa-solid fa-notes-medical"></i>Mượn</button>
-            <button class="btn btn-primary btn-sm active datcho"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button>
-            <button class="btn btn-info btn-sm active detail"><i class="fa-solid fa-list"></i></button>
+<!--            <button class="btn btn-danger btn-sm active tra" style="display: none;"><i class="fa-solid fa-arrow-rotate-left"></i>Trả</button>-->
+            <button class="btn btn-primary btn-sm active datchobtn" data-bs-toggle="modal" data-bs-target="#datcho" data-matb = ${device.maTB} data-trangthai=${device.trangThai}><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button><!--            <button class="btn btn-danger btn-sm active huy" style="display: none;"><i class="fa-solid fa-newspaper"></i>Hủy đặt chỗ</button>-->
+<!--            <button style="display: none;" class="btn btn-info btn-sm active detail" th:onclick="'showDetailModal(\'' + ${device.maTB} + '\')'"><i class="fa-solid fa-list"></i></button>-->
           </div>
-        </div>       
+        </div>
       </div>
+
     </div>
   </div>
+
+    <!-- Modal đặt chỗ-->
+    <div class="modal fade" id="datcho" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="select-datcho">Xác nhận đặt chỗ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="infomation">
+              <div class="deviceid controlvip" >
+                <label for="getMaTB">Mã thiết bị</label>
+                <input type="text" value="1000001" id="getMaTB" class="form-control" readonly>
+              </div>
+              <div class="trangthaiy controlvip">
+                <label for="getTrangThai">Trạng thái thiết bị</label>
+                <input type="text" value="Đang rảnh" id="getTrangThai" class="form-control" readonly>
+              </div>
+              <div id="chonThoiGian" class="controlvip">
+
+
+                <!-- Khu vực cho phép chọn thời gian -->
+                <label for="thoiGianDat">Chọn thời gian đặt:</label>
+                <input type="datetime-local" id="thoiGianDat" name="thoiGianDat" class="form-control">
+              </div>
+            </div>
+
+            <div class="button-control">
+              <button type="button" class="btn btn-success" id="datChoMuonSauBtn" onclick="datCho()">Đặt chỗ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <!-- Modal xem chi tiet-->
   <div class="modal fade" id="modalXemChiTiet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,23 +135,28 @@
         <div class="modal-body">
           <form>
             <div class="mb-2">
-              <label for="inputMTV" class="form-label">Mã thiết bị</label>
-              <input type="text" readonly class="form-control" id="inputMTV">
+              <label for="id" class="form-label">Mã thiết bị</label>
+              <input type="text" readonly class="form-control" id="id">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Tên thiết bị</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="name" class="form-label">Tên thiết bị</label>
+              <input type="text" readonly class="form-control" id="name">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Mô tả</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="desc" class="form-label">Mô tả</label>
+              <input type="text" readonly class="form-control" id="desc">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Trạng thái</label>
-              <input type="text" readonly class="form-control" id="inputHVT">
+              <label for="status" class="form-label">Trạng thái</label>
+              <input type="text" readonly class="form-control" id="status">
             </div>
             <div class="mb-2">
-              <label for="inputHVT" class="form-label">Đang được mượn bởi:</label>
+              <label for="borrowed" class="form-label">Đang được mượn bởi:</label>
+              <input type="text" readonly class="form-control" id="borrowed">
+            </div>
+            <div class="mb-2">
+              <label for="lending" class="form-label">Đang được đặt chỗ bởi:</label>
+              <input type="text" readonly class="form-control" id="lending">
             </div>
           </form>
         </div>
@@ -125,24 +167,137 @@
     </div>
   </div>
 
-  </div>
     <script src="js/user-home.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
-  <script>
-    // Add event listener to the search button
-    document.querySelectorAll('.device-container-body .detail').forEach(button => {
-      button.addEventListener('click', function() {
-        // Find the modal with the ID "modalXemChiTiet" and show it
-        var modal = document.getElementById('modalXemChiTiet');
-        var modalInstance = new bootstrap.Modal(modal);
-        modalInstance.show();
+
+
+
+    <script>
+      const searchInput = document.getElementById('input-name');
+      const boloc=document.getElementById('boloc');
+
+      searchInput.addEventListener('keyup', function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const devices = document.querySelectorAll('.device-container-body');
+
+        devices.forEach(device => {
+          const deviceName = device.querySelector('.col:nth-child(2) p').textContent.toLowerCase();
+          if (deviceName.includes(searchTerm)) {
+            device.style.display = 'block';
+          } else {
+            device.style.display = 'none';
+          }
+        });
       });
-    });
-  </script>
+      boloc.addEventListener('change', function (){
+        searchInput.value='';
+        const searchTerm = this.options[this.selectedIndex].text;
+        const devices = document.querySelectorAll('.device-container-body');
+
+        if(searchTerm!="Trạng thái"){
+          devices.forEach(device => {
+            const deviceName = device.querySelector('.col:nth-child(4) p').textContent;
+            if (deviceName===searchTerm) {
+              device.style.display = 'block';
+            }
+            else {
+              device.style.display = 'none';
+            }
+          });
+        }
+        else{
+          devices.forEach(device=>{
+            device.style.display = 'block';
+          });
+        }
+      });
+
+
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <script>
+        // Hàm hiển thị dữ liệu trong modal
+        function showDetailModal(maTB) {
+          // Gửi yêu cầu fetch API để lấy dữ liệu từ backend
+          fetch('/api/DanhSachThietBi?maTB=' + maTB)
+                  .then(function(response) {
+                    return response.json(); // Chuyển đổi dữ liệu nhận được sang JSON
+                  })
+                  .then(function(data) {
+                    // Hiển thị dữ liệu lên modal
+                    $('#id').val(data.thietBi.maTB);
+                    $('#name').val(data.thietBi.tenTB);
+                    $('#desc').val(data.thietBi.moTaTB);
+                    $('#status').val(data.thietBi.trangThai);
+                    $('#borrowed').val(data.nguoiMuon);
+                    $('#lending').val(data.nguoiDat);
+                    $('#modalXemChiTiet').modal('show');
+                  })
+                  .catch(function(error) {
+                    console.error('Có lỗi xảy ra:', error);
+                  });
+        }
+
+        $(document).ready(function(){
+          // Xử lý khi nút "Đặt chỗ" được nhấn
+          $(".datchobtn").click(function(){
+            // Lấy thông tin từ data attributes của nút
+            var maTB = $(this).data("matb");
+            var trangThai = $(this).data("trangthai");
+
+            // Gán giá trị vào các input trong modal
+            $("#getMaTB").val(maTB);
+            $("#getTrangThai").val(trangThai);
+
+            // Hiển thị modal
+            $("#datcho").modal("show");
+          });
+        });
+
+
+
+        // function showDatChoModal(maTB,trangthai){
+        //   document.getElementById('getMaTB').value=maTB;
+        //   document.getElementById('getTrangThai').value=trangthai;
+        // }
+
+        // khu vực đặt chỗ
+        function datCho(){
+          const maTV=document.getElementById('maTVvip').value;
+          const maTB=document.getElementById('getMaTB').value;
+          const trangthai=document.getElementById('getTrangThai').value;
+          const tgDatCho=document.getElementById('thoiGianDat').value;
+          // alert("Tv"+maTV+"TB"+maTB+"TT"+trangthai+"dc"+tgDatCho);
+          // var timestamp = new Date(tgDatCho).getTime();
+          var timestamp = moment(tgDatCho, "YYYY-MM-DD hh:mm:ss").valueOf();
+          if (trangthai==="Đang được mượn"){
+            alert("Thiết bị đang được mượn");
+          }
+          else{
+            datChoMuonThietBi(maTB,maTV,timestamp);
+          }
+        }
+        function datChoMuonThietBi(maTB, maTV, tgDatCho){
+          fetch('api/muontra?maTB='+maTB+'&maTV='+maTV+'&tgDatCho='+tgDatCho)
+                  .then(response => response.json())
+                  .then(data => {
+                    // alert("Tv"+maTV+"TB"+maTB+"dc"+tgDatCho);
+                      alert(data.txt);
+
+                  })
+                  .catch(error => console.error('Error:', error));
+          window.location.href='DanhSachThietBi?maTV='+maTV;
+        }
+    </script>
+
+
   
 </body>
 

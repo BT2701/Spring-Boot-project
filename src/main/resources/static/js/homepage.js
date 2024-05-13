@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("header").innerHTML = html;
         });
 
-    fetch("./footer")
+
+});
+document.addEventListener("DOMContentLoaded", function() {
+    // Tải header và footer bằng AJAX
+    fetch("./notification")
         .then(response => response.text())
         .then(html => {
-            document.getElementById("footer").innerHTML = html;
+            document.getElementById("notification").innerHTML = html;
         });
+
 });
 
     var maThanhVienBackUp = -1;
@@ -627,3 +632,4 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Đã xảy ra lỗi. Vui lòng thử lại sau.");
         });
     })
+

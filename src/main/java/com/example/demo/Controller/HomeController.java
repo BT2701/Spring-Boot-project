@@ -18,6 +18,10 @@ public class HomeController {
 	public String forgotPass(){
 		return "login-signup/resetpasword";
 	}
+        @GetMapping("/sign-upSucess")
+	public String signupSucess() {
+		return "login-signup/sign-upSucess";
+	}
 	@GetMapping("/admin-header")
 	public String header_admin(){
 		return "header-footer/admin-header";
@@ -33,5 +37,9 @@ public class HomeController {
 	@GetMapping("/home")
 	public String home() {
 		return "slider/slider";
+	}
+	@GetMapping("/notification")
+	public String notification() {
+		return "slider/notification";
 	}
 }

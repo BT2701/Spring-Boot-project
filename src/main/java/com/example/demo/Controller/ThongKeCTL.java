@@ -9,11 +9,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.demo.Model.ThongKe;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Model.ThanhVien;
@@ -28,10 +31,9 @@ public class ThongKeCTL {
 	@Autowired
 	private ThongKeService thongKeService;
 	
-	
+//	1. THỐNG KÊ TỔNG QUAN
 	@GetMapping("/thong-ke")
-	public String thongKeIndex(Model m
-							   ) {
+	public String thongKeIndex(Model m) {
 
 		m.addAttribute("countMember", thongKeService.countMemberIntoMaterial());
 		m.addAttribute("borrowed", thongKeService.countBorrowedDevice());
@@ -43,20 +45,86 @@ public class ThongKeCTL {
 		m.addAttribute("fee", txtFee);
 		return "admin-thongke/thong_ke";
 	}
+	@GetMapping("/api/thong-ke")
+	@ResponseBody // Đánh dấu để Spring trả về kết quả như là dữ liệu JSON
+	public ThongKe thongKeByDateRange(
+			@RequestParam("from") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+			@RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
+
+		ThongKe ThongKe = new ThongKe();
+
+		// Lấy dữ liệu thống kê từ service
+		int countMember = thongKeService.countIntoMaterialOverTime(fromDate, toDate);
+		int borrowed = thongKeService.countBorrowedDeviceOverTime(fromDate, toDate);
+		int borrowing = thongKeService.countBorrowingDeviceOverTime(fromDate, toDate);
+		int violation = thongKeService.countViolationOverTime(fromDate, toDate);
+		int handled = thongKeService.countHandledViolationOverTime(fromDate, toDate);
+		int handling = thongKeService.countHandlingViolationOverTime(fromDate, toDate);
+		int fee = thongKeService.countFeeOverTime(fromDate, toDate);
+
+		// Đặt các giá trị vào đối tượng ThongKe
+		ThongKe.setCountMember(countMember);
+		ThongKe.setBorrowed(borrowed);
+		ThongKe.setBorrowing(borrowing);
+		ThongKe.setViolation(violation);
+		ThongKe.setHandled(handled);
+		ThongKe.setHandling(handling);
+		ThongKe.setFee(fee);
+
+		return ThongKe;
+	}
+	@GetMapping("/api/resetStatistic")
+	@ResponseBody // Đánh dấu để Spring trả về kết quả như là dữ liệu JSON
+	public ThongKe reset(@RequestParam("action") String action ) {
+		if(action.equalsIgnoreCase("reset")){
+			ThongKe ThongKe = new ThongKe();
+
+			// Lấy dữ liệu thống kê từ service
+			int countMember = thongKeService.countMemberIntoMaterial();
+			int borrowed = thongKeService.countBorrowedDevice();
+			int borrowing = thongKeService.countBorrowingDevice();
+			int violation = thongKeService.countViolation();
+			int handled = thongKeService.countHandledViolation();
+			int handling = thongKeService.countHandlingViolation();
+			int fee = thongKeService.countFee();
+
+			// Đặt các giá trị vào đối tượng ThongKe
+			ThongKe.setCountMember(countMember);
+			ThongKe.setBorrowed(borrowed);
+			ThongKe.setBorrowing(borrowing);
+			ThongKe.setViolation(violation);
+			ThongKe.setHandled(handled);
+			ThongKe.setHandling(handling);
+			ThongKe.setFee(fee);
+
+			return ThongKe;
+		}
+		return null;
+
+	}
+
+
+
+
+	//	END 1.
 	@GetMapping("/member-chart")
 	public String member() {
+
 		return "admin-thongke/member_chart";
 	}
 	@GetMapping("/device-chart")
 	public String device() {
+
 		return "admin-thongke/device_chart";
 	}
 	@GetMapping("/current-chart")
 	public String current() {
+
 		return "admin-thongke/current_chart";
 	}
 	@GetMapping("/handle-chart")
 	public String handle() {
+
 		return "admin-thongke/handle_chart";
 	}
 }

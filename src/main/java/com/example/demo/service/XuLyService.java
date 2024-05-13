@@ -55,4 +55,8 @@ public class XuLyService {
         resultXL.setSoTien(xl.getSoTien());
         xuLyRepository.save(resultXL);
     }
+
+    public Iterable<XuLy> findByThanhVienId(Integer id) {
+        return xuLyRepository.findByThanhVienId(id);
+    }
 }

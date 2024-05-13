@@ -57,6 +57,7 @@ input[type="number"] {
     overflow: auto;
     height: 300px;
     white-space: nowrap;
+    margin-bottom: 100px;
 }
 .member {
     cursor: pointer;

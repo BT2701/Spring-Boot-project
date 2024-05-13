@@ -26,6 +26,8 @@ public class ThietBi {
 	@OneToMany(mappedBy = "thietBi")
 	private List<ThongTinSD> listInfomation;
 
+	@Transient
+	private String trangThai;
 	public ThietBi() {
 	}
 
@@ -72,6 +74,13 @@ public class ThietBi {
 
 	public void setMoTaTB(String moTaTB) {
 		this.motatb = moTaTB;
+	}
+
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
+	}
+	public String getTrangThai() {
+		return trangThai;
 	}
 
 	@Override

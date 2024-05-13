@@ -17,6 +17,7 @@
   integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- link css header style  -->
+
 </head>
 <body>
   <div id="header"></div>
@@ -24,7 +25,7 @@
     <div class="chart">
       <div class="chart-title">
           <h2>Biểu đồ thống kê</h2>
-          <label for="holder">Bấm vào 4 nút bên dưới để xem biểu đồ</label>
+          <label>Bấm vào 4 nút bên dưới để xem biểu đồ</label>
       </div>
       <div class="chart-content">
           <a href="/member-chart" class="chart-button" id="member"><img src="images/btnmemberhover.png" alt=""></a>
@@ -69,11 +70,11 @@
           <input type="text" class="form-control" th:value="${violation}" readonly id="txt4">
         </div>
         <div class="content-statistic">
-          <label for="txt5" class="handled">Đã xử lý</label>
+          <label for="txt5" class="handled" style="font-style: italic; color: green;">Đã xử lý</label>
           <input type="text" class="form-control" th:value="${handled}" readonly id="txt5">
         </div>
         <div class="content-statistic">
-          <label for="txt6" class="handling">Đang xử lý</label>
+          <label for="txt6" class="handling" style="font-style: italic; color: orange;">Đang xử lý</label>
           <input type="text" class="form-control" th:value="${handling}" readonly id="txt6">
         </div>
         <div class="content-statistic">
@@ -85,11 +86,93 @@
   </div>
 
   <script src="js/homepage.js"></script>
-<script src="js/thongke.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+<!--<script src="js/thongke.js"></script>-->
+  <script>
+    function handleSelection() {
+      var selectedOption = document.getElementById("type-selection").value;
+      var tuyChonDiv = document.getElementById("tuy-chon");
 
-<script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
+      if (selectedOption === "all") {
+        tuyChonDiv.style.display="none"; // Thêm class hidden để ẩn tùy chọn
+        resetStatistics();
+      } else if (selectedOption === "time") {
+        tuyChonDiv.style.display="flex";  // Loại bỏ class hidden để hiện tùy chọn
+      }
+    }
+    const fromInput = document.getElementById("from");
+    const toInput = document.getElementById("to");
+    const currentDate = new Date().toISOString().slice(0, 10);
+
+    fromInput.addEventListener("change", function () {
+      if(fromInput.value!= "" &&toInput.value!= "") {
+
+        if(new Date(fromInput.value) > new Date(toInput.value)){
+          alert("Ngày xuất phát không được phép lớn hơn ngày đích");
+          // Đặt giá trị của input 'from' về ngày hiện tại
+          fromInput.value = currentDate;
+          // Đặt giá trị của input 'to' về ngày hiện tại
+          toInput.value = currentDate;
+        }
+        else{
+          updateStatistics();
+        }
+      }
+    });
+
+    toInput.addEventListener("change", function () {
+      if(fromInput.value!= "" &&toInput.value!= "") {
+
+        if(new Date(fromInput.value) > new Date(toInput.value)){
+          alert("Ngày xuất phát không được phép lớn hơn ngày đích");
+          // Đặt giá trị của input 'from' về ngày hiện tại
+          fromInput.value = currentDate;
+          // Đặt giá trị của input 'to' về ngày hiện tại
+          toInput.value = currentDate;
+        }
+        else{
+          updateStatistics();
+        }
+      }
+    });
+
+    function updateStatistics() {
+      const fromDate = fromInput.value;
+      const toDate = toInput.value;
+
+      fetch('/api/thong-ke?from=' + fromDate + '&to=' + toDate)
+              .then(response => response.json())
+              .then(data => {
+                // Cập nhật giá trị của các input statistic
+                document.getElementById("txt1").value = data.countMember;
+                document.getElementById("txt2").value = data.borrowed;
+                document.getElementById("txt3").value = data.borrowing;
+                document.getElementById("txt4").value = data.violation;
+                document.getElementById("txt5").value = data.handled;
+                document.getElementById("txt6").value = data.handling;
+                document.getElementById("txt7").value = data.fee + ' VND';
+              })
+              .catch(error => console.error('Error:', error));
+    }
+    function resetStatistics() {
+      fetch('/api/resetStatistic?action=reset')
+              .then(response => response.json())
+              .then(data => {
+                // Cập nhật giá trị của các input statistic
+                document.getElementById("txt1").value = data.countMember;
+                document.getElementById("txt2").value = data.borrowed;
+                document.getElementById("txt3").value = data.borrowing;
+                document.getElementById("txt4").value = data.violation;
+                document.getElementById("txt5").value = data.handled;
+                document.getElementById("txt6").value = data.handling;
+                document.getElementById("txt7").value = data.fee + ' VND';
+              })
+              .catch(error => console.error('Error:', error));
+    }
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+  <script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
 </body>
 </html>

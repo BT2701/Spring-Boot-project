@@ -1,177 +1,198 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông tin cá nhân</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<link rel="stylesheet" href="../css/edit_profile.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body>
-	<div id="user-header"></div>
-    <div class="container mt-5">
-        <h1 class="page-title">Thông tin cá nhân</h1>
-        <form id="profileForm" th:object="${data}">
-            <div class="mb-3 row">
-                <label for="memberCode" class="col-sm-2 col-form-label form-label">Mã thành viên</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="memberCode" th:value="*{maTV}" disabled>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="fullName" class="col-sm-2 col-form-label form-label">Họ và tên</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="fullName" th:value="*{hoTen}">
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="faculty" class="col-sm-2 col-form-label form-label">Khoa</label>
-                <div class="col-sm-10">
-                    <select class="form-select" id="faculty" onClick="updateMajor()" onchange="updateMajor()">
-                        <option value="CNTT">Khoa Công nghệ Thông tin</option>
-                        <option value="GD">Khoa Giáo dục</option>
-                        <option value="GDMN">Khoa Giáo dục Mầm non</option>
-                        <option value="KL">Khoa Luật</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="major" class="col-sm-2 col-form-label form-label">Ngành</label>
-                <div class="col-sm-10">
-                    <select class="form-select" id="major">
-                        <!-- Options will be populated dynamically based on faculty selection -->
-                    </select>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="phone" class="col-sm-2 col-form-label form-label">Số điện thoại</label>
-                <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="phone" pattern="[0-9]*" maxlength="11"
-                           th:value="*{sdt}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11)">
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="email" class="col-sm-2 col-form-label form-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" th:value="*{email}">
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="password" class="col-sm-2 col-form-label form-label">Password</label>
-                <div class="pwdiv col-sm-10">
-                    <div class="input-group">
-                        <input type="password" class="form-control" id="password" th:value="*{password}">
-                        <button class="btn" type="button" id="togglePassword">
-                            <i class="bi bi-eye"></i>
-                        </button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Thông tin cá nhân</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/edit_profile.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./../../css/styles.css">
+        <link rel="stylesheet" type="text/css" href="./../../css/base-style.css">
+    </head>
+    <body>
+        <div id="user-header"></div>
+        <div class="container-fluid">
+            <a th:href="@{'./../profile?id=' + ${data.maTV}}" class="go-back">
+                <i class="fa-solid fa-left-long"></i> <span>Quay lại</span>
+            </a>
+        </div>
+        <div class="user-info-wraper container mt-5">
+            <h1 class="page-title">Thông tin cá nhân</h1>
+            <form id="profileForm" th:object="${data}">
+                <div class="mb-3 row">
+                    <label for="memberCode" class="col-sm-2 col-form-label form-label">Mã thành viên</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="memberCode" th:value="*{maTV}" disabled>
                     </div>
                 </div>
-            </div>
-            <a th:href="@{'./../profile?id=' + ${data.maTV}}" class="btn btn-danger btn-cancel">
-                <i class="fas fa-times"></i> <span>Hủy</span>
-            </a>
+                <div class="mb-3 row">
+                    <label for="fullName" class="col-sm-2 col-form-label form-label">Họ và tên</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="fullName" th:value="*{hoTen}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="faculty" class="col-sm-2 col-form-label form-label">Khoa</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" id="faculty" onClick="updateMajor()" onchange="updateMajor()">
+                            <option value="CNTT">Khoa Công nghệ Thông tin</option>
+                            <option value="GD">Khoa Giáo dục</option>
+                            <option value="GDMN">Khoa Giáo dục Mầm non</option>
+                            <option value="KL">Khoa Luật</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="major" class="col-sm-2 col-form-label form-label">Ngành</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" id="major">
+                            <!-- Options will be populated dynamically based on faculty selection -->
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="phone" class="col-sm-2 col-form-label form-label">Số điện thoại</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control" id="phone" pattern="[0-9]*" maxlength="11"
+                               th:value="*{sdt}" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,11)">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" th:value="*{email}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="password" class="col-sm-2 col-form-label form-label">Password</label>
+                    <div class="pwdiv col-sm-10">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" th:value="*{password}">
+                            <button class="btn" type="button" id="togglePassword">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="text-center">
-                <button type="button" id="saveButton" class="btn btn-custom">
-                    <i class="fas fa-save"></i> <span>Lưu thông tin</span>
-                </button>
-            </div>
-        </form>
-    </div>
-    <script src="/js/user-home.js"></script>
+                <div class="text-center">
+                    <button type="button" id="saveButton" class="btn-custom">
+                        <i class="fas fa-save"></i> <span>Lưu thông tin</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+                <!--<script src="js/user-hom
+            e.js"></script>-->
+        <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                // Tải header và footer bằng AJAX
+                fetch("./../../user-header")
+                    .then(response => response.text())
+                        .then(html => {
+                            document.getElementById("user-header").innerHTML = html;
+                        });
+                    });
+        </script>
+                        <script>
+            function updateMajor() {
+                        const facultySelect = document.querySelector("#faculty");
+                        const majorSelect = document.querySelector("#major");
+                    majorSelect.innerHTML = "";
 
-    <script>
-        function updateMajor() {
-            const facultySelect = document.querySelector("#faculty");
-            const majorSelect = document.querySelector("#major");
-            majorSelect.innerHTML = "";
+                if (facultySelect.value === "CNTT") {
+                    const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
+                    majors.forEach(major => {
+                        const option = document.createElement("option");
+                        option.text = major;
+                        option.value = major;
+                        maj
+                        orSelect.add(option);
+                    });
+                } else if (facultySelect.value === "GD") {
+                    const majors = ["Tư vấn học đường", "Tâm lý giáo dục", "Sư phạm", "Công nghệ giáo dục"];
+                    majors.forEach(major => {
 
-            if (facultySelect.value === "CNTT") {
-                const majors = ["Khoa học máy tính", "Truyền thông dữ liệu và mạng máy tính", "Công nghệ phần mềm", "Kỹ thuật máy tính", "Kỹ thuật mạng"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
+                        const option = document.createElement("option");
+                        option.text = major;
+                        option.value = major;
+                        majorSelect.add(option);
+                    });
+                } else if (facultySelect.value === "GDMN") {
+                    const majors = ["Ngành giáo dục mầm non"];
+                    majors.forEach(major => {
+                        const option = document.createElement("option");
                     option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
-            } else if (facultySelect.value === "GD") {
-                const majors = ["Tư vấn học đường", "Tâm lý giáo dục", "Sư phạm", "Công nghệ giáo dục"];
-                majors.forEach(major => {
+                        option.value = major;
+                        majorSelect.add(option);
+                    });
+                        } else if (facultySelect.value === "KL") {
+            const majors = ["Luậ t Hình sự", "Luật Dân sự", "Luật Hành chính", "Luật Thương mại", "Luật Quốc tế", "Cố vấn  pháp lý", "Thẩm ph án"];
+                    majors.forEach(major =>
+            { 
                     const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
+                        option.text = major;
+                        option.value = major;
                     majorSelect.add(option);
-                });
-            } else if (facultySelect.value === "GDMN") {
-                const majors = ["Ngành giáo dục mầm non"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
-            } else if (facultySelect.value === "KL") {
-                const majors = ["Luật Hình sự", "Luật Dân sự", "Luật Hành chính","Luật Thương mại","Luật Quốc tế","Cố vấn pháp lý","Thẩm phán"];
-                majors.forEach(major => {
-                    const option = document.createElement("option");
-                    option.text = major;
-                    option.value = major;
-                    majorSelect.add(option);
-                });
+                    });
+                }
             }
-        }
 
-<!--        document.addEventListener("DOMContentLoaded", function() {-->
-<!--            const saveButton = document.querySelector("#saveButton");-->
-<!--            const profileForm = document.querySelector("#profileForm");-->
+<!--        docu
+            m
+                    ent.addEventListener("DOMContentLoaded", fu nction() {-->
+<!--            const saveButton = document.querySelector("#saveButton");-
+            -
+            >
+                    <!--            const profileForm = document.querySelector("#profileForm");-->
 
-<!--            saveButton.addEventListener("click", function() {-->
-<!--                // Get updated profile data-->
-<!--                const updatedData = {-->
-<!--                    fullName: document.querySelector("#fullName").value,-->
-<!--                    faculty: document.querySelector("#faculty").value,-->
-<!--                    major: document.querySelector("#major").value,-->
+                        <!--            saveButton.addEventListener("click", function() {-- >
+                    <!--                // Get updated profile data-->
+            <!--                const updatedData = {-- >
+                    <!--                    fullName: document.querySelector("#fullName").value,-->
+                        <!--                    faculty: document.querySelector("#faculty").value,-->
+                        <!--                    major: document.querySelector("#major").value,-->
 <!--                    phone: document.querySelector("#phone").value,-->
-<!--                    email: document.querySelector("#email").value,-->
-<!--                    password: document.querySelector("#password").value-->
+                    <!--                    email: document.querySelector("#email").value,-->
+                        <!--                    password: document.querySelector("#password").value-->
 <!--                };-->
 
-<!--                // Do something with updated data (like sending to server)-->
+                    <!--                // Do something with updated data (like sending to server)-->
 
-<!--                // For now, let's just log the updated data-->
-<!--                console.log(updatedData);-->
+                        <!--                // For now, let's just log the updated data-->
+                        <!--                console.log(updatedData);-->
 
 <!--                // Display success message-->
-<!--                alert("Thông tin đã được lưu thành công!");-->
+            <!--                alert("Thông tin đã được lưu thành công!");-->
 
 <!--                // Optionally, you can redirect the user back to the original page after saving-->
 <!--                // window.location.href = "index.html";-->
-<!--            });-->
+                                            <!--            });-->
 
-<!--            // Populate major select options based on the initial faculty value-->
-<!--            updateMajor();-->
-<!--        });-->
+                                    <!--            // Populate major select options based on the initial faculty value-->
+            <!--            updateMajor();-->
+                            <!--        });-->
 
-        // ẩn hiện mk
-        document.getElementById('togglePassword').addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành vi mặc định của nút button
-            const passwordInput = document.getElementById('password');
+// ẩn hiện mk
+document.getElementById('togglePassword').addEventListener('click', function (event) {
+                            event.preventDefault(); // Ngăn chặn hành vi mặc định của nút button
+                            const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
 
             if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash'); // Change icon to hide password
+            passwordInput.type = 'text';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash'); // Change icon to hide password
             } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye'); // Change icon to show password
+            passwordInput.type = 'password';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye'); // Change icon to show password
             }
-        });
+            });
 
-        // hiển thị khoa, ngành khi vào trang
-        (async function renderMajorAndFaculty() {
+            // hiển thị khoa, ngành khi vào trang
+            (async function renderMajorAndFaculty() {
             const urlParams = new URLSearchParams(window.location.search);
             const maTV = urlParams.get('id');
 
@@ -182,52 +203,52 @@
             const tv = tvJson.thanhVien;
 
             for (let i = 0; i < inputKhoa.options.length; i++) {
-                if (inputKhoa.options[i].value === tv.khoa) {
-                    inputKhoa.selectedIndex = i;
-                    updateMajor();
+            if (inputKhoa.options[i].value === tv.khoa) {
+            inputKhoa.selectedIndex = i;
+            updateMajor();
 
-                    const inputNganh = document.getElementById("major");
-                    for (let j = 0; j < inputNganh.options.length; j++) {
-                        if (inputNganh.options[j].value === tv.nganh) {
-                            inputNganh.selectedIndex = j;
-                            break;
-                        }
-                    }
-
-                    break;
-                }
+            const inputNganh = document.getElementById("major");
+            for (let j = 0; j < inputNganh.options.length; j++) {
+            if (inputNganh.options[j].value === tv.nganh) {
+            inputNganh.selectedIndex = j;
+            break;
             }
-        })();
+            }
+
+            break;
+            }
+            }
+            })();
 
 
-        // cập nhật thành viên
-        function validateAddAndUpdateThanhVien(maTV, hoten, khoa, nganh, sdt) {
+            // cập nhật thành viên
+            function validateAddAndUpdateThanhVien(maTV, hoten, khoa, nganh, sdt) {
             if (!maTV || !hoten || !khoa || !nganh || !sdt) {
-                alert("Tất cả các trường phải được điền.");
-                return false;
+            alert("Tất cả các trường phải được điền.");
+            return false;
             }
 
             if (sdt.length !== 10) {
-                alert("Số điện thoại phải là 10 chữ số.");
-                return false;
+            alert("Số điện thoại phải là 10 chữ số.");
+            return false;
             }
 
             return true;
-        }
-        document.querySelector("#saveButton").addEventListener("click", () => {
-          const maTV = document.getElementById("memberCode").value.trim();
-          const hoten = document.getElementById("fullName").value.trim();
-          const khoa = document.getElementById("faculty").value.trim();
-          const nganh = document.getElementById("major").value.trim();
-          const sdt = document.getElementById("phone").value.trim();
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value.trim();
+            }
+            document.querySelector("#saveButton").addEventListener("click", () => {
+            const maTV = document.getElementById("memberCode").value.trim();
+            const hoten = document.getElementById("fullName").value.trim();
+            const khoa = document.getElementById("faculty").value.trim();
+            const nganh = document.getElementById("major").value.trim();
+            const sdt = document.getElementById("phone").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-          if (!validateAddAndUpdateThanhVien(maTV, hoten, khoa, nganh, sdt)) {
-              return;
-          }
+            if (!validateAddAndUpdateThanhVien(maTV, hoten, khoa, nganh, sdt)) {
+            return;
+            }
 
-          const data = {
+            const data = {
             maTV,
             hoten,
             khoa,
@@ -235,32 +256,32 @@
             sdt,
             email,
             password,
-          };
+            };
 
-          try {
+            try {
             fetch("/thanhvien/update", {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-              body: new URLSearchParams(data),
-             })
-              .then((response) => {
-                if (response.ok) {
-                  window.location.reload();
-                } else {
-                  alert("Có lỗi khi sửa thông tin thành viên.");
-                }
-              })
-              .catch((error) => {
-                console.error("Lỗi:", error);
-              });
-          } catch (error) {
-              console.error("Lỗi:", error);
-              alert("Đã xảy ra lỗi khi thực hiện yêu cầu. Vui lòng thử lại sau.");
-          }
+            method: "PUT",
+            headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(data),
+            })
+            .then((response) => {
+            if (response.ok) {
+            window.location.reload();
+            } else {
+            alert("Có lỗi khi sửa thông tin thành viên.");
+            }
+            })
+            .catch((error) => {
+            console.error("Lỗi:", error);
+            });
+            } catch (error) {
+            console.error("Lỗi:", error);
+            alert("Đã xảy ra lỗi khi thực hiện yêu cầu. Vui lòng thử lại sau.");
+            }
 
-        })
-    </script>
-</body>
+            })
+        </script> 
+    </body>
 </html>
