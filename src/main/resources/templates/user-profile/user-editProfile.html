@@ -11,7 +11,66 @@
     <link rel="stylesheet" type="text/css" href="./../../css/base-style.css">
 </head>
 <body>
-<div id="user-header"></div>
+<header class="header-style">
+    <div class="container">
+        <div class="row d-flex align-items-center container-fluid header-wraper">
+
+            <!-- Logo -->
+            <div class="col-lg-4 col-6 web-logo">
+                <!-- <a class="navbar-brand" href="#">
+                    <img src="your-logo.png" alt="Logo" height="30" class="d-inline-block align-top">
+                </a> -->
+                <a th:href="@{'../DanhSachThietBi?maTV=' + ${session.maTV}}">Learning material</a>
+            </div>
+
+
+            <!-- Search Bar -->
+            <div class="col-lg-4 d-lg-block d-none search-bar">
+
+            </div>
+
+
+            <!-- Header operation -->
+            <div class="col-lg-4 d-flex col-6 align-items-center justify-content-end header-operations">
+
+                <div class=" d-none d-lg-flex header-operations_user-info ">
+
+
+                    <div class="user-info_wrapper">
+                        <div style="background-color: white; display:flex; justify-content:center; align-items:center; padding: 7px; margin-right: 5px; border-radius: 50%;">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <span th:text="${session.HoTen}"></span>
+                        <!--session de lay ten-->
+                        <div class="user-actions">
+                            <ul class="user-action_list">
+                                <li>
+                                    <a th:href="@{'../profile?id=' + ${session.maTV}}" style="text-decoration: none; color: black;">Profile</a>
+                                </li>
+                                <li><a href="../login" style="text-decoration: none; color: black;">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ----------------------------------------------------------------------- -->
+                <!-- Case width less than Ipad pro  -->
+                <ul class="d-flex d-lg-none list-unstyled m-0 ">
+                    <li class="search-hiden" onclick="showSearchModal()">
+                        <i class="fa-solid fa-magnifying-glass circle-bg-icon"></i>
+                        <!-- search bar -->
+
+                        <div class="search-bar-hiden">
+                            <input class="form-control me-2 " type="search" placeholder="Search"
+                                   aria-label="Search">
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container-fluid">
     <a th:href="@{'./../profile?id=' + ${data.maTV}}" class="go-back">
         <i class="fa-solid fa-left-long"></i> <span>Quay lại</span>
@@ -245,5 +304,10 @@ document.querySelector("#saveButton").addEventListener("click", () => {
 
 })
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="https://kit.fontawesome.com/56362bb265.js" crossorigin="anonymous"></script>
 </body>
 </html>
