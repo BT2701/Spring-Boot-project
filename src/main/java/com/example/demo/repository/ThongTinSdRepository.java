@@ -16,4 +16,10 @@ public interface ThongTinSdRepository extends JpaRepository<ThongTinSD, Integer>
 
     @Query("SELECT DISTINCT tv.hoten FROM thanhvien tv left join thongtinsd tt on tv.maTV = tt.thanhVien.maTV left join thietbi tb on tb.maTB=tt.thietBi.maTB where tb.maTB= :maTB and tt.tgMuon is not null and tt.tgTra is null ")
     String muonBoi(@Param("maTB") Integer maTB);
+
+
+
+    @Query("SELECT t FROM thongtinsd t INNER JOIN t.thietBi tb WHERE tb.maTB = :maTB AND t.tgdatcho is not null")
+    public Iterable<ThongTinSD> findByMaTBAndtGDatchoNotNull(@Param("maTB") Integer maTB);
+
 }

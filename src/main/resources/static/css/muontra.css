@@ -117,3 +117,19 @@ button i{
 input{
     background: white !important;
 }
+
+.controlvip{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 10px;
+}
+.controlvip label{
+    max-width: 150px;
+    width: 100%;
+}
+
+.controlvip input{
+    background: white;
+}
