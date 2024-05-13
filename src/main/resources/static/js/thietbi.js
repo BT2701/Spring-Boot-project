@@ -65,9 +65,16 @@ function toggleClassUpdateItem(btn) {
     var tenTB = row.querySelector(".column2").innerText; // Lấy giá trị của cột 2
     var moTaTB = row.querySelector(".column3").innerText; // Lấy giá trị của cột 3
 
+    // Tách từ đầu tiên từ chuỗi tenTB
+    var firstWord = tenTB.split(/\s+/)[0];
+
+    // Bỏ đi từ đầu tiên từ chuỗi tenTB
+    var restOfTenTB = tenTB.slice(firstWord.length).trim();
+
     // Gán giá trị cho các input
     document.getElementById("idTB-modal-update").value = maTB;
-    document.getElementById("tenTB-modal-update").value = tenTB;
+    document.getElementById("chuDauTenTB-modal-update").value = firstWord;
+    document.getElementById("tenTB-modal-update").value = restOfTenTB;
     document.getElementById("moTaTB-modal-update").value = moTaTB;
 
     // Hiển thị modal update
@@ -266,8 +273,11 @@ async function addNewTB() {
 async function updateThietBi() {
     // Trường idTB-modal-add không trống
     const idTB = document.getElementById("idTB-modal-update").value;
-    const tenTB = document.getElementById("tenTB-modal-update").value;
+    const chuDauTenTB = document.getElementById("chuDauTenTB-modal-update").value;
+    const sauChuDauTenTB = document.getElementById("tenTB-modal-update").value;
     const moTaTB = document.getElementById("moTaTB-modal-update").value;
+
+    let tenTB = chuDauTenTB + " " + sauChuDauTenTB;
 
     const data = { idTB, tenTB, moTaTB };
 
