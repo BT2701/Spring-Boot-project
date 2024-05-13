@@ -84,7 +84,7 @@ public class ThongKeService {
 	public int countHandledViolation() {
 		int count = 0;
 		for (XuLy model : handleList()) {
-			if (model.getTrangThaiXL() == 0) {
+			if (model.getTrangThaiXL() != 0) {
 				count++;
 			}
 		}
@@ -95,7 +95,7 @@ public class ThongKeService {
 	public int countHandlingViolation() {
 		int count = 0;
 		for (XuLy model : handleList()) {
-			if (model.getTrangThaiXL() != 0) {
+			if (model.getTrangThaiXL() == 0) {
 				count++;
 			}
 		}
