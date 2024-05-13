@@ -80,7 +80,7 @@
           </div>
           <div class="col text-center">
 <!--            <button class="btn btn-danger btn-sm active tra" style="display: none;"><i class="fa-solid fa-arrow-rotate-left"></i>Trả</button>-->
-            <button class="btn btn-primary btn-sm active datchobtn" data-bs-toggle="modal" data-bs-target="#datcho" data-matb = ${device.maTB} data-trangthai=${device.trangThai}><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button><!--            <button class="btn btn-danger btn-sm active huy" style="display: none;"><i class="fa-solid fa-newspaper"></i>Hủy đặt chỗ</button>-->
+            <button class="btn btn-primary btn-sm active datchobtn" data-bs-toggle="modal" data-bs-target="#datcho" th:data-matb = "${device.maTB}"  th:data-trangthai="${device.trangThai}"><i class="fa-solid fa-newspaper"></i>Đặt chỗ</button><!--            <button class="btn btn-danger btn-sm active huy" style="display: none;"><i class="fa-solid fa-newspaper"></i>Hủy đặt chỗ</button>-->
 <!--            <button style="display: none;" class="btn btn-info btn-sm active detail" th:onclick="'showDetailModal(\'' + ${device.maTB} + '\')'"><i class="fa-solid fa-list"></i></button>-->
           </div>
         </div>
@@ -283,6 +283,7 @@
           else{
             datChoMuonThietBi(maTB,maTV,timestamp);
           }
+          window.location.href='DanhSachThietBi?maTV='+maTV;
         }
         function datChoMuonThietBi(maTB, maTV, tgDatCho){
           fetch('api/muontra?maTB='+maTB+'&maTV='+maTV+'&tgDatCho='+tgDatCho)
@@ -293,7 +294,6 @@
 
                   })
                   .catch(error => console.error('Error:', error));
-          window.location.href='DanhSachThietBi?maTV='+maTV;
         }
     </script>
 
