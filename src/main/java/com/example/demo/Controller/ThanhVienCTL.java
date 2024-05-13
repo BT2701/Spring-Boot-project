@@ -187,7 +187,7 @@ public class ThanhVienCTL {
 		}
 
 		// Kiểm tra tên các cột có đúng định dạng không
-		String[] expectedColumnNames = {"MaTV", "Ho Ten", "Khoa", "Nganh", "SDT", "email", "password"};
+		String[] expectedColumnNames = {"MaTV", "HoTen", "Khoa", "Nganh", "SDT", "PassWord", "Email"};
 		for (int i = 0; i < expectedColumnCount; i++) {
 			Cell cell = headerRow.getCell(i);
 			if (cell == null || !cell.getStringCellValue().equals(expectedColumnNames[i])) {
@@ -308,12 +308,11 @@ public class ThanhVienCTL {
 
                 .filter(ttsd
                         -> (ttsd.getThietBi() != null && Objects.equals(ttsd.getThietBi().getMaTB(), maTB))
-                && ttsd.getTgMuon() != null
-                && ttsd.getTgTra() == null
+                && ((ttsd.getTgMuon() != null && ttsd.getTgTra() == null) || ttsd.getTgDatCho() != null)
                 )
                 .findFirst();
         if (thongTinSD.isPresent()) {
-            return ResponseEntity.badRequest().body("Thiết bị này đã được mượn !");
+            return ResponseEntity.badRequest().body("Thiết bị này đã được mượn hoặc đã được đặt chỗ !");
 
         }
 
