@@ -308,12 +308,11 @@ public class ThanhVienCTL {
 
                 .filter(ttsd
                         -> (ttsd.getThietBi() != null && Objects.equals(ttsd.getThietBi().getMaTB(), maTB))
-                && ttsd.getTgMuon() != null
-                && ttsd.getTgTra() == null
+                && ((ttsd.getTgMuon() != null && ttsd.getTgTra() == null) || ttsd.getTgDatCho() != null)
                 )
                 .findFirst();
         if (thongTinSD.isPresent()) {
-            return ResponseEntity.badRequest().body("Thiết bị này đã được mượn !");
+            return ResponseEntity.badRequest().body("Thiết bị này đã được mượn hoặc đã được đặt chỗ !");
 
         }
 
