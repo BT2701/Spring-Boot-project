@@ -193,7 +193,7 @@ public class ThanhVienCTL {
 		}
 
 		// Kiểm tra tên các cột có đúng định dạng không
-		String[] expectedColumnNames = {"MaTV", "Ho Ten", "Khoa", "Nganh", "SDT", "email", "password"};
+		String[] expectedColumnNames = {"MaTV", "HoTen", "Khoa", "Nganh", "SDT", "PassWord", "Email"};
 		for (int i = 0; i < expectedColumnCount; i++) {
 			Cell cell = headerRow.getCell(i);
 			if (cell == null || !cell.getStringCellValue().equals(expectedColumnNames[i])) {

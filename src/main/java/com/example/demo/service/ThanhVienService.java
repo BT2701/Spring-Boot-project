@@ -54,16 +54,18 @@ public class ThanhVienService {
 	}
 
 	private ThanhVien parseMemberFromRow(Row row) {
-		int id = (int) row.getCell(0).getNumericCellValue();
+		String idStr = getCellStringValue(row.getCell(0));
 
-		String idStr = Integer.toString(id);
-		int year = Calendar.getInstance().get(Calendar.YEAR);
-		int last2DigitsOfYear = Integer.parseInt(String.valueOf(year).substring(2,4));
-		if(idStr.length() != 10 || !idStr.startsWith("11") || Integer.parseInt(idStr.substring(2,4)) > last2DigitsOfYear) {
+		if(idStr == null || idStr.isEmpty()) {
 			return null;
 		}
 
-		if(getById(id) != null) {
+		if(idStr.length() != 10 || !idStr.startsWith("11")) {
+			return null;
+		}
+
+		int id = Integer.parseInt(idStr);
+		if(thanhVienRepository.findById(id).isPresent()) {
 			return null;
 		}
 
@@ -71,12 +73,8 @@ public class ThanhVienService {
 		String khoa = getCellStringValue(row.getCell(2));
 		String nganh = getCellStringValue(row.getCell(3));
 		String sdt = getCellStringValue(row.getCell(4));
-		String email = getCellStringValue(row.getCell(5));
-		String password = getCellStringValue(row.getCell(6));
-
-		if (thanhVienRepository.findById(id).isPresent()) {
-			return null;
-		}
+		String password = getCellStringValue(row.getCell(5));
+		String email = getCellStringValue(row.getCell(6));
 
 		return new ThanhVien(id, hoTen, khoa, nganh, sdt, email, password);
 	}
